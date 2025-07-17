@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSkill : MonoBehaviour
@@ -16,17 +17,31 @@ public class PlayerSkill : MonoBehaviour
 
     void QSkill()
     {
-
+        StartCoroutine(WhaleThrow());
     }
 
     void WSkill()
     {
-
+        StartCoroutine(FlyFishShot());
     }
 
     void ESkill()
     {
-
+        StartCoroutine(TurtleShield());
     }
 
+    IEnumerator WhaleThrow()
+    {
+        yield return null;
+    }
+
+    IEnumerator FlyFishShot()
+    {
+        yield return null;
+    }
+
+    IEnumerator TurtleShield()
+    {
+        yield return null;
+    }
 }
