@@ -1,0 +1,127 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+public class PlayerBlock : MonoBehaviour
+{
+    [Header("방어 변수")]
+    public float MaxBlockTime = 0.5f;           // 최대 방어 시간
+    public float ExhaustThreshold = 0.4f;       // 빨간선 임계값
+    public float RecoveryRate = 0.5f;           // Idle 회복 속도
+    public float ExhaustedDelay = 1f;           // 탈진 시 회복 지연 시간
+
+    private enum BlockState
+    {
+        Idle,
+        Blocking,
+        Exhausted
+    }
+
+    private BlockState currentState = BlockState.Idle;
+    public float currentGauge;
+
+    private float exhaustedTimer = 0f; // 탈진 대기 타이머
+
+    private PlayerInputManager inputManager;
+
+ 
+    void Start()
+    {
+        currentGauge = MaxBlockTime;
+    }
+
+    void Update()
+    {
+        switch (currentState)
+        {
+            case BlockState.Idle:
+                HandleIdle();
+                break;
+
+            case BlockState.Blocking:
+                HandleBlocking();
+                break;
+
+            case BlockState.Exhausted:
+                HandleExhausted();
+                break;
+        }
+    }
+
+    private void HandleIdle()
+    {
+        if //(inputManager.IsBlockButtonHeld && currentGauge > ExhaustThreshold)
+            (Input.GetKeyDown(KeyCode.Escape) && currentGauge > ExhaustThreshold)
+        {
+            StartBlocking();
+        }
+        else
+        {
+            RecoverGauge(RecoveryRate, MaxBlockTime);
+        }
+    }
+
+    private void HandleBlocking()
+    {
+        currentGauge -= Time.deltaTime;
+        currentGauge = Mathf.Max(currentGauge, 0f);
+
+        if (currentGauge <= ExhaustThreshold)
+        {
+            StopBlocking();
+            EnterExhausted();
+            return;
+        }
+
+        if //(!inputManager.IsBlockButtonHeld)
+            (Input.GetKeyUp(KeyCode.Escape) && currentGauge > ExhaustThreshold)
+        {
+            StopBlocking();
+        }
+    }
+
+    private void HandleExhausted()
+    {
+        if (exhaustedTimer < ExhaustedDelay)
+        {
+            exhaustedTimer += Time.deltaTime;
+            return; // 대기 중에는 회복 안 함
+        }
+
+        // 대기 끝나면 빨간선까지 회복
+        RecoverGauge(RecoveryRate, ExhaustThreshold);
+
+        if (currentGauge >= ExhaustThreshold)
+        {
+            currentState = BlockState.Idle;
+        }
+    }
+
+    private void StartBlocking()
+    {
+        currentState = BlockState.Blocking;
+        // Animator.SetTrigger("Block");
+    }
+
+    private void StopBlocking()
+    {
+        currentState = BlockState.Idle;
+        // Animator.SetTrigger("Unblock");
+    }
+
+    private void EnterExhausted()
+    {
+        currentState = BlockState.Exhausted;
+        exhaustedTimer = 0f;
+        // Animator.SetTrigger("Exhausted");
+    }
+
+    private void RecoverGauge(float rate, float maxLimit)
+    {
+        if (currentGauge < maxLimit)
+        {
+            currentGauge += rate * Time.deltaTime;
+            currentGauge = Mathf.Min(currentGauge, maxLimit);
+        }
+    }
+}
