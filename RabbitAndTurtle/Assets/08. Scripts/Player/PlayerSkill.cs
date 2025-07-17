@@ -33,15 +33,18 @@ public class PlayerSkill : MonoBehaviour
     IEnumerator WhaleThrow()
     {
         yield return null;
+        //스킬추가 예정
     }
 
     IEnumerator FlyFishShot()
     {
         yield return null;
+        //스킬 추가 예정
     }
 
     IEnumerator TurtleShield()
     {
         yield return null;
+        //스킬추가 예정
     }
 }

@@ -22,9 +22,11 @@ public class PlayerBlock : MonoBehaviour
 
     private float exhaustedTimer = 0f; // 탈진 대기 타이머
 
-    private PlayerInputManager inputManager;
+    private InputManager inputManager;
 
- 
+    private bool isBlockButtonHeld = false;
+
+
     void Start()
     {
         currentGauge = MaxBlockTime;
@@ -48,10 +50,15 @@ public class PlayerBlock : MonoBehaviour
         }
     }
 
+    public void SetBlocking(bool isHeld)
+    {
+        isBlockButtonHeld = isHeld;
+    }
+
+
     private void HandleIdle()
     {
-        if //(inputManager.IsBlockButtonHeld && currentGauge > ExhaustThreshold)
-            (Input.GetKeyDown(KeyCode.Escape) && currentGauge > ExhaustThreshold)
+        if (isBlockButtonHeld && currentGauge > ExhaustThreshold)
         {
             StartBlocking();
         }
@@ -73,12 +80,12 @@ public class PlayerBlock : MonoBehaviour
             return;
         }
 
-        if //(!inputManager.IsBlockButtonHeld)
-            (Input.GetKeyUp(KeyCode.Escape) && currentGauge > ExhaustThreshold)
+        if (!isBlockButtonHeld)
         {
             StopBlocking();
         }
     }
+
 
     private void HandleExhausted()
     {
