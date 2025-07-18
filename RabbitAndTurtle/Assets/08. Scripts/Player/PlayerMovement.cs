@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public PlayerAnimationController animatorController;
-    public SpriteRenderer spriteRenderer;
+    private PlayerAnimationController animatorController;
+    private SpriteRenderer spriteRenderer;
     public float moveSpeed = 5f;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
-    private string lastDirection = "Front"; // 마지막 방향 저장용
+    public string lastDirection = "Front"; // 마지막 방향 저장용
 
     void Awake()
     {

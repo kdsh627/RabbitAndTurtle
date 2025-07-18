@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class PlayerBlock : MonoBehaviour
 {
+    private PlayerMovement playerMovement;
+    private PlayerAnimationController animatorController;
+
     [Header("방어 변수")]
     public float MaxBlockTime = 0.5f;           // 최대 방어 시간
     public float ExhaustThreshold = 0.4f;       // 빨간선 임계값
@@ -29,6 +32,8 @@ public class PlayerBlock : MonoBehaviour
 
     void Start()
     {
+        playerMovement = GetComponent<PlayerMovement>();
+        animatorController = GetComponent<PlayerAnimationController>();
         currentGauge = MaxBlockTime;
     }
 
@@ -106,15 +111,21 @@ public class PlayerBlock : MonoBehaviour
 
     private void StartBlocking()
     {
-        currentState = BlockState.Blocking;
-        // Animator.SetTrigger("Block");
+       currentState = BlockState.Blocking;
+       animatorController.PlayGuard(); // 방어 애니메이션 재생 
     }
 
     private void StopBlocking()
     {
         currentState = BlockState.Idle;
-        // Animator.SetTrigger("Unblock");
+
+        if (playerMovement != null && animatorController != null)
+        {
+            string lastDir = playerMovement.lastDirection;
+            animatorController.PlayIdle(lastDir); // 마지막 방향으로 Idle 재생
+        }
     }
+
 
     private void EnterExhausted()
     {

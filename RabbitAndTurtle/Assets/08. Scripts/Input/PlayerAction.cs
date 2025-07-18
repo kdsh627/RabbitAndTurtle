@@ -39,7 +39,7 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     public void ActionGuard(InputAction.CallbackContext context)
     {
-        PlayerBlock block = _player.GetComponent<PlayerBlock>();
+        //PlayerBlock block = _player.GetComponent<PlayerBlock>();
 
         //입력 시작 시 최초 실행
         if (context.started)
