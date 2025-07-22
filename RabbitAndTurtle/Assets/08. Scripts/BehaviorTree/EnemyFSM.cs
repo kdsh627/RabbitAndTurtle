@@ -1,16 +1,29 @@
+using System.Linq;
+using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyFSM : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Transform target;
+    private NavMeshAgent navMeshAgent;
+    private BehaviorGraphAgent behavionrAgent;
+
+    public void Setup(Transform target)
     {
-        
+        this.target = target;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        behavionrAgent = GetComponent<BehaviorGraphAgent>();
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
+
+        //behavionrAgent.SetVariableValue("PatrolPoints", wayPoints.ToList());
+        behavionrAgent.SetVariableValue("Target", target.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        navMeshAgent.SetDestination(target.position);
     }
 }
