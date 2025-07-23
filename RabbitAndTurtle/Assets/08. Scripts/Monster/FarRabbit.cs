@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class CloseRabbit : BaseMonster
+public class FarRabbit : BaseMonster
 {
     public override void Attack()
     {
-        
+
     }
 }

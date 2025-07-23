@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
-    }
+    }   
 
     private string GetDirection(Vector2 dir)
     {

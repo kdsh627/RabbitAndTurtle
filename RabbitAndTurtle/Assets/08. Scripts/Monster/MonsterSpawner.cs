@@ -8,7 +8,7 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField]
     private Tilemap tileMap;
     [SerializeField]
-    private GameObject enemyPrefab;
+    private List<GameObject> enemyPrefabs; // 여러 프리팹을 리스트로 받
     [SerializeField]
     private int enemyCount = 10;
     [SerializeField]
@@ -18,6 +18,15 @@ public class MonsterSpawner : MonoBehaviour
     private Vector3 offset = new Vector3(0.5f, 0.5f, 0);
     private List<Vector3> possibleTiles = new List<Vector3>();
 
+    [System.Serializable]
+    private struct WayPointData
+    {
+        public GameObject[] wayPoints;
+    }
+
+    [SerializeField]
+    private WayPointData[] wayPointData;
+
     private void Awake()
     {
         //tileMap의 bounds 재설정
@@ -26,11 +35,15 @@ public class MonsterSpawner : MonoBehaviour
         CalculatePossibleTiles();
         //임의 타일에 enemyCount 숫자만큼 적 생성
 
-        for(int i = 0; i < enemyCount; i++)
+        for (int i = 0; i < enemyCount; i++)
         {
-            int index = Random.Range(0, possibleTiles.Count);
-            GameObject clone = Instantiate(enemyPrefab, possibleTiles[index],Quaternion.identity);
-            clone.GetComponent<EnemyFSM>().Setup(target);
+            int tileIndex = Random.Range(0, possibleTiles.Count);
+            int wayIndex = Random.Range(0, wayPointData.Length);
+            int prefabIndex = Random.Range(0, enemyPrefabs.Count); // 랜덤 프리팹 선택
+
+            GameObject prefab = enemyPrefabs[prefabIndex];
+            GameObject clone = Instantiate(prefab, possibleTiles[tileIndex], Quaternion.identity);
+            clone.GetComponent<EnemyFSM>().Setup(target, wayPointData[wayIndex].wayPoints);
         }
     }
 
