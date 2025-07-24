@@ -1,4 +1,6 @@
-using System;
+using State;
+using State.SceneState;
+using StateMachine.SceneStateMachine;
 using UnityEngine;
 
 
@@ -6,51 +8,85 @@ namespace Manager
 {
     public class SceneManager : MonoBehaviour
     {
-        [Header("--- 씬 관련 정보 ---")]
-        [SerializeField] private string[] _gameScenePaths;
-        [SerializeField] private string _clearScenePaths;
+        [Header("--- 핵심 씬 ---")]
+        [SerializeField] private string _titleScenePath;
+        [SerializeField] private string _gameScenePath;
+        [SerializeField] private string _clearScenePath;
 
-        private void OnEnable()
-        {
-            GameEventHandler.Clear += LoadClearScene;
-            GameEventHandler.LoadTitle += LoadTitleScene;
-        }
+        private SceneStateMachine _sceneStateMachine;
+        private string _currentScenePath;
 
-        private void OnDisable()
+        public SceneStateMachine SceneStateMachine => _sceneStateMachine;
+
+        private void Awake()
         {
-            GameEventHandler.Clear -= LoadClearScene;
-            GameEventHandler.LoadTitle -= LoadTitleScene;
+            _currentScenePath = "";
+            _sceneStateMachine = new SceneStateMachine(this);
         }
 
         private void Start()
         {
-            LoadAdditivelyScene(_gameScenePaths[0]);
+            _sceneStateMachine.Initialize(_sceneStateMachine._titleState);
+        }
+        private void Update()
+        {
+            _sceneStateMachine.Excute();
         }
 
-        public void LoadGameScene(int index)
+        private void OnEnable()
         {
-            LoadScene(_gameScenePaths[index]);
+            _sceneStateMachine.stateChanged += ChangeScene;
+
+            GameEventHandler.ExcuteTitle += () => GameEvent_ExcuteState(SceneState.Title);
+            GameEventHandler.ExcuteGamePlay += () => GameEvent_ExcuteState(SceneState.GamePlay);
+            GameEventHandler.ExcuteClear += () => GameEvent_ExcuteState(SceneState.Clear);
         }
 
-        public void LoadClearScene()
+        private void OnDisable()
         {
-            LoadScene(_clearScenePaths);
+            _sceneStateMachine.stateChanged -= ChangeScene;
+            GameEventHandler.ExcuteTitle -= () => GameEvent_ExcuteState(SceneState.Title);
+            GameEventHandler.ExcuteGamePlay -= () => GameEvent_ExcuteState(SceneState.GamePlay);
+            GameEventHandler.ExcuteClear -= () => GameEvent_ExcuteState(SceneState.Clear);
         }
 
-        public void LoadTitleScene()
+        private void GameEvent_ExcuteState(SceneState state)
         {
-            SceneEventHandler.LastSceneUnloaded.Invoke();
-            SceneEventHandler.TitleSceneLoaded.Invoke();
+            switch (state)
+            {
+                case SceneState.Title:
+                    _sceneStateMachine.TransitionTo(_sceneStateMachine._titleState);
+                    break;
+                case SceneState.GamePlay:
+                    _sceneStateMachine.TransitionTo(_sceneStateMachine._gamePlayState);
+                    break;
+                case SceneState.Clear:
+                    _sceneStateMachine.TransitionTo(_sceneStateMachine._clearState);
+                    break;
+            }
         }
 
-        private void LoadScene(string scenePath)
+        private void ChangeScene(IState state)
         {
-            SceneEventHandler.SceneLoadedByPath(scenePath);
-        }
+            SceneState sceneState = (state as ISceneState).CurrentSceneState;
 
-        private void LoadAdditivelyScene(string scenePath)
-        {
-            SceneEventHandler.SceneLoadedAdditivelyByPath(scenePath);
+            string scenePath = "";
+            switch (sceneState)
+            {
+                case SceneState.Title:
+                    scenePath = _titleScenePath;
+                    break;
+                case SceneState.GamePlay:
+                    scenePath = _gameScenePath;
+                    break;
+                case SceneState.Clear:
+                    scenePath = _clearScenePath;
+                    break;
+            }
+
+            SceneEventHandler.SceneStateChanged(scenePath, _currentScenePath);
+
+            _currentScenePath = scenePath;
         }
     }
 }

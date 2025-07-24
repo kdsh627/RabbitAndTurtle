@@ -10,45 +10,33 @@ namespace Utilities
         [Header("--- 씬 시작, 탈출 시 실행할 효과들을 담은 캔버스 ---")]
         //[SerializeField] private SceneCanvas _sceneStarter;
 
-        [Header("핵심 씬 들")]
-        [SerializeField] private string _titleScenePath;
-        [SerializeField] private string _gameScenePath;
-
         private Scene _mainScene; //메인 씬
         private Scene _lastLoadedScene; //가장 최근 열린 씬
-        private Stack<string> _ScenesQueue = new Stack<string>(); //씬이 열린 순서대로 스택에 담김  
-        private List<Scene> _additiveScenes = new List<Scene>(); //현재 열려있는 씬 리스트  
+        private List<string> _additiveScenePaths = new List<string>(); //현재 열려있는 씬 리스트
 
         private void Awake()
         {
             _mainScene = SceneManager.GetActiveScene();//현재 열려있는 씬을 메인 씬으로 할당
         }
 
-        private void Start()
-        {
-            LoadSceneAdditivelyByPath(_titleScenePath);
-        }
-
         private void OnEnable()
         {
             SceneEventHandler.SceneLoadedByPath += SceneEvents_LoadSceneByPath;
+            SceneEventHandler.SceneStateChanged += SceneEvents_ChangeSceneStateByPath;
             SceneEventHandler.SceneLoadedAdditivelyByPath += SceneEvents_LoadSceneAdditivelyByPath;
             SceneEventHandler.SceneUnloadedByPath += SceneEvents_UnloadSceneByPath;
-            SceneEventHandler.SceneLoadedByIndex += SceneEvents_SceneIndexLoaded;
+            SceneEventHandler.AllSceneUnloaded += SceneEvents_AllSceneUnloaded;
             SceneEventHandler.LastSceneUnloaded += SceneEvents_LastSceneUnloaded;
-            SceneEventHandler.TitleSceneLoaded += SceneEvents_TitleSceneLoaded;
-            SceneEventHandler.GameSceneLoaded += SceneEvents_GameSceneLoaded;
         }
 
         private void OnDisable()
         {
             SceneEventHandler.SceneLoadedByPath -= SceneEvents_LoadSceneByPath;
+            SceneEventHandler.SceneStateChanged -= SceneEvents_ChangeSceneStateByPath;
             SceneEventHandler.SceneLoadedAdditivelyByPath -= SceneEvents_LoadSceneAdditivelyByPath;
             SceneEventHandler.SceneUnloadedByPath -= SceneEvents_UnloadSceneByPath;
-            SceneEventHandler.SceneLoadedByIndex -= SceneEvents_SceneIndexLoaded;
+            SceneEventHandler.AllSceneUnloaded -= SceneEvents_AllSceneUnloaded;
             SceneEventHandler.LastSceneUnloaded -= SceneEvents_LastSceneUnloaded;
-            SceneEventHandler.TitleSceneLoaded -= SceneEvents_TitleSceneLoaded;
-            SceneEventHandler.GameSceneLoaded -= SceneEvents_GameSceneLoaded;
         }
 
         private void SceneEvents_LastSceneUnloaded()
@@ -56,14 +44,19 @@ namespace Utilities
             UnloadLastLoadedScene();
         }
 
-        private void SceneEvents_SceneIndexLoaded(int sceneIndex)
+        private void SceneEvents_AllSceneUnloaded()
         {
-            LoadSceneAdditively(sceneIndex);
+            UnloadAllAdditiveScenes();
         }
 
         private void SceneEvents_LoadSceneByPath(string scenePath)
         {
             LoadSceneByPath(scenePath);
+        }
+
+        private void SceneEvents_ChangeSceneStateByPath(string scenePath, string lastScenePath)
+        {
+            ChangeSceneStateByPath(scenePath, lastScenePath);
         }
 
         private void SceneEvents_UnloadSceneByPath(string scenePath)
@@ -74,23 +67,6 @@ namespace Utilities
         private void SceneEvents_LoadSceneAdditivelyByPath(string scenePath)
         {
             LoadSceneAdditivelyByPath(scenePath);
-        }
-
-        private void SceneEvents_TitleSceneLoaded()
-        {
-            LoadSceneByPath(_titleScenePath);
-        }
-
-        private void SceneEvents_GameSceneLoaded()
-        {
-            LoadSceneByPath(_gameScenePath);
-        }
-
-        private void UpdateLastScene()
-        {
-            string scenePath = _ScenesQueue.Pop();
-            _lastLoadedScene = SceneManager.GetSceneByPath(scenePath);
-            Debug.Log("Pop  " + scenePath);
         }
 
         public IEnumerator LoadSceneRoutine(string scenePath)
@@ -148,7 +124,16 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 경로를 통한 
+        /// 씬의 상태 변경
+        /// </summary>
+        /// <param name="scenePath"></param>
+        public void ChangeSceneStateByPath(string scenePath, string lastScenePath)
+        {
+            StartCoroutine(LoadScene(scenePath, lastScenePath));
+        }
+
+        /// <summary>
+        /// 경로를 통한 씬 변경
         /// </summary>
         /// <param name="scenePath"></param>
         public void LoadSceneByPath(string scenePath)
@@ -165,11 +150,11 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 씬 로드
+        /// 현재 씬을 닫고 다음 씬을 로드
         /// </summary>
         /// <param name="scenePath"></param>
         /// <returns></returns>
-        public IEnumerator LoadScene(string scenePath)
+        public IEnumerator LoadScene(string scenePath, string lastScenePath = "")
         {
             if (string.IsNullOrEmpty(scenePath))
             {
@@ -181,10 +166,12 @@ namespace Utilities
             //    yield return _sceneStarter.ExitSceneRoutine();
             //}
 
-            _ScenesQueue.Push(scenePath); //현재 연 씬 스택에 푸쉬
-            Debug.Log("Push  " + scenePath);
+            if (!string.IsNullOrEmpty(lastScenePath))
+            {
+                _lastLoadedScene = SceneManager.GetSceneByPath(lastScenePath);
+            }
+
             yield return UnloadLastSceneRoutine();
-            UpdateLastScene();
             yield return LoadAdditiveSceneRoutine(scenePath);
 
             //yield return new WaitForSecondsRealtime(0.5f);
@@ -195,9 +182,8 @@ namespace Utilities
         }
 
 
-
         /// <summary>
-        /// 씬을 겹쳐서 로드
+        /// 씬을 리스트에 등록하고 겹쳐서 로드
         /// </summary>
         /// <param name="scenePath"></param>
         public void LoadSceneAdditivelyByPath(string scenePath)
@@ -206,9 +192,9 @@ namespace Utilities
             if (!sceneToLoad.IsValid()) //로드가 안되어있으면
             {
                 // 내부 리스트에 등록
-                if (!_additiveScenes.Contains(sceneToLoad))
+                if (!_additiveScenePaths.Contains(scenePath))
                 {
-                    _additiveScenes.Add(sceneToLoad);
+                    _additiveScenePaths.Add(scenePath);
                 }
 
                 //해당 씬 로드
@@ -238,7 +224,7 @@ namespace Utilities
             SceneManager.SetActiveScene(_lastLoadedScene); //활성 씬을 현재 씬으로 변경
         }
 
-        //LoadAdditiveScene 오버로드
+        //인덱스로 씬 겹쳐서 로드
         private IEnumerator LoadAdditiveSceneRoutine(int buildIndex)
         {
             string scenePath = SceneUtility.GetScenePathByBuildIndex(buildIndex);
@@ -246,7 +232,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 씬 언로드
+        /// 씬 패스에 해당하는 씬 언로드
         /// </summary>
         /// <param name="scenePath"></param>
         public void UnloadSceneByPath(string scenePath)
@@ -259,13 +245,15 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 활성화 된 최근 씬 언로드
+        /// 리스트에 등록된 활성화 씬들 모두 언로드
         /// </summary>
         /// <returns></returns>
         public IEnumerator UnloadLastSceneRoutine()
         {
             if (!_lastLoadedScene.IsValid())
                 yield break;
+
+            UnloadAllAdditiveScenes();
 
             if (_lastLoadedScene != _mainScene)
             {
@@ -295,14 +283,15 @@ namespace Utilities
         /// </summary>
         public void UnloadAllAdditiveScenes()
         {
-            foreach (Scene scene in _additiveScenes)
+            foreach (string scenePath in _additiveScenePaths)
             {
+                Scene scene = SceneManager.GetSceneByPath(scenePath);
                 if (scene.IsValid() && scene != _mainScene)
                 {
                     StartCoroutine(UnloadSceneRoutine(scene));
                 }
             }
-            _additiveScenes.Clear();
+            _additiveScenePaths.Clear();
         }
 
         /// <summary>

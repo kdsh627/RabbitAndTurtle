@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 921199294}
   - component: {fileID: 921199295}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,12 +160,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 921199293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646c1a34aea422b4381188c3824cc944, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d3c8749ee43aee40bb55ecbe087c7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameScenePaths:
+  _stageScenePaths:
   - Assets/06. Scenes/Test/SceneFlow/PlayScene.unity
-  _clearScenePaths: Assets/06. Scenes/Test/SceneFlow/ClearScene.unity
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

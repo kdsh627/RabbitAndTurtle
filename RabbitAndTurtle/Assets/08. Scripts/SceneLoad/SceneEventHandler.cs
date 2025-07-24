@@ -19,16 +19,6 @@ public static class SceneEventHandler
     public static Action SceneReloaded;
 
     /// <summary>
-    /// 타이틀 씬 로드
-    /// </summary>
-    public static Action TitleSceneLoaded;
-
-    /// <summary>
-    /// 게임 씬 로드
-    /// </summary>
-    public static Action GameSceneLoaded;
-
-    /// <summary>
     /// 가장 최근 씬 언로드
     /// </summary>
     public static Action LastSceneUnloaded;
@@ -44,9 +34,19 @@ public static class SceneEventHandler
     public static Action<string> SceneLoadedByPath;
 
     /// <summary>
+    /// 씬의 상태가 변경되는 로드
+    /// </summary>
+    public static Action<string, string> SceneStateChanged;
+
+    /// <summary>
     /// 씬 경로로 언로드
     /// </summary>
     public static Action<string> SceneUnloadedByPath;
+
+    /// <summary>
+    /// 씬 리스트에 겹쳐서 활성화된 모든 씬 언로드
+    /// </summary>
+    public static Action AllSceneUnloaded;
 
     /// <summary>
     /// 빌드 세팅에 있는 씬 인덱스로 씬 로드(겹쳐서)

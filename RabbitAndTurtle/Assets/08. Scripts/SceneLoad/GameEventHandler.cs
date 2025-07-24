@@ -1,11 +1,14 @@
 using System;
+using State.SceneState;
 using UnityEngine;
 
 public static class GameEventHandler
 {
-    public static Action Clear;
+    public static Action ExcuteClear;
 
-    public static Action LoadTitle;
+    public static Action ExcuteTitle;
 
-    public static Action Exit;
+    public static Action ExcuteGamePlay;
+
+    public static Action ExcuteExit;
 }
