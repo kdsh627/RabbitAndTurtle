@@ -15,5 +15,14 @@ public class MovementRigidbody2D : MonoBehaviour
 	{
 		rigid2D.linearVelocity = direction * moveSpeed;
 	}
+
+    public void Reflect()
+    {
+        if (rigid2D != null)
+        {
+            rigid2D.linearVelocity *= -1f; // 현재 방향의 정반대로 반사
+        }
+    }
+
 }
 

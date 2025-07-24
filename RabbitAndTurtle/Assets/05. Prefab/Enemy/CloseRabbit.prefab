@@ -353,7 +353,7 @@ MonoBehaviour:
           m_Value0: 16769835630061605949
           m_Value1: 1258569626590515689
         Name: chaseDistance
-        m_Value: 8
+        m_Value: 4
     - rid: 7310272870508659013
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

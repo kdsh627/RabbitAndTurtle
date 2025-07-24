@@ -13,6 +13,8 @@ public class PlayerBlock : MonoBehaviour
     public float RecoveryRate = 0.5f;           // Idle 회복 속도
     public float ExhaustedDelay = 1f;           // 탈진 시 회복 지연 시간
 
+    public GameObject ExhaustedEff;
+    public GameObject BlockCollider;
     private enum BlockState
     {
         Idle,
@@ -35,6 +37,8 @@ public class PlayerBlock : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         animatorController = GetComponent<PlayerAnimationController>();
         currentGauge = MaxBlockTime;
+        ExhaustedEff.SetActive(false); // 탈진 이펙트 비활성화
+        BlockCollider.SetActive(false);
     }
 
     void Update()
@@ -75,39 +79,51 @@ public class PlayerBlock : MonoBehaviour
 
     private void HandleBlocking()
     {
+        if (!BlockCollider.activeSelf)
+            BlockCollider.SetActive(true);
+
         currentGauge -= Time.deltaTime;
         currentGauge = Mathf.Max(currentGauge, 0f);
 
-        if (currentGauge <= ExhaustThreshold)
+        if (!isBlockButtonHeld)
         {
-            StopBlocking();
-            EnterExhausted();
+            StopBlocking(); // 그냥 Idle로 전환
+            BlockCollider.SetActive(false);
             return;
         }
 
-        if (!isBlockButtonHeld)
+        if (currentGauge <= ExhaustThreshold)
         {
-            StopBlocking();
+            EnterExhausted(); // 상태 전환만 수행
+            BlockCollider.SetActive(false);
+            return;
         }
     }
 
 
+
     private void HandleExhausted()
     {
+        if (!ExhaustedEff.activeSelf)
+            ExhaustedEff.SetActive(true); // 탈진 시작 시 이펙트 켜기
+
         if (exhaustedTimer < ExhaustedDelay)
         {
             exhaustedTimer += Time.deltaTime;
             return; // 대기 중에는 회복 안 함
         }
 
-        // 대기 끝나면 빨간선까지 회복
+        // ExhaustThreshold까지 회복
         RecoverGauge(RecoveryRate, ExhaustThreshold);
 
         if (currentGauge >= ExhaustThreshold)
         {
             currentState = BlockState.Idle;
+            ExhaustedEff.SetActive(false); // 회복 완료 후 이펙트 끄기
         }
     }
+
+
 
     private void StartBlocking()
     {
@@ -131,8 +147,17 @@ public class PlayerBlock : MonoBehaviour
     {
         currentState = BlockState.Exhausted;
         exhaustedTimer = 0f;
-        // Animator.SetTrigger("Exhausted");
+
+        //animatorController.PlayExhausted(); // 필요한 애니메이션 재생
+
+        // 방어 중단 처리도 이 안에서
+        if (playerMovement != null && animatorController != null)
+        {
+            string lastDir = playerMovement.lastDirection;
+            animatorController.PlayIdle(lastDir);
+        }
     }
+
 
     private void RecoverGauge(float rate, float maxLimit)
     {

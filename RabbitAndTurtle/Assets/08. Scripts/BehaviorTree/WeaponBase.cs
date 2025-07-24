@@ -1,4 +1,7 @@
+using System.Collections;
+using Unity.Behavior.Demo;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class WeaponBase : MonoBehaviour
 {
@@ -13,7 +16,12 @@ public abstract class WeaponBase : MonoBehaviour
     protected float maxCooldownTime;
     private float currentCooldownTime = 0f;
     private bool isSkillAvailable = true;
+    private NavMeshAgent agent;
 
+    private void Awake()
+    {
+       agent = GetComponent<NavMeshAgent>();
+    }
     public void Setup(Transform target, float damage, float cooldownTime)
     {
         this.target = target;
@@ -34,9 +42,17 @@ public abstract class WeaponBase : MonoBehaviour
         if(isSkillAvailable == true)
         {
             OnAttack();
+            StartCoroutine(StopWhileAttacking());
             isSkillAvailable=false;
             currentCooldownTime = Time.time;
         }
+    }
+
+    public IEnumerator StopWhileAttacking()
+    {
+        agent.isStopped = true;
+        yield return new WaitForSeconds(1f);
+        agent.isStopped = false;
     }
 
     public abstract void OnAttack();

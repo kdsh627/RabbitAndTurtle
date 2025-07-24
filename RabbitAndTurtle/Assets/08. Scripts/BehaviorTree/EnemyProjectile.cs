@@ -27,11 +27,24 @@ public class EnemyProjectile : MonoBehaviour
         Destroy(gameObject, 3f); // 3초 후 자동 파괴
     }
 
+    private void ReflectProjectile()
+    {
+        if (movement != null)
+        {
+            movement.Reflect(); // 반사 방향 전환
+        }
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
+        }
+        if (collision.CompareTag("BlockCollider"))
+        {
+            ReflectProjectile();
         }
     }
 }

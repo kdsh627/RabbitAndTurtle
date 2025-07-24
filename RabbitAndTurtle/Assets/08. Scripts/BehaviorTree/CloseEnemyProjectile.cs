@@ -67,4 +67,16 @@ public class CloseEnemyProjectile : MonoBehaviour
         else
             return toTarget.y > 0 ? "Back" : "Front";
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+           
+        }
+        else if (collision.CompareTag("BlockCollider"))
+        {
+           Destroy(gameObject); // 장애물에 닿으면 파괴
+        }
+    }
 }
