@@ -4,7 +4,7 @@ using Utilities;
 
 public class ClearState : ISceneState
 {
-    private SceneManager _sceneManager;
+    private SceneStateManager _sceneManager;
 
     private SceneState _currentSceneState;
     public SceneState CurrentSceneState 
@@ -17,7 +17,7 @@ public class ClearState : ISceneState
     /// 생성자
     /// </summary>
     /// <param name="sceneManager"></param>
-    public ClearState(SceneManager sceneManager)
+    public ClearState(SceneStateManager sceneManager)
     {
         _sceneManager = sceneManager;
     }

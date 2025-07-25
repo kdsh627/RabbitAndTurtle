@@ -3,7 +3,7 @@ using State.SceneState;
 
 public class TitleState : ISceneState
 {
-    private SceneManager _sceneManager;
+    private SceneStateManager _sceneManager;
 
     private SceneState _currentSceneState;
     public SceneState CurrentSceneState 
@@ -16,7 +16,7 @@ public class TitleState : ISceneState
     /// 생성자
     /// </summary>
     /// <param name="sceneManager"></param>
-    public TitleState(SceneManager sceneManager)
+    public TitleState(SceneStateManager sceneManager)
     {
         _sceneManager = sceneManager;
     }

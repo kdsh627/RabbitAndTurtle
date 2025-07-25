@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Manager
 {
-    public class SceneManager : MonoBehaviour
+    public class SceneStateManager : MonoBehaviour
     {
         [Header("--- 핵심 씬 ---")]
         [SerializeField] private string _titleScenePath;

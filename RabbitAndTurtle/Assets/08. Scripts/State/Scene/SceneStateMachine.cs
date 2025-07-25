@@ -10,13 +10,13 @@ namespace StateMachine.SceneStateMachine
         public GamePlayState _gamePlayState;
         public ClearState _clearState;
 
-        private SceneManager _sceneManager;
+        private SceneStateManager _sceneManager;
 
         /// <summary>
         /// 생성자
         /// </summary>
         /// <param name="player"></param>
-        public SceneStateMachine(SceneManager sceneManager)
+        public SceneStateMachine(SceneStateManager sceneManager)
         {
             _sceneManager = sceneManager;
 
