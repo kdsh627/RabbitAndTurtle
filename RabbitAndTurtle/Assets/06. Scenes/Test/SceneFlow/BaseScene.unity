@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 1928196859}
   - component: {fileID: 1928196860}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: SceneStateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,12 +204,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1928196858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646c1a34aea422b4381188c3824cc944, type: 3}
+  m_Script: {fileID: 11500000, guid: e1ace05b5b21e4c4196f5b211759fb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _titleScenePath: Assets/06. Scenes/Test/SceneFlow/TitleScene.unity
-  _gameScenePath: Assets/06. Scenes/Test/SceneFlow/GameScene.unity
-  _clearScenePath: Assets/06. Scenes/Test/SceneFlow/ClearScene.unity
+  _titleScenePath: 
+  _gameScenePath: 
+  _clearScenePath: 
 --- !u!1 &1935246665
 GameObject:
   m_ObjectHideFlags: 0
