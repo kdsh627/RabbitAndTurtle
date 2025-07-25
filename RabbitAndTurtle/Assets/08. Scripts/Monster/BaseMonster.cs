@@ -1,6 +1,7 @@
 using NUnit.Framework.Constraints;
 using System.Collections;
 using Unity.Behavior.Demo;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -123,9 +124,32 @@ public abstract class BaseMonster : MonoBehaviour
         if (currentHealth <= 0) Die();
     }
 
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+    }
+
     protected virtual void Die()
     {
         Debug.Log("Monster has died.");
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("SongPeyon"))
+        {
+            Debug.Log("Monster hit by SongPyeon projectile.");
+            if (collision.TryGetComponent<EnemyProjectile>(out EnemyProjectile projectile))
+            {
+                if (projectile.isReflected)
+                {
+                    TakeDamage(projectile.damage);
+                    Destroy(projectile.gameObject);
+                }
+            }
+            else return;
+        }
+    }
+
 }

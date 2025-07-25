@@ -22444,7 +22444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4631bfc8882604d906792ff1120459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HpSlider: {fileID: 0}
+  HpSlider: {fileID: 391380668}
   BlockGaugeSlider: {fileID: 1774057204}
   playerBlock: {fileID: 1596271306}
   playerStat: {fileID: 1596271311}
@@ -23140,11 +23140,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMap: {fileID: 205346181}
+  target: {fileID: 1596271305}
   enemyPrefabs:
   - {fileID: 1755243971956980991, guid: 6327a8434bebfd84f8cd8a1e40fe38d8, type: 3}
   - {fileID: 1755243971956980991, guid: 00e54f576b1b22449b833babab1b5837, type: 3}
-  enemyCount: 10
-  target: {fileID: 1596271305}
+  elitePrefabs:
+  - {fileID: 7178142710304102445, guid: 2e2dc05551a2b97449731ecbbdeea1fd, type: 3}
+  - {fileID: 948950176875190219, guid: ebb86529ad28879479d211bb7c300a05, type: 3}
+  initialSpawnCount: 10
+  maxMonsterCount: 40
   wayPointData:
   - wayPoints:
     - {fileID: 314783976}

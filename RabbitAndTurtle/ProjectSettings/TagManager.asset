@@ -8,6 +8,7 @@ TagManager:
   - LevelCamera
   - Monster
   - BlockCollider
+  - SongPeyon
   layers:
   - Default
   - TransparentFX

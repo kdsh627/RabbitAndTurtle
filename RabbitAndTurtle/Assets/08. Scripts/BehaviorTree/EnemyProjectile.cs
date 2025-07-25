@@ -5,7 +5,8 @@ public class EnemyProjectile : MonoBehaviour
     public Sprite[] SongpeyonSprites;
     private MovementRigidbody2D movement;
     private Transform target;
-    private float damage;
+    public float damage;
+    public bool isReflected;
 
     public void Setup(Transform target, float damage)
     {
@@ -24,6 +25,7 @@ public class EnemyProjectile : MonoBehaviour
 
     private void Start()
     {
+        isReflected = false;
         Destroy(gameObject, 3f); // 3초 후 자동 파괴
     }
 
@@ -44,6 +46,7 @@ public class EnemyProjectile : MonoBehaviour
         }
         if (collision.CompareTag("BlockCollider"))
         {
+            isReflected = true;
             ReflectProjectile();
         }
     }

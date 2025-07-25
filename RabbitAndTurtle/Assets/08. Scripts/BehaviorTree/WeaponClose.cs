@@ -45,7 +45,7 @@ public class WeaponClose : WeaponBase
         if (spawnPoint != null)
         {
             GameObject clone = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation);
-            clone.GetComponent<CloseEnemyProjectile>().Setup(fsm.target, damage, spawnPoint, attackDir);
+            clone.GetComponent<CloseEnemyProjectile>().Setup(fsm.target, damage, spawnPoint, attackDir, baseMonster);
         }
         StartCoroutine(baseMonster.ExitAttackMode());
     }

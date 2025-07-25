@@ -1,22 +1,27 @@
-using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private Tilemap tileMap;
-    [SerializeField]
-    private List<GameObject> enemyPrefabs; // 여러 프리팹을 리스트로 받
-    [SerializeField]
-    private int enemyCount = 10;
-    [SerializeField]
-    private Transform target;
+    [Header("타일 및 타겟")]
+    [SerializeField] private Tilemap tileMap;
+    [SerializeField] private Transform target;
 
+    [Header("프리팹")]
+    [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private List<GameObject> elitePrefabs;
 
-    private Vector3 offset = new Vector3(0.5f, 0.5f, 0);
+    [Header("스폰 설정")]
+    [SerializeField] private int initialSpawnCount = 10;
+    [SerializeField] private int maxMonsterCount = 40;
+
+    private int currentMonsterCount = 0;
+    private int[] killCounts;
+
     private List<Vector3> possibleTiles = new List<Vector3>();
+    private Vector3 offset = new Vector3(0.5f, 0.5f, 0);
 
     [System.Serializable]
     private struct WayPointData
@@ -29,38 +34,29 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Awake()
     {
-        //tileMap의 bounds 재설정
         tileMap.CompressBounds();
-        //타일맵 모든 타일 대상으로 적 배치 가능한 타일 계산
         CalculatePossibleTiles();
-        //임의 타일에 enemyCount 숫자만큼 적 생성
 
-        for (int i = 0; i < enemyCount; i++)
-        {
-            int tileIndex = Random.Range(0, possibleTiles.Count);
-            int wayIndex = Random.Range(0, wayPointData.Length);
-            int prefabIndex = Random.Range(0, enemyPrefabs.Count); // 랜덤 프리팹 선택
+        killCounts = new int[enemyPrefabs.Count];
 
-            GameObject prefab = enemyPrefabs[prefabIndex];
-            GameObject clone = Instantiate(prefab, possibleTiles[tileIndex], Quaternion.identity);
-            clone.GetComponent<EnemyFSM>().Setup(target, wayPointData[wayIndex].wayPoints);
-        }
+        // 초기 10마리 소환
+        for (int i = 0; i < initialSpawnCount; i++)
+            SpawnEnemy();
+
+        // 지속 스폰 루프
+        StartCoroutine(SpawnLoop());
     }
 
     private void CalculatePossibleTiles()
     {
-        BoundsInt  bounds = tileMap.cellBounds;
-        //타일맵 내부 모든 타일의 정보를 불러와 alltiles 배열에 저장
+        BoundsInt bounds = tileMap.cellBounds;
         TileBase[] allTiles = tileMap.GetTilesBlock(bounds);
 
-        //외곽 라인 제외 모든 타일 검사
-        for(int y = 1; y < bounds.size.y-1; y++)
+        for (int y = 1; y < bounds.size.y - 1; y++)
         {
-            for(int x = 1; x < bounds.size.x-1; x++)
+            for (int x = 1; x < bounds.size.x - 1; x++)
             {
-                //[y * bounds.size.x + x] 번째 방의 타일 정보를 불러옴
                 TileBase tile = allTiles[y * bounds.size.x + x];
-                // 해당타일이 비어있지 않으면 적 배치 가능 타일로 판단
                 if (tile != null)
                 {
                     Vector3Int localPosition = bounds.position + new Vector3Int(x, y);
@@ -70,5 +66,62 @@ public class MonsterSpawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator SpawnLoop()
+    {
+        while (true)
+        {
+            if (currentMonsterCount < maxMonsterCount)
+            {
+                SpawnEnemy();
+            }
+
+            float delay = currentMonsterCount < 30 ? 1f : 10f;
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+    private void SpawnEnemy()
+    {
+        if (possibleTiles.Count == 0 || currentMonsterCount >= maxMonsterCount)
+            return;
+
+        int tileIndex = Random.Range(0, possibleTiles.Count);
+        int wayIndex = Random.Range(0, wayPointData.Length);
+        int prefabIndex = Random.Range(0, enemyPrefabs.Count);
+
+        GameObject clone = Instantiate(enemyPrefabs[prefabIndex], possibleTiles[tileIndex], Quaternion.identity);
+        clone.GetComponent<EnemyFSM>().Setup(target, wayPointData[wayIndex].wayPoints);
+
+        // 사망 감지기 부착
+        EnemyDeathNotifier notifier = clone.AddComponent<EnemyDeathNotifier>();
+        notifier.Init(this, prefabIndex);
+
+        currentMonsterCount++;
+    }
+
+    public void OnMonsterDied(int prefabIndex)
+    {
+        currentMonsterCount--;
+
+        killCounts[prefabIndex]++;
+        if (killCounts[prefabIndex] % 10 == 0 && prefabIndex < elitePrefabs.Count)
+        {
+            SpawnElite(prefabIndex);
+        }
+    }
+
+    private void SpawnElite(int index)
+    {
+        int tileIndex = Random.Range(0, possibleTiles.Count);
+        int wayIndex = Random.Range(0, wayPointData.Length);
+
+        GameObject elite = Instantiate(elitePrefabs[index], possibleTiles[tileIndex], Quaternion.identity);
+        elite.GetComponent<EnemyFSM>().Setup(target, wayPointData[wayIndex].wayPoints);
+
+        Debug.Log($"[엘리트 소환] {index}번 몬스터 등장!");
+
+        currentMonsterCount++;
     }
 }

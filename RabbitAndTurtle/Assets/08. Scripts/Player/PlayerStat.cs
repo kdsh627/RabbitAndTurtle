@@ -30,4 +30,24 @@ public class PlayerStat : MonoBehaviour
     {
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SongPeyon"))
+        {
+            float damage = other.GetComponent<EnemyProjectile>().damage;
+            TakeDamage(damage);
+            Destroy(other.gameObject); // 적 투사체 제거
+        }
+
+        if (other.CompareTag("Bbata"))
+        {
+            CloseEnemyProjectile proj = other.GetComponent<CloseEnemyProjectile>();
+            if (proj != null && !proj.isHit)
+            {
+                proj.isHit = true; // 중복 데미지 방지
+                TakeDamage(proj.damage);
+            }
+        }
+    }
 }
