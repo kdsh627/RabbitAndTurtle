@@ -28,26 +28,22 @@ namespace Manager
         {
             _sceneStateMachine.Initialize(_sceneStateMachine._titleState);
         }
-        private void Update()
-        {
-            _sceneStateMachine.Excute();
-        }
 
         private void OnEnable()
         {
             _sceneStateMachine.stateChanged += ChangeScene;
 
-            GameEventHandler.ExcuteTitle += () => GameEvent_ExcuteState(SceneState.Title);
-            GameEventHandler.ExcuteGamePlay += () => GameEvent_ExcuteState(SceneState.GamePlay);
-            GameEventHandler.ExcuteClear += () => GameEvent_ExcuteState(SceneState.Clear);
+            GameEventHandler.TitleExcuted += () => GameEvent_ExcuteState(SceneState.Title);
+            GameEventHandler.GamePlayExcuted += () => GameEvent_ExcuteState(SceneState.GamePlay);
+            GameEventHandler.GameClearExcuted += () => GameEvent_ExcuteState(SceneState.Clear);
         }
 
         private void OnDisable()
         {
             _sceneStateMachine.stateChanged -= ChangeScene;
-            GameEventHandler.ExcuteTitle -= () => GameEvent_ExcuteState(SceneState.Title);
-            GameEventHandler.ExcuteGamePlay -= () => GameEvent_ExcuteState(SceneState.GamePlay);
-            GameEventHandler.ExcuteClear -= () => GameEvent_ExcuteState(SceneState.Clear);
+            GameEventHandler.TitleExcuted -= () => GameEvent_ExcuteState(SceneState.Title);
+            GameEventHandler.GamePlayExcuted -= () => GameEvent_ExcuteState(SceneState.GamePlay);
+            GameEventHandler.GameClearExcuted -= () => GameEvent_ExcuteState(SceneState.Clear);
         }
 
         private void GameEvent_ExcuteState(SceneState state)

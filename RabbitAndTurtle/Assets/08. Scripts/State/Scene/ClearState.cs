@@ -1,39 +1,36 @@
 using Manager;
-using State.SceneState;
-using Utilities;
 
-public class ClearState : ISceneState
+namespace State.SceneState
 {
-    private SceneStateManager _sceneManager;
-
-    private SceneState _currentSceneState;
-    public SceneState CurrentSceneState 
-    { 
-        get => _currentSceneState; 
-        set => _currentSceneState = value; 
-    }
-
-    /// <summary>
-    /// 생성자
-    /// </summary>
-    /// <param name="sceneManager"></param>
-    public ClearState(SceneStateManager sceneManager)
+    public class ClearState : ISceneState
     {
-        _sceneManager = sceneManager;
-    }
+        private SceneStateManager _sceneStateManager;
 
-    public void Enter()
-    {
-        _currentSceneState = SceneState.Clear;
-    }
+        private SceneState _currentSceneState;
+        public SceneState CurrentSceneState => _currentSceneState;
 
-    public void Execute()
-    {
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        /// <param name="sceneStateManager"></param>
+        public ClearState(SceneStateManager sceneStateManager)
+        {
+            _sceneStateManager = sceneStateManager;
+        }
 
-    }
+        public void Enter()
+        {
+            _currentSceneState = SceneState.Clear;
+        }
 
-    public void Exit()
-    {
+        public void Execute()
+        {
 
+        }
+
+        public void Exit()
+        {
+
+        }
     }
 }

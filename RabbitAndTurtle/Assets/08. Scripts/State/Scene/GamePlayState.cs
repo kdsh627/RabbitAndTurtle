@@ -2,38 +2,37 @@ using Manager;
 using State.SceneState;
 using Utilities;
 
-public class GamePlayState : ISceneState
+namespace State.SceneState
 {
-    private SceneStateManager _sceneManager;
-
-    private SceneState _currentSceneState;
-    public SceneState CurrentSceneState 
-    { 
-        get => _currentSceneState; 
-        set => _currentSceneState = value; 
-    }
-
-    /// <summary>
-    /// 생성자
-    /// </summary>
-    /// <param name="sceneManager"></param>
-    public GamePlayState(SceneStateManager sceneManager)
+    public class GamePlayState : ISceneState
     {
-        _sceneManager = sceneManager;
-    }
+        private SceneStateManager _sceneStateManager;
 
-    public void Enter()
-    {
-        _currentSceneState = SceneState.GamePlay;
-    }
+        private SceneState _currentSceneState;
+        public SceneState CurrentSceneState => _currentSceneState;
 
-    public void Execute()
-    {
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        /// <param name="sceneStateManager"></param>
+        public GamePlayState(SceneStateManager sceneStateManager)
+        {
+            _sceneStateManager = sceneStateManager;
+        }
 
-    }
+        public void Enter()
+        {
+            _currentSceneState = SceneState.GamePlay;
+        }
 
-    public void Exit()
-    {
+        public void Execute()
+        {
 
+        }
+
+        public void Exit()
+        {
+
+        }
     }
 }

@@ -12,11 +12,11 @@ public class SceneChangeButton : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.ExcuteGamePlay.Invoke);
+        button.onClick.AddListener(GameEventHandler.GamePlayExcuted.Invoke);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.ExcuteGamePlay.Invoke);
+        button.onClick.RemoveListener(GameEventHandler.GamePlayExcuted.Invoke);
     }
 }
