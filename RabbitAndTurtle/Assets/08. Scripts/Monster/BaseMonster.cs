@@ -120,6 +120,7 @@ public abstract class BaseMonster : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+        monAni.PlayHurt();
         currentHealth -= damage;
         if (currentHealth <= 0) Die();
     }

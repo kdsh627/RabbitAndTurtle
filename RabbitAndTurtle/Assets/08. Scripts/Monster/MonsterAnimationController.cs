@@ -13,4 +13,6 @@ public class MonsterAnimationController : MonoBehaviour
 
     public void PlayIdle(string Dir) => ani.Play($"{Dir}Idle");
     public void PlayWalk(string Dir) => ani.Play($"{Dir}Walk");
+
+    public void PlayHurt() => ani.Play("Hurt");
 }
