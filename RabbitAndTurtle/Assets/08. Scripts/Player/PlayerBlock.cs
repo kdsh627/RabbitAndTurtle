@@ -15,6 +15,10 @@ public class PlayerBlock : MonoBehaviour
 
     public GameObject ExhaustedEff;
     public GameObject BlockCollider;
+
+    public bool isBlock { get; private set; } = false;
+
+
     private enum BlockState
     {
         Idle,
@@ -128,12 +132,14 @@ public class PlayerBlock : MonoBehaviour
     private void StartBlocking()
     {
        currentState = BlockState.Blocking;
-       animatorController.PlayGuard(); // 방어 애니메이션 재생 
+        isBlock = true;
+        animatorController.PlayGuard(); // 방어 애니메이션 재생 
     }
 
     private void StopBlocking()
     {
         currentState = BlockState.Idle;
+        isBlock = false;
 
         if (playerMovement != null && animatorController != null)
         {

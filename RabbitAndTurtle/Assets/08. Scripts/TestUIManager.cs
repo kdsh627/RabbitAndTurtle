@@ -11,7 +11,9 @@ public class TestUIManager : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {   HpSlider.maxValue = playerStat.maxHealth;
+    {
+        HpSlider.minValue = 0f;
+        HpSlider.maxValue = playerStat.maxHealth;
 
         BlockGaugeSlider.minValue = 0f;
         BlockGaugeSlider.maxValue = playerBlock.MaxBlockTime;

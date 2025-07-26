@@ -15,9 +15,12 @@ public abstract class BaseMonster : MonoBehaviour
     [SerializeField] private GameObject FrontSprite;
     [SerializeField] private GameObject BackSprite;
     [SerializeField] private GameObject SideSprite;
-   
+    [SerializeField] private GameObject FrontDSprite;
+    [SerializeField] private GameObject SideDSprite;
+
     private GameObject currentSprite;
     private SpriteRenderer spriteRenderer;
+    private SpriteRenderer sideDSpriteRenderer;
     private MonsterAnimationController monAni;
     public float moveThreshold = 0.01f;
 
@@ -27,40 +30,51 @@ public abstract class BaseMonster : MonoBehaviour
     private NavMeshAgent agent;
     private EnemyFSM fsm;
     private bool isAttacking = false;
+    private bool isDead = false;
 
     protected virtual void Start()
     { 
         monAni = GetComponent<MonsterAnimationController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        sideDSpriteRenderer = SideDSprite.GetComponent<SpriteRenderer>();
         agent = GetComponent<NavMeshAgent>();
         fsm = GetComponent<EnemyFSM>();
 
         currentHealth = MonsterHealth;
         lastPosition = transform.position;
+        FrontDSprite.SetActive(false);
+        SideDSprite.SetActive(false);
     }
 
     protected virtual void Update()
     {
-        Vector3 velocity = agent.velocity;
-
-        if (velocity.magnitude < moveThreshold)
+        if (!isDead)
         {
-            SetActiveSprite(lastDirection);
-            monAni.PlayIdle(lastDirection);
-        }
-        else
-        {
-            // 움직였으면 target 기준으로 바라보게 설정
-            Vector3 dirToTarget = fsm.target.position - transform.position;
-            string direction = GetDirection(dirToTarget);
-            lastDirection = direction;
+            Vector3 velocity = agent.velocity;
 
-            SetActiveSprite(direction);
+            if (velocity.magnitude < moveThreshold)
+            {
+                SetActiveSprite(lastDirection);
+                monAni.PlayIdle(lastDirection);
+            }
+            else
+            {
+                // 움직였으면 target 기준으로 바라보게 설정
+                Vector3 dirToTarget = fsm.target.position - transform.position;
+                string direction = GetDirection(dirToTarget);
+                lastDirection = direction;
 
-            if (direction == "Side")
-                spriteRenderer.flipX = dirToTarget.x < 0;
+                SetActiveSprite(direction);
 
-            monAni.PlayWalk(direction);
+                if (direction == "Side")
+                {
+                    bool flip = dirToTarget.x < 0;
+                    spriteRenderer.flipX = flip;
+                    sideDSpriteRenderer.flipX = flip;
+                }
+
+                monAni.PlayWalk(direction);
+            }
         }
     }
 
@@ -84,7 +98,7 @@ public abstract class BaseMonster : MonoBehaviour
 
     public IEnumerator ExitAttackMode()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         isAttacking = false;
         SetActiveSprite(lastDirection);
     }
@@ -120,10 +134,31 @@ public abstract class BaseMonster : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        monAni.PlayHurt();
+        StartCoroutine(DamageAni());
         currentHealth -= damage;
         if (currentHealth <= 0) Die();
     }
+
+    IEnumerator DamageAni()
+    {
+        agent.isStopped = true;
+
+        if (lastDirection == "Front" || lastDirection == "Back")
+        {
+            FrontDSprite.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            FrontDSprite.SetActive(false);
+        }
+        else
+        {
+            SideDSprite.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            SideDSprite.SetActive(false);
+        }
+       
+        agent.isStopped = false;
+    }
+
 
     public bool IsDead()
     {
@@ -132,7 +167,17 @@ public abstract class BaseMonster : MonoBehaviour
 
     protected virtual void Die()
     {
-        Debug.Log("Monster has died.");
+        isDead = true;
+        StartCoroutine(DieAni());
+    }
+
+    IEnumerator DieAni()
+    {
+        FrontSprite.SetActive(false);
+        BackSprite.SetActive(false);
+        SideSprite.SetActive(false);
+        monAni.PlayDie();
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 

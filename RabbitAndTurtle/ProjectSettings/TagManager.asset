@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - BlockCollider
   - SongPeyon
+  - Bbata
   layers:
   - Default
   - TransparentFX
