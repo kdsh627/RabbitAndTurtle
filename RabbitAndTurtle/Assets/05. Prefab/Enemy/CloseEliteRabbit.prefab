@@ -816,6 +816,7 @@ MonoBehaviour:
   BackAttackPoint: {fileID: 2781824686933439010}
   LeftAttackPoint: {fileID: 4335219204666134651}
   RightAttackPoint: {fileID: 6119824343981537229}
+  closeProjectileIndex: 2
 --- !u!114 &6001561788064999023
 MonoBehaviour:
   m_ObjectHideFlags: 0

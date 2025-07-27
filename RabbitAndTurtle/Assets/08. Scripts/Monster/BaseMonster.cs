@@ -146,7 +146,7 @@ public abstract class BaseMonster : MonoBehaviour
     {
         agent.isStopped = true;
 
-        if (lastDirection == "Front" || lastDirection == "Back")
+        if (lastDirection == "Front" || lastDirection == "Back" || currentHealth <= 0)
         {
             FrontDSprite.SetActive(true);
             yield return new WaitForSeconds(0.2f);
@@ -171,7 +171,7 @@ public abstract class BaseMonster : MonoBehaviour
     protected virtual void Die()
     {
         agent.isStopped = true;
-        agent.ResetPath(); // ← 중요
+        agent.ResetPath();
         agent.velocity = Vector3.zero;
         isDead = true;
         StartCoroutine(DieAni());

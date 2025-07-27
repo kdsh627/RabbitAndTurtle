@@ -3,30 +3,17 @@ using UnityEngine;
 public class EnemyDeathNotifier : MonoBehaviour
 {
     private MonsterSpawner spawner;
-    private int monsterIndex;
-    private BaseMonster monster;
-    private bool isNotified = false;
+    private int index;
 
-    public void Init(MonsterSpawner spawner, int monsterIndex)
+    public void Init(MonsterSpawner spawner, int index)
     {
         this.spawner = spawner;
-        this.monsterIndex = monsterIndex;
+        this.index = index;
     }
 
-    private void Start()
+    public void NotifyDeath()
     {
-        monster = GetComponent<BaseMonster>();
-    }
-
-    private void Update()
-    {
-        if (isNotified || monster == null) return;
-
-        if (monster.IsDead())
-        {
-            isNotified = true;
-            spawner?.OnMonsterDied(monsterIndex);
-            Destroy(this);
-        }
+        spawner.OnMonsterDied(index);
+        MonsterPool.Instance.Return(index, gameObject);
     }
 }

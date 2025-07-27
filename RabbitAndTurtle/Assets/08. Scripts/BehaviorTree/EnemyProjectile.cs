@@ -8,8 +8,12 @@ public class EnemyProjectile : MonoBehaviour
     public float damage;
     public bool isReflected;
 
-    public void Setup(Transform target, float damage)
+    private int poolIndex;
+
+    public void Setup(Transform target, float damage, int poolIndex)
     {
+        this.poolIndex = poolIndex;
+
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (SongpeyonSprites.Length > 0 && sr != null)
         {
@@ -21,12 +25,9 @@ public class EnemyProjectile : MonoBehaviour
         this.damage = damage;
 
         movement.MoveTo((target.position - transform.position).normalized);
-    }
 
-    private void Start()
-    {
         isReflected = false;
-        Destroy(gameObject, 3f); // 3초 후 자동 파괴
+        Invoke(nameof(ReturnToPool), 3f); // 3초 후 복귀
     }
 
     private void ReflectProjectile()
@@ -37,13 +38,17 @@ public class EnemyProjectile : MonoBehaviour
         }
     }
 
+    private void ReturnToPool()
+    {
+        WeaponPool.Instance.Return(poolIndex, gameObject);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("BlockCollider"))
         {
             isReflected = true;
-            ReflectProjectile();
+            movement.Reflect();
         }
     }
 }

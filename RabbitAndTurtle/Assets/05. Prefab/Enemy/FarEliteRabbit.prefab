@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 248079298253088888, guid: c9c9163fdfe83ce4c96a4db932bb715e, type: 3}
   projectileSpawnPoint: {fileID: 8734913429104522646}
+  projectileIndex: 3
 --- !u!114 &704847885262817564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +269,8 @@ MonoBehaviour:
   FrontSprite: {fileID: 7134456325790410613}
   BackSprite: {fileID: 2185330689957990116}
   SideSprite: {fileID: 1137737921868308191}
+  FrontDSprite: {fileID: 0}
+  SideDSprite: {fileID: 0}
   moveThreshold: 0.01
 --- !u!114 &6836272474656928222
 MonoBehaviour:

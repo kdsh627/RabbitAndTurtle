@@ -91,17 +91,24 @@ public class MonsterSpawner : MonoBehaviour
         int wayIndex = Random.Range(0, wayPointData.Length);
         int prefabIndex = Random.Range(0, enemyPrefabs.Count);
 
-        GameObject clone = Instantiate(enemyPrefabs[prefabIndex], possibleTiles[tileIndex], Quaternion.identity);
+        GameObject clone = MonsterPool.Instance.Get(prefabIndex);
+        if (clone == null) return;
+
+        clone.transform.position = possibleTiles[tileIndex];
         clone.GetComponent<EnemyFSM>().Setup(target, wayPointData[wayIndex].wayPoints);
 
-        // 사망 감지기 부착
-        EnemyDeathNotifier notifier = clone.AddComponent<EnemyDeathNotifier>();
+        // 사망 처리 등록
+        EnemyDeathNotifier notifier = clone.GetComponent<EnemyDeathNotifier>();
+        if (notifier == null)
+            notifier = clone.AddComponent<EnemyDeathNotifier>();
+
         notifier.Init(this, prefabIndex);
+
 
         currentMonsterCount++;
     }
 
-    public void OnMonsterDied(int prefabIndex)
+        public void OnMonsterDied(int prefabIndex)
     {
         currentMonsterCount--;
 
@@ -117,11 +124,19 @@ public class MonsterSpawner : MonoBehaviour
         int tileIndex = Random.Range(0, possibleTiles.Count);
         int wayIndex = Random.Range(0, wayPointData.Length);
 
-        GameObject elite = Instantiate(elitePrefabs[index], possibleTiles[tileIndex], Quaternion.identity);
+        GameObject elite = MonsterPool.Instance.Get(index);
+        if (elite == null) return;
+
+        elite.transform.position = possibleTiles[tileIndex];
         elite.GetComponent<EnemyFSM>().Setup(target, wayPointData[wayIndex].wayPoints);
 
-        Debug.Log($"[엘리트 소환] {index}번 몬스터 등장!");
+        EnemyDeathNotifier notifier = elite.GetComponent<EnemyDeathNotifier>();
+        if (notifier == null)
+            notifier = elite.AddComponent<EnemyDeathNotifier>();
+
+        notifier.Init(this, index);
 
         currentMonsterCount++;
     }
+
 }

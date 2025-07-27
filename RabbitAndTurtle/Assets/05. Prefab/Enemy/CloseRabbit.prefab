@@ -357,7 +357,7 @@ MonoBehaviour:
           m_Value0: 16769835630061605949
           m_Value1: 1258569626590515689
         Name: chaseDistance
-        m_Value: 2
+        m_Value: 8
     - rid: 7310272870508659013
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -365,7 +365,7 @@ MonoBehaviour:
           m_Value0: 4175259497739007218
           m_Value1: 4118166852027509837
         Name: falloutDistance
-        m_Value: 10
+        m_Value: 6
     - rid: 7310272870508659014
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

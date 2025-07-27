@@ -11,6 +11,7 @@ public class WeaponClose : WeaponBase
 
     private EnemyFSM fsm;
     private BaseMonster baseMonster;
+    [SerializeField] private int closeProjectileIndex;
 
     private void Awake()
     {
@@ -44,9 +45,16 @@ public class WeaponClose : WeaponBase
 
         if (spawnPoint != null)
         {
-            GameObject clone = Instantiate(projectilePrefab, spawnPoint.position, spawnPoint.rotation);
-            clone.GetComponent<CloseEnemyProjectile>().Setup(fsm.target, damage, spawnPoint, attackDir, baseMonster);
+            GameObject clone = WeaponPool.Instance.Get(closeProjectileIndex);
+            if (clone == null) return;
+
+            clone.transform.position = spawnPoint.position;
+            clone.transform.rotation = spawnPoint.rotation;
+
+            clone.GetComponent<CloseEnemyProjectile>().Setup(
+                fsm.target, damage, spawnPoint, attackDir, baseMonster, closeProjectileIndex);
         }
+
         StartCoroutine(baseMonster.ExitAttackMode());
     }
 
