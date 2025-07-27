@@ -1,9 +1,11 @@
 using NUnit.Framework.Constraints;
 using System.Collections;
+using Unity.Behavior;
 using Unity.Behavior.Demo;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public abstract class BaseMonster : MonoBehaviour
 {
@@ -28,6 +30,7 @@ public abstract class BaseMonster : MonoBehaviour
     private string lastDirection = "Front";
 
     private NavMeshAgent agent;
+    private BlackboardVariable var;
     private EnemyFSM fsm;
     private bool isAttacking = false;
     private bool isDead = false;
@@ -167,12 +170,15 @@ public abstract class BaseMonster : MonoBehaviour
 
     protected virtual void Die()
     {
+        agent.isStopped = true;
+        agent.ResetPath(); // ← 중요
+        agent.velocity = Vector3.zero;
         isDead = true;
         StartCoroutine(DieAni());
     }
 
     IEnumerator DieAni()
-    {
+    { 
         FrontSprite.SetActive(false);
         BackSprite.SetActive(false);
         SideSprite.SetActive(false);

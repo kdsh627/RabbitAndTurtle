@@ -716,7 +716,7 @@ MonoBehaviour:
           m_Value0: 1484318629835084290
           m_Value1: 2299085134650128501
         Name: currentDistance
-        m_Value: 4
+        m_Value: 6
     - rid: 7310272870508659011
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -732,7 +732,7 @@ MonoBehaviour:
           m_Value0: 16769835630061605949
           m_Value1: 1258569626590515689
         Name: chaseDistance
-        m_Value: 4
+        m_Value: 10
     - rid: 7310272870508659013
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -795,6 +795,8 @@ MonoBehaviour:
   FrontSprite: {fileID: 1063438107947866487}
   BackSprite: {fileID: 5665606147551054921}
   SideSprite: {fileID: 6083642371286701818}
+  FrontDSprite: {fileID: 0}
+  SideDSprite: {fileID: 0}
   moveThreshold: 0.01
 --- !u!114 &2538468465317121094
 MonoBehaviour:
