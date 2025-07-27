@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 708271586691325435}
   - component: {fileID: 1154952760531112319}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SidePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: -6728246061633014703}
   - component: {fileID: 6704908632220924433}
   - component: {fileID: -2062531566088875516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FarRabbit
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 3893386569425657024}
   - component: {fileID: 4790619762857017699}
   - component: {fileID: 1531805243343866932}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 597147431263691110}
   - component: {fileID: 5157401770020288023}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 4879452381827272312}
   - component: {fileID: 3202385885156182968}
   - component: {fileID: 2872095469940944209}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8242308827808846979}
   - component: {fileID: 7535334228034329930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7740438655710784576}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
