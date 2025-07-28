@@ -8,6 +8,7 @@ public class PlayerStat : MonoBehaviour
     public float currentHealth; // 현재 체력
     private PlayerBlock playerBlock;
     private PlayerMovement playerMovement;
+    private PlayerAnimationController animatorController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +33,8 @@ public class PlayerStat : MonoBehaviour
 
     public void Die()
     {
-
+        playerMovement.enabled = false;
+        animatorController.PlayDie();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

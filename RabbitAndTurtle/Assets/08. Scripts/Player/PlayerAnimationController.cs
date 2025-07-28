@@ -14,4 +14,6 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlayIdle(string Dir) => ani.Play($"{Dir}Idle");
     public void PlayWalk(string Dir) => ani.Play($"{Dir}Walk");
     public void PlayGuard() => ani.Play("Block");
+
+    public void PlayDie() => ani.Play("Die");
 }

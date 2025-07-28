@@ -28,7 +28,7 @@ public abstract class BaseMonster : MonoBehaviour
 
     private Vector3 lastPosition;
     private string lastDirection = "Front";
-
+    private BehaviorGraphAgent agent2;
     private NavMeshAgent agent;
     private BlackboardVariable var;
     private EnemyFSM fsm;
@@ -40,6 +40,7 @@ public abstract class BaseMonster : MonoBehaviour
         monAni = GetComponent<MonsterAnimationController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         sideDSpriteRenderer = SideDSprite.GetComponent<SpriteRenderer>();
+        agent2 = GetComponent<BehaviorGraphAgent>();
         agent = GetComponent<NavMeshAgent>();
         fsm = GetComponent<EnemyFSM>();
 
@@ -173,6 +174,7 @@ public abstract class BaseMonster : MonoBehaviour
         agent.isStopped = true;
         agent.ResetPath();
         agent.velocity = Vector3.zero;
+        agent2.enabled = false;
         isDead = true;
         StartCoroutine(DieAni());
     }
