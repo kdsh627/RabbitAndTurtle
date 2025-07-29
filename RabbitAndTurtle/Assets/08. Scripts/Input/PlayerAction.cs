@@ -18,20 +18,21 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     public void ActionMove(InputAction.CallbackContext context)
     {
+        PlayerMovement movement = _player.GetComponent<PlayerMovement>();
         Vector2 direction = context.ReadValue<Vector2>();
 
-        //입력 시작 시 최초 실행
-        if (context.started)
+        // 키 누를 때 or 방향 바꿀 때
+        if (context.started || context.performed)
         {
-            //키 입력시 플레이어에 방향 주입
-
+            movement.SetMoveInput(direction);
         }
-        else if(context.canceled)
+        // 키 뗄 때
+        else if (context.canceled)
         {
-            //키 입력 끝날때 플레이어에 방향 주입
-
+            movement.SetMoveInput(Vector2.zero);
         }
     }
+
 
     /// <summary>
     /// 플레이어 막기 액션
@@ -39,14 +40,18 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     public void ActionGuard(InputAction.CallbackContext context)
     {
+        PlayerBlock block = _player.GetComponent<PlayerBlock>();
+
         //입력 시작 시 최초 실행
         if (context.started)
         {
             //막기 액션 추가
+            block.SetBlocking(true);
         }
         else if (context.canceled)
         {
             //키 입력 끝날때 추가
+            block.SetBlocking(false);
 
         }
     }
