@@ -9,7 +9,8 @@ namespace StateMachine.SceneStateMachine
         public ReadyState _readyState;
         public WaveState _waveState;
         public BossState _bossState;
-        public ClearState _clearState;
+        public WaveClearState _waveClearState;
+        public BossClearState _bossClearState;
 
         private GameStateManager _gameStateManager;
 
@@ -23,8 +24,9 @@ namespace StateMachine.SceneStateMachine
 
             _readyState = new ReadyState(gameStateManager);
             _waveState = new WaveState(gameStateManager);
-            _clearState = new ClearState(gameStateManager);
+            _waveClearState = new WaveClearState(gameStateManager);
             _bossState = new BossState(gameStateManager);
+            _bossClearState = new BossClearState(gameStateManager);
         }
 
         public override void Excute()
@@ -36,10 +38,33 @@ namespace StateMachine.SceneStateMachine
 
         private void AnyState()
         {
-            //if ()
-            //{
-            //    TransitionTo();
-            //}
+
+        }
+
+        /// <summary>
+        /// 트랜지션 전환
+        /// </summary>
+        /// <param name="state"></param>
+        public void TransitionState(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.Ready:
+                    TransitionTo(_readyState);
+                    break;
+                case GameState.Wave:
+                    TransitionTo(_waveState);
+                    break;
+                case GameState.Boss:
+                    TransitionTo(_bossState);
+                    break;
+                case GameState.WaveClear:
+                    TransitionTo(_waveClearState);
+                    break;
+                case GameState.BossClear:
+                    TransitionTo(_bossClearState);
+                    break;
+            }
         }
     }
 }

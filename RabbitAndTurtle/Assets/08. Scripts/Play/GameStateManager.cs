@@ -44,20 +44,18 @@ namespace Manager
 
         private void OnEnable()
         {
-            _gameStateMachine.stateChanged += ChangeState;
-
-            GameEventHandler.ReadyExcuted += () => GameEvent_ExcuteState(GameState.Ready);
-            GameEventHandler.WaveExcuted += () => GameEvent_ExcuteState(GameState.Wave);
-            GameEventHandler.BossExcuted += () => GameEvent_ExcuteState(GameState.Boss);
-            GameEventHandler.StageClearExcuted += () => GameEvent_ExcuteState(GameState.Clear);
+            GameEventHandler.ReadyExcuted += () => GameEvent_TransitionState(GameState.Ready);
+            GameEventHandler.WaveExcuted += () => GameEvent_TransitionState(GameState.Wave);
+            GameEventHandler.BossExcuted += () => GameEvent_TransitionState(GameState.Boss);
+            GameEventHandler.StageClearExcuted += () => GameEvent_TransitionState(GameState.WaveClear);
         }
 
         private void OnDisable()
         {
-            GameEventHandler.ReadyExcuted -= () => GameEvent_ExcuteState(GameState.Ready);
-            GameEventHandler.WaveExcuted -= () => GameEvent_ExcuteState(GameState.Wave);
-            GameEventHandler.BossExcuted -= () => GameEvent_ExcuteState(GameState.Boss);
-            GameEventHandler.StageClearExcuted -= () => GameEvent_ExcuteState(GameState.Clear);
+            GameEventHandler.ReadyExcuted -= () => GameEvent_TransitionState(GameState.Ready);
+            GameEventHandler.WaveExcuted -= () => GameEvent_TransitionState(GameState.Wave);
+            GameEventHandler.BossExcuted -= () => GameEvent_TransitionState(GameState.Boss);
+            GameEventHandler.StageClearExcuted -= () => GameEvent_TransitionState(GameState.WaveClear);
         }
 
         /// <summary>
@@ -66,19 +64,7 @@ namespace Manager
         public void ReadyInit()
         {
             _currentWave = 0;
-            switch(_gameState)
-            {
-                case GameState.Wave:
-                    _currentStage++;
-                    _maxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
-                    _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
-                    break;
-                case GameState.Boss:
-                    _currentBossStage++;
-                    _maxWave = _stageData.BossStageDataList[_currentBossStage].MaxWaveCount;
-                    _scenePath = _stageData.DefaultStageDataList[_currentBossStage].ScenePath;
-                    break;
-            }
+            SceneEventHandler.SceneLoadedByPath(_scenePath);
         }
 
         /// <summary>
@@ -99,82 +85,70 @@ namespace Manager
         }
 
         /// <summary>
-        /// Clear 상태에서 변수 초기화
+        /// Boss 클리어 상태
         /// </summary>
-        public void ClearInit()
+        public void BossClearInit()
         {
-
+            if(IsGameClear())
+            {
+                GameEventHandler.GameClearExcuted?.Invoke();
+            }
+            else
+            {
+                //일반 스테이지로
+                _currentStage++;
+                _maxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
+                _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
+            }
         }
 
         /// <summary>
-        /// 클리어 상태에서 다음 단계 판별
+        /// Wave 클리어 상태
         /// </summary>
-        private void ProcessStageTransition()
+        public void WaveClearInit()
         {
-            //보스 클리어
-            if(_gameState == GameState.Boss)
+            if(IsStageClear())
             {
-                //모든 보스 스테이지 클리어
-                if (_currentBossStage == _maxBossStage)
+                if (IsAllStageClear())
                 {
-                    //게임 클리어
-                    GameEventHandler.GameClearExcuted.Invoke();
+                    //보스 스테이지로
+                    _currentBossStage++;
+                    _maxWave = _stageData.BossStageDataList[_currentBossStage].MaxWaveCount;
+                    _scenePath = _stageData.DefaultStageDataList[_currentBossStage].ScenePath;
                 }
                 else
                 {
-                    _gameState = GameState.Wave;
+                    //다음 스테이지로
+                    _currentStage++;
+                    _maxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
+                    _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
                 }
             }
-            //현재 스테이지 클리어
-            else if (_currentWave == _maxWave)
+            else
             {
-                //모든 일반 스테이지 클리어
-                if (_currentStage == _maxStage)
-                {
-                    //보스 스테이지로 진입
-                    _gameState = GameState.Boss;
-                }
+                //다음 웨이브 진행
+                GameEventHandler.WaveExcuted?.Invoke();
             }
         }
 
-        private void GameEvent_ExcuteState(GameState state)
+        private bool IsStageClear()
         {
-            switch (state)
-            {
-                case GameState.Ready:
-                    _gameStateMachine.TransitionTo(_gameStateMachine._readyState);
-                    break;
-                case GameState.Wave:
-                    _gameStateMachine.TransitionTo(_gameStateMachine._waveState);
-                    break;
-                case GameState.Boss:
-                    _gameStateMachine.TransitionTo(_gameStateMachine._bossState);
-                    break;
-                case GameState.Clear:
-                    _gameStateMachine.TransitionTo(_gameStateMachine._clearState);
-                    break;
-            }
+            return _currentWave == _maxWave;
+        }
+        private bool IsAllStageClear()
+        {
+            return _currentStage == _maxStage;
         }
 
-        private void ChangeState(IState state)
+        private bool IsGameClear()
         {
-            GameState sceneState = (state as IGameState).CurrentGameState;
+            return _currentBossStage == _maxBossStage;
+        }
 
-            switch (sceneState)
-            {
-                case GameState.Ready:
-                    SceneEventHandler.SceneLoadedByPath(_scenePath);
-                    break;
-                case GameState.Wave:
 
-                    break;
-                case GameState.Boss:
-
-                    break;
-                case GameState.Clear:
-                    ProcessStageTransition();
-                    break;
-            }
+        private void GameEvent_TransitionState(GameState state)
+        {
+            _gameStateMachine.TransitionState(state);
         }
     }
 }

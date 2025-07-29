@@ -2,7 +2,7 @@ using Manager;
 
 namespace State.GameState
 {
-    public class ClearState : IGameState
+    public class BossClearState : IGameState
     {
         private GameStateManager _gameStateManager;
 
@@ -14,16 +14,16 @@ namespace State.GameState
         /// 생성자
         /// </summary>
         /// <param name="gameStateManager"></param>
-        public ClearState(GameStateManager gameStateManager)
+        public BossClearState(GameStateManager gameStateManager)
         {
             _gameStateManager = gameStateManager;
         }
 
         public void Enter()
         {
-            _currentGameState = GameState.Clear;
+            _currentGameState = GameState.BossClear;
 
-            _gameStateManager.ClearInit();
+            _gameStateManager.BossClearInit();
         }
 
         public void Execute()

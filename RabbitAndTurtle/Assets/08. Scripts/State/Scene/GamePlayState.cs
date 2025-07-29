@@ -9,7 +9,9 @@ namespace State.SceneState
         private SceneStateManager _sceneStateManager;
 
         private SceneState _currentSceneState;
+        private string _scenePath;
         public SceneState CurrentSceneState => _currentSceneState;
+        public string ScenePath => _scenePath;
 
         /// <summary>
         /// 생성자
@@ -18,6 +20,7 @@ namespace State.SceneState
         public GamePlayState(SceneStateManager sceneStateManager)
         {
             _sceneStateManager = sceneStateManager;
+            _scenePath = sceneStateManager.GameScenePath;
         }
 
         public void Enter()

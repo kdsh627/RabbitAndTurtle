@@ -5,7 +5,8 @@ namespace State.GameState
         Ready,
         Wave,
         Boss,
-        Clear
+        WaveClear,
+        BossClear
     }
 
     public interface IGameState : IState

@@ -34,10 +34,27 @@ namespace StateMachine.SceneStateMachine
 
         private void AnyState()
         {
-            //if ()
-            //{
-            //    TransitionTo();
-            //}
+
+        }
+
+        /// <summary>
+        /// 트랜지션 전환
+        /// </summary>
+        /// <param name="state"></param>
+        public void TransitionState(SceneState state)
+        {
+            switch (state)
+            {
+                case SceneState.Title:
+                    TransitionTo(_titleState);
+                    break;
+                case SceneState.GamePlay:
+                    TransitionTo(_gamePlayState);
+                    break;
+                case SceneState.Clear:
+                    TransitionTo(_clearState);
+                    break;
+            }
         }
     }
 }
