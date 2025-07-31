@@ -13,19 +13,10 @@ MonoBehaviour:
   m_Name: StageData
   m_EditorClassIdentifier: 
   DefaultStageDataList:
-  - ScenePath: 
-    MaxWaveCount: 2
-    MaxWaveTime: 120
-  - ScenePath: 
-    MaxWaveCount: 2
-    MaxWaveTime: 120
-  - ScenePath: 
-    MaxWaveCount: 2
-    MaxWaveTime: 120
-  - ScenePath: 
+  - ScenePath: Assets/06. Scenes/Test/SceneFlow/WaveScene.unity
     MaxWaveCount: 2
     MaxWaveTime: 120
   BossStageDataList:
-  - ScenePath: 
+  - ScenePath: Assets/06. Scenes/Test/SceneFlow/BossScene.unity
     MaxWaveCount: 1
     MaxWaveTime: 120

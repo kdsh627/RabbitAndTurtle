@@ -1,4 +1,3 @@
-using State;
 using State.GameState;
 using StateMachine.SceneStateMachine;
 using UnityEngine;
@@ -7,7 +6,10 @@ namespace Manager
 {
     public class GameStateManager : MonoBehaviour
     {
+        public static GameStateManager Instace { get; set; }
+
         [SerializeField] private StageDataSO _stageData;
+        [SerializeField] private WaveManager _waveManager;
 
         private int _currentBossStage;
         private int _maxBossStage;
@@ -16,24 +18,25 @@ namespace Manager
         private int _currentStage;
         private int _maxStage;
 
-        private float _waveTime;
-        private int _currentWave;
-        private int _maxWave;
-
         private GameStateMachine _gameStateMachine;
-        private GameState _gameState;
 
         public GameStateMachine SceneStateMachine => _gameStateMachine;
+        public void SetWaveManager(WaveManager waveManager)
+        {
+            _waveManager = waveManager;
+        }
 
         private void Awake()
         {
-            _gameState = GameState.Wave;
+            Instace = this;
+
             _currentStage = 0;
             _currentBossStage = 0;
 
             _maxStage = _stageData.DefaultStageDataList.Count;
             _maxBossStage = _stageData.BossStageDataList.Count;
 
+            _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
             _gameStateMachine = new GameStateMachine(this);
         }
 
@@ -44,26 +47,31 @@ namespace Manager
 
         private void OnEnable()
         {
-            GameEventHandler.ReadyExcuted += () => GameEvent_TransitionState(GameState.Ready);
-            GameEventHandler.WaveExcuted += () => GameEvent_TransitionState(GameState.Wave);
-            GameEventHandler.BossExcuted += () => GameEvent_TransitionState(GameState.Boss);
-            GameEventHandler.StageClearExcuted += () => GameEvent_TransitionState(GameState.WaveClear);
+            GameEventHandler.ReadyExcuted += GameEvent_ReadyExcuted;
+            GameEventHandler.WaveExcuted += GameEvent_WaveExcuted;
+            GameEventHandler.BossExcuted += GameEvent_BossExcuted;
+            GameEventHandler.StageClearExcuted +=  GameEvent_StageClearExcuted;
         }
 
         private void OnDisable()
         {
-            GameEventHandler.ReadyExcuted -= () => GameEvent_TransitionState(GameState.Ready);
-            GameEventHandler.WaveExcuted -= () => GameEvent_TransitionState(GameState.Wave);
-            GameEventHandler.BossExcuted -= () => GameEvent_TransitionState(GameState.Boss);
-            GameEventHandler.StageClearExcuted -= () => GameEvent_TransitionState(GameState.WaveClear);
+            GameEventHandler.ReadyExcuted -= GameEvent_ReadyExcuted;
+            GameEventHandler.WaveExcuted -= GameEvent_WaveExcuted;
+            GameEventHandler.BossExcuted -= GameEvent_BossExcuted;
+            GameEventHandler.StageClearExcuted -= GameEvent_StageClearExcuted;
         }
+
+        private void GameEvent_ReadyExcuted() => GameEvent_TransitionState(GameState.Ready);
+        private void GameEvent_WaveExcuted() => GameEvent_TransitionState(GameState.Wave);
+        private void GameEvent_BossExcuted() => GameEvent_TransitionState(GameState.Boss);
+        private void GameEvent_StageClearExcuted() => GameEvent_TransitionState(GameState.WaveClear);
+
 
         /// <summary>
         /// Ready 상태에서 변수 초기화
         /// </summary>
         public void ReadyInit()
         {
-            _currentWave = 0;
             SceneEventHandler.SceneLoadedByPath(_scenePath);
         }
 
@@ -72,8 +80,8 @@ namespace Manager
         /// </summary>
         public void WaveInit()
         {
-            _currentWave++;
-            _waveTime = _stageData.DefaultStageDataList[_currentWave].MaxWaveTime;
+            _waveManager.WaveTime = _stageData.DefaultStageDataList[_waveManager.CurrentWave].MaxWaveTime;
+            _waveManager.NextWaveCount();
         }
 
         /// <summary>
@@ -95,9 +103,8 @@ namespace Manager
             }
             else
             {
-                //일반 스테이지로
                 _currentStage++;
-                _maxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
+                _waveManager.MaxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
                 _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
             }
         }
@@ -107,20 +114,20 @@ namespace Manager
         /// </summary>
         public void WaveClearInit()
         {
-            if(IsStageClear())
+            if(_waveManager.IsStageClear())
             {
                 if (IsAllStageClear())
                 {
                     //보스 스테이지로
                     _currentBossStage++;
-                    _maxWave = _stageData.BossStageDataList[_currentBossStage].MaxWaveCount;
-                    _scenePath = _stageData.DefaultStageDataList[_currentBossStage].ScenePath;
+                    _waveManager.MaxWave = _stageData.BossStageDataList[_currentBossStage].MaxWaveCount;
+                    _scenePath = _stageData.BossStageDataList[_currentBossStage].ScenePath;
                 }
                 else
                 {
                     //다음 스테이지로
                     _currentStage++;
-                    _maxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
+                    _waveManager.MaxWave = _stageData.DefaultStageDataList[_currentStage].MaxWaveCount;
                     _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
                 }
             }
@@ -131,10 +138,6 @@ namespace Manager
             }
         }
 
-        private bool IsStageClear()
-        {
-            return _currentWave == _maxWave;
-        }
         private bool IsAllStageClear()
         {
             return _currentStage == _maxStage;
