@@ -34,7 +34,7 @@ public class CloseEnemyProjectile : MonoBehaviour
         offset = transform.position - followOrigin.position;
 
         PlayAnimation();
-        Invoke(nameof(ReturnToPool), 1f);
+        Invoke(nameof(ReturnToPool), 0.8f);
     }
 
     private void PlayAnimation()

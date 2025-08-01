@@ -102,7 +102,7 @@ public abstract class BaseMonster : MonoBehaviour
 
     public IEnumerator ExitAttackMode()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         isAttacking = false;
         SetActiveSprite(lastDirection);
     }
