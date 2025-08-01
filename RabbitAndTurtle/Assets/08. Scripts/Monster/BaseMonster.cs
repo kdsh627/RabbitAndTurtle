@@ -34,7 +34,7 @@ public abstract class BaseMonster : MonoBehaviour
     private EnemyFSM fsm;
     private bool isAttacking = false;
     private bool isDead = false;
-
+    public bool isClose;
     protected virtual void Start()
     { 
         monAni = GetComponent<MonsterAnimationController>();
@@ -171,6 +171,10 @@ public abstract class BaseMonster : MonoBehaviour
 
     protected virtual void Die()
     {
+        FrontSprite.SetActive(false);
+        BackSprite.SetActive(false);
+        SideSprite.SetActive(false);
+
         agent.isStopped = true;
         agent.ResetPath();
         agent.velocity = Vector3.zero;

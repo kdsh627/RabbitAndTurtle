@@ -312,7 +312,7 @@ NavMeshAgent:
   m_Height: 1.5
   m_BaseOffset: 0.16
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!114 &-1743169837818877481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +362,7 @@ MonoBehaviour:
   FrontDSprite: {fileID: 4292308581470775049}
   SideDSprite: {fileID: 6767105734232932360}
   moveThreshold: 0.01
+  isClose: 0
 --- !u!114 &-6728246061633014703
 MonoBehaviour:
   m_ObjectHideFlags: 0

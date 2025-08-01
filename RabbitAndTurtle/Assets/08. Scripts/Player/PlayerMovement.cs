@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerAnimationController animatorController;
+    private PlayerBlock playerBlock; // PlayerBlock 컴포넌트 추가
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer sideDSpriteRenderer;
     public float moveSpeed = 5f;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
         animatorController = GetComponent<PlayerAnimationController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         sideDSpriteRenderer = SideDSprite.GetComponent<SpriteRenderer>();
+        playerBlock = GetComponent<PlayerBlock>();
     }
     private void Start()
     {
@@ -70,7 +72,11 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
+        if(playerBlock.isBlock || playerBlock.isExhausted)
+            rb.MovePosition(rb.position + moveInput.normalized * (moveSpeed - 4f) * Time.fixedDeltaTime);
+
+        else
+            rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
     }   
 
     private string GetDirection(Vector2 dir)

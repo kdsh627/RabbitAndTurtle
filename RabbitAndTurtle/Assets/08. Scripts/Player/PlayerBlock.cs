@@ -17,6 +17,7 @@ public class PlayerBlock : MonoBehaviour
     public GameObject BlockCollider;
 
     public bool isBlock { get; private set; } = false;
+    public bool isExhausted { get; private set; } = false;
 
 
     private enum BlockState
@@ -124,6 +125,7 @@ public class PlayerBlock : MonoBehaviour
         {
             currentState = BlockState.Idle;
             ExhaustedEff.SetActive(false); // 회복 완료 후 이펙트 끄기
+            isExhausted = false; // 탈진 상태로 설정
         }
     }
 
@@ -151,6 +153,8 @@ public class PlayerBlock : MonoBehaviour
 
     private void EnterExhausted()
     {
+        isExhausted = true; // 탈진 상태로 설정
+        isBlock = false;
         currentState = BlockState.Exhausted;
         exhaustedTimer = 0f;
 
