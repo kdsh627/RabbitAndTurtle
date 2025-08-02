@@ -13,12 +13,18 @@ public static class GameEventHandler
     #endregion
 
     #region 게임 플레이 상태 관련 이벤트
+    public static Action StageExcuted;
+
+    public static Action StageClearExcuted;
+
     public static Action WaveExcuted;
 
     public static Action ReadyExcuted;
 
     public static Action BossExcuted;
 
-    public static Action StageClearExcuted;
+    public static Action WaveClearExcuted;
+
+    public static Action BossClearExcuted;
     #endregion
 }

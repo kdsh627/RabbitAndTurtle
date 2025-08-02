@@ -8,6 +8,8 @@ namespace StateMachine.SceneStateMachine
         //각 상태들
         public ReadyState _readyState;
         public WaveState _waveState;
+        public StageState _stageState;
+        public StageClearState _stageClearState;
         public BossState _bossState;
         public WaveClearState _waveClearState;
         public BossClearState _bossClearState;
@@ -24,6 +26,8 @@ namespace StateMachine.SceneStateMachine
 
             _readyState = new ReadyState(gameStateManager);
             _waveState = new WaveState(gameStateManager);
+            _stageState = new StageState(gameStateManager);
+            _stageClearState = new StageClearState(gameStateManager);
             _waveClearState = new WaveClearState(gameStateManager);
             _bossState = new BossState(gameStateManager);
             _bossClearState = new BossClearState(gameStateManager);
@@ -63,6 +67,12 @@ namespace StateMachine.SceneStateMachine
                     break;
                 case GameState.BossClear:
                     TransitionTo(_bossClearState);
+                    break;
+                case GameState.StageClear:
+                    TransitionTo(_stageClearState);
+                    break;
+                case GameState.Stage:
+                    TransitionTo(_stageState);
                     break;
             }
         }

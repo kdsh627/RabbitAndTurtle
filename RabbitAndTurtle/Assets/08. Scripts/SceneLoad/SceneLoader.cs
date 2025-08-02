@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +13,7 @@ namespace Utilities
 
         private Scene _mainScene; //메인 씬
         private Scene _lastLoadedScene; //가장 최근 열린 씬
-        private List<string> _additiveScenePaths = new List<string>(); //현재 열려있는 씬 리스트
+        private Stack<string> _additiveScenePaths = new Stack<string>(); //현재 열려있는 씬 리스트
 
         private void Awake()
         {
@@ -149,8 +150,10 @@ namespace Utilities
             StartCoroutine(UnloadLastSceneRoutine());
         }
 
+       
+
         /// <summary>
-        /// 현재 씬을 닫고 다음 씬을 로드
+        /// 현재 겹쳐서 연 모든 씬을 닫고 다음 씬을 로드
         /// </summary>
         /// <param name="scenePath"></param>
         /// <returns></returns>
@@ -168,6 +171,7 @@ namespace Utilities
 
             if (!string.IsNullOrEmpty(lastScenePath))
             {
+                yield return UnloadAllAdditiveScenesRoutine();
                 _lastLoadedScene = SceneManager.GetSceneByPath(lastScenePath);
             }
 
@@ -181,7 +185,6 @@ namespace Utilities
             //}
         }
 
-
         /// <summary>
         /// 씬을 리스트에 등록하고 겹쳐서 로드
         /// </summary>
@@ -194,7 +197,7 @@ namespace Utilities
                 // 내부 리스트에 등록
                 if (!_additiveScenePaths.Contains(scenePath))
                 {
-                    _additiveScenePaths.Add(scenePath);
+                    _additiveScenePaths.Push(scenePath);
                 }
 
                 //해당 씬 로드
@@ -244,8 +247,9 @@ namespace Utilities
             }
         }
 
+
         /// <summary>
-        /// 리스트에 등록된 활성화 씬들 모두 언로드
+        /// 가장 최근에 열린 씬만 언로드
         /// </summary>
         /// <returns></returns>
         public IEnumerator UnloadLastSceneRoutine()
@@ -253,12 +257,24 @@ namespace Utilities
             if (!_lastLoadedScene.IsValid())
                 yield break;
 
-            UnloadAllAdditiveScenes();
-
             if (_lastLoadedScene != _mainScene)
             {
                 yield return UnloadSceneRoutine(_lastLoadedScene);
             }
+        }
+
+        /// <summary>
+        /// 리스트에 등록된 활성화 씬들 모두 언로드
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator UnloadAllAdditiveScenesRoutine()
+        {
+            if (!_lastLoadedScene.IsValid())
+                yield break;
+
+            yield return UnloadLastSceneRoutine();
+
+            UnloadAllAdditiveScenes();
         }
 
         // 씬 언로드 코루틴

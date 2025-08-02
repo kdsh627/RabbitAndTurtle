@@ -15,8 +15,11 @@ MonoBehaviour:
   DefaultStageDataList:
   - ScenePath: Assets/06. Scenes/Test/SceneFlow/WaveScene.unity
     MaxWaveCount: 2
-    MaxWaveTime: 120
+    MaxWaveTime:
+    - 120
+    - 120
   BossStageDataList:
   - ScenePath: Assets/06. Scenes/Test/SceneFlow/BossScene.unity
     MaxWaveCount: 1
-    MaxWaveTime: 120
+    MaxWaveTime:
+    - 120

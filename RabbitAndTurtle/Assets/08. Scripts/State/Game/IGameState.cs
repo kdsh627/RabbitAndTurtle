@@ -3,10 +3,12 @@ namespace State.GameState
     public enum GameState
     {
         Ready,
+        Stage,
         Wave,
         Boss,
         WaveClear,
-        BossClear
+        StageClear,
+        BossClear,
     }
 
     public interface IGameState : IState

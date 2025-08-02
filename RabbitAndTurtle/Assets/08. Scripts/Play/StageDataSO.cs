@@ -8,7 +8,7 @@ public struct StageData
 {
     public string ScenePath;
     public int MaxWaveCount;
-    public float MaxWaveTime;
+    public float[] MaxWaveTime;
 }
 
 [CreateAssetMenu(fileName = "StageDataSO", menuName = "Scriptable Objects/StageDataSO")]

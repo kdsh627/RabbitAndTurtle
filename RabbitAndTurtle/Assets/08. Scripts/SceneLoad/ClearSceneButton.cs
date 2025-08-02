@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneChangeButton3 : MonoBehaviour
+public class ClearSceneButton : MonoBehaviour
 {
     private Button button;
 
