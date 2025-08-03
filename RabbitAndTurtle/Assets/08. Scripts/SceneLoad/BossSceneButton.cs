@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneChangeButton : MonoBehaviour
+public class BossSceneButton : MonoBehaviour
 {
     private Button button;
 
@@ -12,11 +12,11 @@ public class SceneChangeButton : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.GamePlayExcuted.Invoke);
+        button.onClick.AddListener(GameEventHandler.BossClearExcuted.Invoke);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.GamePlayExcuted.Invoke);
+        button.onClick.RemoveListener(GameEventHandler.BossClearExcuted.Invoke);
     }
 }

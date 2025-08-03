@@ -9,7 +9,8 @@ namespace State.SceneState
 
     public interface ISceneState : IState
     {
-        public SceneState CurrentSceneState { get; set; }
+        public string ScenePath { get; }
+        public SceneState CurrentSceneState { get; }
     }
 }
 

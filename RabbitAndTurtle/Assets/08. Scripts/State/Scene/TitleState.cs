@@ -1,38 +1,40 @@
 using Manager;
 using State.SceneState;
 
-public class TitleState : ISceneState
+namespace State.SceneState
 {
-    private SceneStateManager _sceneManager;
-
-    private SceneState _currentSceneState;
-    public SceneState CurrentSceneState 
-    { 
-        get => _currentSceneState; 
-        set => _currentSceneState = value; 
-    }
-
-    /// <summary>
-    /// 생성자
-    /// </summary>
-    /// <param name="sceneManager"></param>
-    public TitleState(SceneStateManager sceneManager)
+    public class TitleState : ISceneState
     {
-        _sceneManager = sceneManager;
-    }
+        private SceneStateManager _sceneStateManager;
 
-    public void Enter()
-    {
-        _currentSceneState = SceneState.Title;
-    }
+        private SceneState _currentSceneState;
+        private string _scenePath;
+        public SceneState CurrentSceneState => _currentSceneState;
+        public string ScenePath => _scenePath;
 
-    public void Execute()
-    {
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        /// <param name="sceneStateManager"></param>
+        public TitleState(SceneStateManager sceneStateManager)
+        {
+            _sceneStateManager = sceneStateManager;
+            _scenePath = sceneStateManager.TitleScenePath;
+        }
 
-    }
+        public void Enter()
+        {
+            _currentSceneState = SceneState.Title;
+        }
 
-    public void Exit()
-    {
+        public void Execute()
+        {
 
+        }
+
+        public void Exit()
+        {
+
+        }
     }
 }

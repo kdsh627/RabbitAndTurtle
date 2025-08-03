@@ -17,6 +17,10 @@ namespace Manager
         private string _currentScenePath;
 
         public SceneStateMachine SceneStateMachine => _sceneStateMachine;
+        public string TitleScenePath => _titleScenePath;
+        public string GameScenePath => _gameScenePath;
+        public string ClearScenePath => _clearScenePath;
+
 
         private void Awake()
         {
@@ -28,61 +32,32 @@ namespace Manager
         {
             _sceneStateMachine.Initialize(_sceneStateMachine._titleState);
         }
-        private void Update()
-        {
-            _sceneStateMachine.Excute();
-        }
 
         private void OnEnable()
         {
             _sceneStateMachine.stateChanged += ChangeScene;
 
-            GameEventHandler.ExcuteTitle += () => GameEvent_ExcuteState(SceneState.Title);
-            GameEventHandler.ExcuteGamePlay += () => GameEvent_ExcuteState(SceneState.GamePlay);
-            GameEventHandler.ExcuteClear += () => GameEvent_ExcuteState(SceneState.Clear);
+            GameEventHandler.TitleExcuted += () => GameEvent_TransitionState(SceneState.Title);
+            GameEventHandler.GamePlayExcuted += () => GameEvent_TransitionState(SceneState.GamePlay);
+            GameEventHandler.GameClearExcuted += () => GameEvent_TransitionState(SceneState.Clear);
         }
 
         private void OnDisable()
         {
             _sceneStateMachine.stateChanged -= ChangeScene;
-            GameEventHandler.ExcuteTitle -= () => GameEvent_ExcuteState(SceneState.Title);
-            GameEventHandler.ExcuteGamePlay -= () => GameEvent_ExcuteState(SceneState.GamePlay);
-            GameEventHandler.ExcuteClear -= () => GameEvent_ExcuteState(SceneState.Clear);
+            GameEventHandler.TitleExcuted -= () => GameEvent_TransitionState(SceneState.Title);
+            GameEventHandler.GamePlayExcuted -= () => GameEvent_TransitionState(SceneState.GamePlay);
+            GameEventHandler.GameClearExcuted -= () => GameEvent_TransitionState(SceneState.Clear);
         }
 
-        private void GameEvent_ExcuteState(SceneState state)
+        private void GameEvent_TransitionState(SceneState state)
         {
-            switch (state)
-            {
-                case SceneState.Title:
-                    _sceneStateMachine.TransitionTo(_sceneStateMachine._titleState);
-                    break;
-                case SceneState.GamePlay:
-                    _sceneStateMachine.TransitionTo(_sceneStateMachine._gamePlayState);
-                    break;
-                case SceneState.Clear:
-                    _sceneStateMachine.TransitionTo(_sceneStateMachine._clearState);
-                    break;
-            }
+            _sceneStateMachine.TransitionState(state);
         }
 
         private void ChangeScene(IState state)
         {
-            SceneState sceneState = (state as ISceneState).CurrentSceneState;
-
-            string scenePath = "";
-            switch (sceneState)
-            {
-                case SceneState.Title:
-                    scenePath = _titleScenePath;
-                    break;
-                case SceneState.GamePlay:
-                    scenePath = _gameScenePath;
-                    break;
-                case SceneState.Clear:
-                    scenePath = _clearScenePath;
-                    break;
-            }
+            string scenePath = (state as ISceneState).ScenePath;
 
             SceneEventHandler.SceneStateChanged(scenePath, _currentScenePath);
 

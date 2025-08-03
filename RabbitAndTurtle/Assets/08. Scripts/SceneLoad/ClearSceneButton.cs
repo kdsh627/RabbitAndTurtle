@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneChangeButton3 : MonoBehaviour
+public class ClearSceneButton : MonoBehaviour
 {
     private Button button;
 
@@ -9,14 +9,14 @@ public class SceneChangeButton3 : MonoBehaviour
     {
         button = GetComponent<Button>();
     }
-
+    
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.ExcuteTitle.Invoke);
+        button.onClick.AddListener(GameEventHandler.TitleExcuted.Invoke);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.ExcuteTitle.Invoke);
+        button.onClick.RemoveListener(GameEventHandler.TitleExcuted.Invoke);
     }
 }

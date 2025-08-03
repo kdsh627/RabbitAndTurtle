@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneChangeButton2 : MonoBehaviour
+public class WaveSceneButton : MonoBehaviour
 {
     private Button button;
 
@@ -12,11 +12,11 @@ public class SceneChangeButton2 : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.ExcuteClear.Invoke);
+        button.onClick.AddListener(GameEventHandler.WaveClearExcuted.Invoke);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.ExcuteClear.Invoke);
+        button.onClick.RemoveListener(GameEventHandler.WaveClearExcuted.Invoke);
     }
 }
