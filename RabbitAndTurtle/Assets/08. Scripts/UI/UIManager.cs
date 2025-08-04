@@ -13,7 +13,6 @@ class UIState
     }
 }
 
-
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; set; }
@@ -22,7 +21,7 @@ public class UIManager : MonoBehaviour
 
     public void AddUIDictionary(string name, GameObject go)
     {
-        _uiDict.Add(name, new UIState(false, go));
+        _uiDict.Add(name, new UIState(go.activeSelf, go));
     }
     public void RemoveUIDictionary(string name)
     {

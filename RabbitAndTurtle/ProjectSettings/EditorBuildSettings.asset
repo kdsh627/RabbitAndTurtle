@@ -32,6 +32,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/06. Scenes/Test/SceneFlow/BossScene.unity
     guid: 0641a152a7e2e5f4c87e144c81034ee2
+  - enabled: 1
+    path: Assets/06. Scenes/Test/SceneFlow/GameScene.unity
+    guid: 124f820ccc834a1448f87abb5b77227f
+  - enabled: 1
+    path: Assets/06. Scenes/Test/SceneFlow/ClearScene.unity
+    guid: 257733acef3d2d5449c81fed8ceeb171
+  - enabled: 1
+    path: Assets/06. Scenes/Test/SceneFlow/WaveScene.unity
+    guid: 537e5a22704f7ae43afd0450135267ee
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 6f01ade188ee41041a542c6a0584ed21, type: 3}
   m_UseUCBPForAssetBundles: 0

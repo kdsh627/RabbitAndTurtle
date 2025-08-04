@@ -7,8 +7,14 @@ public class TitleTurtle : MonoBehaviour
     [SerializeField] float _duration;
     [SerializeField] Ease _ease;
 
+    private Tween _tween;
     void Start()
     {
-        transform.DOScaleY(_targetScale, _duration).SetEase(_ease).SetLoops(-1, LoopType.Yoyo);
+        _tween = transform.DOScaleY(_targetScale, _duration).SetEase(_ease).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private void OnDestroy()
+    {
+        _tween.Kill();
     }
 }

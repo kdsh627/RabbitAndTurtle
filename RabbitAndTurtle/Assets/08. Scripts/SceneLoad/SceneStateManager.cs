@@ -40,6 +40,7 @@ namespace Manager
             GameEventHandler.TitleExcuted += () => GameEvent_TransitionState(SceneState.Title);
             GameEventHandler.GamePlayExcuted += () => GameEvent_TransitionState(SceneState.GamePlay);
             GameEventHandler.GameClearExcuted += () => GameEvent_TransitionState(SceneState.Clear);
+            GameEventHandler.ExitExcuted += GameEvent_Exit;
         }
 
         private void OnDisable()
@@ -48,11 +49,17 @@ namespace Manager
             GameEventHandler.TitleExcuted -= () => GameEvent_TransitionState(SceneState.Title);
             GameEventHandler.GamePlayExcuted -= () => GameEvent_TransitionState(SceneState.GamePlay);
             GameEventHandler.GameClearExcuted -= () => GameEvent_TransitionState(SceneState.Clear);
+            GameEventHandler.ExitExcuted -= GameEvent_Exit;
         }
 
         private void GameEvent_TransitionState(SceneState state)
         {
             _sceneStateMachine.TransitionState(state);
+        }
+
+        private void GameEvent_Exit()
+        {
+            Application.Quit();
         }
 
         private void ChangeScene(IState state)
