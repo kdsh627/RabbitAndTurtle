@@ -33,6 +33,7 @@ public class PlayerStat : MonoBehaviour
 
     public void Die()
     {
+        animatorController.isDie = true;
         playerMovement.enabled = false;
         animatorController.PlayDie();
     }

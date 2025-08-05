@@ -61,10 +61,11 @@ public class PlayerAction : MonoBehaviour
     /// <param name="context"></param>
     public void ActionActiveSkill(InputAction.CallbackContext context)
     {
+        PlayerSkill skill = _player.GetComponent<PlayerSkill>();
         //입력 시작 시 최초 실행
         if (context.started)
         {
-            //스킬 실행
+            skill.QSkill();
         }
     }
 
