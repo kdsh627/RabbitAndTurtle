@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject effectPrefab; // 생성할 이펙트 프리팹
+
+    // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 2f); // 2초 후 오브젝트 파괴
     }
 
-    // Update is called once per frame
-    void Update()
+    // 파괴 직전에 호출되는 메서드
+    private void OnDestroy()
     {
-        
+        if (effectPrefab != null)
+        {
+            Instantiate(effectPrefab, transform.position, Quaternion.identity);
+        }
     }
 }

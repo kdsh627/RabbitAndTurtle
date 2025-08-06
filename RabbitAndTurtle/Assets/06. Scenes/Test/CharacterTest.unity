@@ -27691,7 +27691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WhalePrefab: {fileID: 713340527523127906, guid: 6fc72daa5557a3445ae554d537db2866, type: 3}
-  throwPower: 10
+  throwPower: 5
 --- !u!114 &1596271310
 MonoBehaviour:
   m_ObjectHideFlags: 0

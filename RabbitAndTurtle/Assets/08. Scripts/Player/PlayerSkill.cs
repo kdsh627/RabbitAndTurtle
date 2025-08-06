@@ -25,9 +25,49 @@ public class PlayerSkill : MonoBehaviour
 
     public void QSkill()
     {
-        Debug.Log("Q 스킬 사용"); 
-        StartCoroutine(WhaleThrow());
+        string dir = playerMovement.lastDirection;
+        bool isLeft = playerMovement.GetComponent<SpriteRenderer>().flipX;
+
+        Vector2 throwDir = GetThrowDirection(dir, isLeft);
+
+        // 이 시점의 방향 상태를 모두 고정해서 넘겨줌!
+        StartCoroutine(WhaleThrow(throwDir, isLeft));
     }
+
+    private Vector2 GetThrowDirection(string dir, bool isLeft)
+    {
+        switch (dir)
+        {
+            case "Front": return Vector2.down;
+            case "Back": return Vector2.up;
+            case "Side": return isLeft ? Vector2.left : Vector2.right;
+            default: return Vector2.zero;
+        }
+    }
+
+    // flipX까지 매개변수로 받음
+    IEnumerator WhaleThrow(Vector2 throwDir, bool isLeft)
+    {
+        float speed = playerMovement.moveSpeed;
+        playerMovement.moveSpeed = 0f;
+
+        GameObject whale = Instantiate(WhalePrefab, transform.position, Quaternion.identity);
+        Animator whaleAnimator = whale.GetComponent<Animator>();
+        if(isLeft) whaleAnimator.Play("WhaleSpawnLeft");
+        else whaleAnimator.Play("WhaleSpawnRight");
+        yield return new WaitForSeconds(0.5f);
+
+        playerMovement.moveSpeed = speed;
+
+        Rigidbody2D rb = whale.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = throwDir * throwPower;
+        }
+
+    
+    }
+
 
     void WSkill()
     {
@@ -39,39 +79,6 @@ public class PlayerSkill : MonoBehaviour
         StartCoroutine(TurtleShield());
     }
 
-    IEnumerator WhaleThrow()
-    {
-        float speed =  playerMovement.moveSpeed; // 이동 멈추기
-        playerMovement.moveSpeed = 0f;
-        // 1. 던질 방향 계산
-        string dir = playerMovement.lastDirection;
-        Vector2 throwDir = Vector2.zero;
-
-        switch (dir)
-        {
-            case "Front":
-                throwDir = Vector2.down;
-                break;
-            case "Back":
-                throwDir = Vector2.up;
-                break;
-            case "Side":
-                // flipX 기준 왼쪽/오른쪽 결정
-                bool isLeft = playerMovement.GetComponent<SpriteRenderer>().flipX;
-                throwDir = isLeft ? Vector2.left : Vector2.right;
-                break;
-        }
-
-        // 2. Instantiate + 던지기
-        GameObject whale = Instantiate(WhalePrefab, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(0.5f);
-        playerMovement.moveSpeed = speed; // 이동 속도 복원
-        Rigidbody2D rb = whale.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = throwDir * throwPower;
-        }
-    }
 
     IEnumerator FlyFishShot()
     {

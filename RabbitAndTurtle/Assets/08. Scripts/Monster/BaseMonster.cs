@@ -35,6 +35,8 @@ public abstract class BaseMonster : MonoBehaviour
     private bool isAttacking = false;
     private bool isDead = false;
     public bool isClose;
+    private bool isHit = false; // Wave에 맞았는지 여부
+
     protected virtual void Start()
     { 
         monAni = GetComponent<MonsterAnimationController>();
@@ -208,6 +210,22 @@ public abstract class BaseMonster : MonoBehaviour
             }
             else return;
         }
+
+        if (collision.CompareTag("Wave") && !isHit)
+        {
+            if (collision.TryGetComponent<Wave>(out Wave wave))
+            {
+                isHit = true;
+                TakeDamage(wave.damage);
+                StartCoroutine(WaveDmg()); // 0.5초 후 다시 맞을 수 있도록 설정
+            }
+            else return;
+        }
     }
 
+    IEnumerator WaveDmg()
+    {
+           yield return new WaitForSeconds(0.5f); // 0.5초 후 다시 맞을 수 있도록 설정
+          isHit = false;
+    }
 }
