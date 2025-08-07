@@ -51,6 +51,8 @@ namespace Manager
 
         private void OnEnable()
         {
+            GameEventHandler.GameOverExcuted += UIEventHandler.ToggleGameOverUI;
+
             GameEventHandler.ReadyExcuted += GameEvent_ReadyExcuted;
             GameEventHandler.StageExcuted += GameEvent_StageExcuted;
             GameEventHandler.WaveExcuted += GameEvent_WaveExcuted;
@@ -62,6 +64,8 @@ namespace Manager
 
         private void OnDisable()
         {
+            GameEventHandler.GameOverExcuted -= UIEventHandler.ToggleGameOverUI;
+
             GameEventHandler.ReadyExcuted -= GameEvent_ReadyExcuted;
             GameEventHandler.StageExcuted -= GameEvent_StageExcuted;
             GameEventHandler.WaveExcuted -= GameEvent_WaveExcuted;
@@ -72,7 +76,6 @@ namespace Manager
         }
 
         private void GameEvent_ReadyExcuted() => GameEvent_TransitionState(GameState.Ready);
-
         private void GameEvent_StageExcuted() => GameEvent_TransitionState(GameState.Stage);
         private void GameEvent_WaveExcuted() => GameEvent_TransitionState(GameState.Wave);
         private void GameEvent_WaveClearExcuted() => GameEvent_TransitionState(GameState.WaveClear);

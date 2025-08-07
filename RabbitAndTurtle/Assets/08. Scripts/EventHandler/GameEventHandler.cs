@@ -26,5 +26,7 @@ public static class GameEventHandler
     public static Action WaveClearExcuted;
 
     public static Action BossClearExcuted;
+
+    public static Action GameOverExcuted;
     #endregion
 }

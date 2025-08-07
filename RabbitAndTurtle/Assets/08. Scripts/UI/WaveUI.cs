@@ -1,7 +1,5 @@
-using System.Text;
 using TMPro;
 using UnityEngine;
-
 
 public class WaveUI : MonoBehaviour
 {
@@ -11,7 +9,6 @@ public class WaveUI : MonoBehaviour
     [Header("뷰")]
     [SerializeField] private TMP_Text _waveCountText;
     [SerializeField] private TMP_Text _waveTimeText;
-    [SerializeField] private TMP_Text _maxWaveText;
 
     private void OnEnable()
     {
@@ -24,7 +21,7 @@ public class WaveUI : MonoBehaviour
 
     public void UpdateView()
     {
-        _waveCountText.text = string.Format("현재 웨이브 : {0:D2}", _waveManager.CurrentWave);
+        _waveCountText.text = string.Format("웨이브 : {0:D2} / {0:D2}", _waveManager.CurrentWave, _waveManager.MaxWave);
 
         float time = _waveManager.WaveTime;
         int minutes = (int)(time/ 60);
@@ -32,8 +29,6 @@ public class WaveUI : MonoBehaviour
         int milliSeconds = Mathf.RoundToInt(time * 100) % 100;
 
         _waveTimeText.text = string.Format("남은시간 : {0:D2}:{1:D2}:{2:D2}", minutes, seconds, milliSeconds);
-
-        _maxWaveText.text = string.Format("총 웨이브 : {0:D2}", _waveManager.MaxWave);
     }
 
     void Start()

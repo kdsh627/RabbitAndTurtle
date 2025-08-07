@@ -1,29 +1,16 @@
 using UnityEngine;
 
-public class SettingUI : MonoBehaviour
+public class SettingUI : ToggleUI
 {
-    [SerializeField] private string _name = "SettingUI";
-    [SerializeField] private GameObject _ui;
-
-    private void Awake()
+    protected override void Start()
     {
-        _ui.SetActive(false);
+        base.OnDestroy();
+        UIEventHandler.ToggleSettingUI += UIEvent_ToggleUI;        
     }
 
-    private void Start()
+    protected override void OnDestroy()
     {
-        UIManager.Instance.AddUIDictionary(_name, _ui);
-        UIEventHandler.ToggleSettingUI += UIEvent_ToggleSettingUI;        
-    }
-
-    private void OnDestroy()
-    {
-        UIManager.Instance.RemoveUIDictionary(_name);
-        UIEventHandler.ToggleSettingUI -= UIEvent_ToggleSettingUI;
-    }
-
-    private void UIEvent_ToggleSettingUI()
-    {
-        UIManager.Instance.ToggleUI(name, true);
+        base.OnDestroy();
+        UIEventHandler.ToggleSettingUI -= UIEvent_ToggleUI;
     }
 }

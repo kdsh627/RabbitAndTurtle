@@ -3,10 +3,6 @@ using UnityEngine.UI;
 
 public class TitleUI : MonoBehaviour
 {
-    [Header("------ UI ------")]
-    [SerializeField] private string _name = "TitleUI";
-    [SerializeField] private GameObject _ui;
-
     [Header("------ 버튼 ------")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _optionButton;
@@ -21,22 +17,12 @@ public class TitleUI : MonoBehaviour
         _exitButton.onClick.AddListener(ButtonEvent_Exit);
     }
 
-    private void Start()
-    {
-        UIManager.Instance.AddUIDictionary(_name, _ui);
-    }
-
     private void OnDisable()
     {
         _startButton.onClick.RemoveListener(ButtonEvent_Start);
         _optionButton.onClick.RemoveListener(ButtonEvent_Option);
         _creditButton.onClick.RemoveListener(ButtonEvent_Credit);
         _exitButton.onClick.RemoveListener(ButtonEvent_Exit);
-    }
-
-    private void OnDestroy()
-    {
-        UIManager.Instance.RemoveUIDictionary(_name);
     }
 
     private void ButtonEvent_Start()

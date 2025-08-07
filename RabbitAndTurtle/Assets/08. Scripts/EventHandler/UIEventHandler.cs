@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class UIEventHandler
 {
-    //Setting Ui 토글
+    //Setting UI 토글
     public static Action ToggleSettingUI;
+
+    //GameOver UI 토글
+    public static Action ToggleGameOverUI;
 }
