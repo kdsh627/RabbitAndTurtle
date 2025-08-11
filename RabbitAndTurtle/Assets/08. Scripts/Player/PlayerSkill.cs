@@ -4,91 +4,75 @@ using UnityEngine;
 public class PlayerSkill : MonoBehaviour
 {
     public GameObject WhalePrefab;
-    public float throwPower = 10f; // 던지는 힘 조절 변수
+
+    [Header("연출")]
+    public float spawnDelay = 0.5f;   // 스폰 애니 길이(클립 길이에 맞춰 조절)
 
     private PlayerMovement playerMovement;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
-        {
             QSkill();
-        }
     }
-
 
     public void QSkill()
     {
         string dir = playerMovement.lastDirection;
-        bool isLeft = playerMovement.GetComponent<SpriteRenderer>().flipX;
+        bool isLeft = GetComponent<SpriteRenderer>().flipX;
 
         Vector2 throwDir = GetThrowDirection(dir, isLeft);
-
-        // 이 시점의 방향 상태를 모두 고정해서 넘겨줌!
-        StartCoroutine(WhaleThrow(throwDir, isLeft));
+        StartCoroutine(WhaleThrow(throwDir, isLeft, dir));
     }
 
     private Vector2 GetThrowDirection(string dir, bool isLeft)
     {
         switch (dir)
         {
-            case "Front": return Vector2.down;
-            case "Back": return Vector2.up;
-            case "Side": return isLeft ? Vector2.left : Vector2.right;
+            case "Front": return Vector2.down;                 // 아래
+            case "Back": return Vector2.up;                   // 위
+            case "Side": return isLeft ? Vector2.left : Vector2.right; // 좌/우
             default: return Vector2.zero;
         }
     }
 
-    // flipX까지 매개변수로 받음
-    IEnumerator WhaleThrow(Vector2 throwDir, bool isLeft)
+    IEnumerator WhaleThrow(Vector2 throwDir, bool isLeft, string rawDir)
     {
-        float speed = playerMovement.moveSpeed;
+        // 플레이어 잠깐 멈춤 (원하면 제거)
+        float prevSpeed = playerMovement.moveSpeed;
         playerMovement.moveSpeed = 0f;
 
         GameObject whale = Instantiate(WhalePrefab, transform.position, Quaternion.identity);
-        Animator whaleAnimator = whale.GetComponent<Animator>();
-        if(isLeft) whaleAnimator.Play("WhaleSpawnLeft");
-        else whaleAnimator.Play("WhaleSpawnRight");
-        yield return new WaitForSeconds(0.5f);
 
-        playerMovement.moveSpeed = speed;
-
-        Rigidbody2D rb = whale.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        // 스폰 애니 있으면 재생
+        Animator anim = whale.GetComponent<Animator>();
+        if (anim != null && spawnDelay > 0f)
         {
-            rb.linearVelocity = throwDir * throwPower;
+            anim.Play(isLeft ? "WhaleSpawnLeft" : "WhaleSpawnRight");
+            yield return new WaitForSeconds(spawnDelay);
         }
 
-    
+        // 이동 재개
+        playerMovement.moveSpeed = prevSpeed;
+
+     
+        var proj = whale.GetComponent<Whale>(); // 또는 Whale
+
+        // 좌/우 = 포물선, 위/아래 = 스케일
+        ThrowMode mode = (rawDir == "Side") ? ThrowMode.SideParabola : ThrowMode.VerticalScale;
+
+        // 발사
+        proj.Launch(throwDir, mode);
     }
 
+    void WSkill() => StartCoroutine(FlyFishShot());
+    void ESkill() => StartCoroutine(TurtleShield());
 
-    void WSkill()
-    {
-        StartCoroutine(FlyFishShot());
-    }
-
-    void ESkill()
-    {
-        StartCoroutine(TurtleShield());
-    }
-
-
-    IEnumerator FlyFishShot()
-    {
-        yield return null;
-        //스킬 추가 예정
-    }
-
-    IEnumerator TurtleShield()
-    {
-        yield return null;
-        //스킬추가 예정
-    }
+    IEnumerator FlyFishShot() { yield return null; }
+    IEnumerator TurtleShield() { yield return null; }
 }
