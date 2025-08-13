@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerSkill : MonoBehaviour
 {
     public GameObject WhalePrefab;
+    public float spawnYOffset = 1f;
 
     [Header("연출")]
     public float spawnDelay = 0.5f;   // 스폰 애니 길이(클립 길이에 맞춰 조절)
@@ -47,7 +48,10 @@ public class PlayerSkill : MonoBehaviour
         float prevSpeed = playerMovement.moveSpeed;
         playerMovement.moveSpeed = 0f;
 
-        GameObject whale = Instantiate(WhalePrefab, transform.position, Quaternion.identity);
+        Vector3 spawnPos = transform.position;
+        spawnPos.y += spawnYOffset;
+
+        GameObject whale = Instantiate(WhalePrefab, spawnPos, Quaternion.identity);
 
         // 스폰 애니 있으면 재생
         Animator anim = whale.GetComponent<Animator>();

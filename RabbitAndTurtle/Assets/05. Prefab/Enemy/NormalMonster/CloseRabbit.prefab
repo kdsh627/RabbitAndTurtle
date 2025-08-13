@@ -422,8 +422,9 @@ MonoBehaviour:
   SideSprite: {fileID: 2379278696548150998}
   FrontDSprite: {fileID: 3693121446546390433}
   SideDSprite: {fileID: 5223573213249029867}
+  usePooling: 1
+  dropItem: {fileID: 37357033029640370, guid: d1c3717cad82b0d44b374ad305398bfd, type: 3}
   moveThreshold: 0.01
-  isClose: 0
 --- !u!114 &-4050040505208040732
 MonoBehaviour:
   m_ObjectHideFlags: 0

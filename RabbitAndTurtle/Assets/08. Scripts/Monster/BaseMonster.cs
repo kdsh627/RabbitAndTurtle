@@ -19,6 +19,9 @@ public abstract class BaseMonster : MonoBehaviour
     [Header("옵션")]
     [SerializeField] private bool usePooling = true; // 풀링 사용 여부 (true면 SetActive(false), false면 Destroy)
 
+    [Header("드롭")]
+    [SerializeField] public GameObject dropItem;
+
     private GameObject currentSprite;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer sideDSpriteRenderer;
@@ -188,6 +191,7 @@ public abstract class BaseMonster : MonoBehaviour
 
         // 연출 후 회수/파괴
         StartCoroutine(DieAni());
+        Instantiate(dropItem, transform.position, Quaternion.identity);
     }
 
     IEnumerator DieAni()
