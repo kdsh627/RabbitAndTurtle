@@ -12,11 +12,16 @@ public class BossSceneButton : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.BossClearExcuted.Invoke);
+        button.onClick.AddListener(ButtonEvent_BossClear);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.BossClearExcuted.Invoke);
+        button.onClick.RemoveListener(ButtonEvent_BossClear);
+    }
+
+    private void ButtonEvent_BossClear()
+    {
+        GameEventHandler.BossClearExcuted?.Invoke();
     }
 }

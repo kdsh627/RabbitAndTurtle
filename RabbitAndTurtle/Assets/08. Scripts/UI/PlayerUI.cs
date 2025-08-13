@@ -14,19 +14,26 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private PlayerStat _playerStat;
     [SerializeField] private PlayerBlock _shieldStat;
 
-    void Start()
+    private void Awake()
     {
-        
+        _playerStat.ValueChanged += UpdateView;
+        _shieldStat.ValueChanged += UpdateView;
+    }
+
+    private void OnDestroy()
+    {
+        _playerStat.ValueChanged -= UpdateView;
+        _shieldStat.ValueChanged -= UpdateView;
     }
 
     private void UpdateView()
     {
         //_levelText.text = _playerStat.Level;
 
-        float hp = _playerStat.currentHealth / _playerStat.maxHealth;
+        float hp = _playerStat.CurrentHealth / _playerStat.maxHealth;
         _hpBar.fillAmount = hp;
 
-        float shield = _shieldStat.currentGauge / _shieldStat.MaxBlockTime;
+        float shield = _shieldStat.CurrentGauge / _shieldStat.MaxBlockTime;
         _shieldBar.fillAmount = shield;
 
         //float exp = _playerStat.currentExp / _playerStat.maxExp;

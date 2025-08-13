@@ -21,9 +21,9 @@ public class TestUIManager : MonoBehaviour
 
     void Update()
     {
-        BlockGaugeSlider.value = playerBlock.currentGauge;
-        HpSlider.value = playerStat.currentHealth;
-        float ratio = playerBlock.currentGauge / playerBlock.MaxBlockTime;
+        BlockGaugeSlider.value = playerBlock.CurrentGauge;
+        HpSlider.value = playerStat.CurrentHealth;
+        float ratio = playerBlock.CurrentGauge / playerBlock.MaxBlockTime;
         FillImage.color = Color.Lerp(Color.red, Color.green, ratio);
     }
 

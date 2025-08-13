@@ -4,7 +4,7 @@ public class SettingUI : ToggleUI
 {
     protected override void Start()
     {
-        base.OnDestroy();
+        base.Start();
         UIEventHandler.ToggleSettingUI += UIEvent_ToggleUI;        
     }
 

@@ -29,7 +29,17 @@ public class PlayerBlock : MonoBehaviour
     }
 
     private BlockState currentState = BlockState.Idle;
-    public float currentGauge;
+
+    private float currentGauge;
+    public float CurrentGauge
+    {
+        get => currentGauge;
+        set
+        {
+            currentGauge = value;
+            ValueChanged?.Invoke();
+        }
+    }
 
     private float exhaustedTimer = 0f; // 탈진 대기 타이머
 
@@ -42,7 +52,7 @@ public class PlayerBlock : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         animatorController = GetComponent<PlayerAnimationController>();
-        currentGauge = MaxBlockTime;
+        CurrentGauge = MaxBlockTime;
         ExhaustedEff.SetActive(false); // 탈진 이펙트 비활성화
         BlockCollider.SetActive(false);
     }
@@ -73,7 +83,7 @@ public class PlayerBlock : MonoBehaviour
 
     private void HandleIdle()
     {
-        if (isBlockButtonHeld && currentGauge > ExhaustThreshold)
+        if (isBlockButtonHeld && CurrentGauge > ExhaustThreshold)
         {
             StartBlocking();
         }
@@ -88,8 +98,8 @@ public class PlayerBlock : MonoBehaviour
         if (!BlockCollider.activeSelf)
             BlockCollider.SetActive(true);
 
-        currentGauge -= Time.deltaTime;
-        currentGauge = Mathf.Max(currentGauge, 0f);
+        CurrentGauge -= Time.deltaTime;
+        CurrentGauge = Mathf.Max(CurrentGauge, 0f);
 
         if (!isBlockButtonHeld)
         {
@@ -98,7 +108,7 @@ public class PlayerBlock : MonoBehaviour
             return;
         }
 
-        if (currentGauge <= ExhaustThreshold)
+        if (CurrentGauge <= ExhaustThreshold)
         {
             EnterExhausted(); // 상태 전환만 수행
             BlockCollider.SetActive(false);
@@ -122,7 +132,7 @@ public class PlayerBlock : MonoBehaviour
         // ExhaustThreshold까지 회복
         RecoverGauge(RecoveryRate, ExhaustThreshold);
 
-        if (currentGauge >= ExhaustThreshold)
+        if (CurrentGauge >= ExhaustThreshold)
         {
             currentState = BlockState.Idle;
             ExhaustedEff.SetActive(false); // 회복 완료 후 이펙트 끄기
@@ -172,11 +182,10 @@ public class PlayerBlock : MonoBehaviour
 
     private void RecoverGauge(float rate, float maxLimit)
     {
-        if (currentGauge < maxLimit)
+        if (CurrentGauge < maxLimit)
         {
-            currentGauge += rate * Time.deltaTime;
-            ValueChanged?.Invoke();
-            currentGauge = Mathf.Min(currentGauge, maxLimit);
+            CurrentGauge += rate * Time.deltaTime;
+            CurrentGauge = Mathf.Min(CurrentGauge, maxLimit);
         }
     }
 }

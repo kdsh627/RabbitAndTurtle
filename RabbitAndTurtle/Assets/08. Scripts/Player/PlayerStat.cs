@@ -5,27 +5,30 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
+    private float currentHealth;
+
     public float maxHealth = 100f; // 최대 체력
-    public float currentHealth; // 현재 체력
+    public float CurrentHealth // 현재 체력
+    {
+        get => currentHealth;
+        set
+        {
+            currentHealth = value; 
+            ValueChanged?.Invoke();
+        }
+    }
     private PlayerBlock playerBlock;
     private PlayerMovement playerMovement;
     private PlayerAnimationController animatorController;
 
     public event Action ValueChanged;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         animatorController = GetComponent<PlayerAnimationController>();
-        currentHealth = maxHealth; // 초기 체력 설정
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        CurrentHealth = maxHealth; // 초기 체력 설정
     }
 
     public virtual void TakeDamage(float damage)
@@ -34,9 +37,9 @@ public class PlayerStat : MonoBehaviour
             return;
 
         StartCoroutine(playerMovement.DamageAni());
-        currentHealth -= damage;
+        CurrentHealth -= damage;
         ValueChanged?.Invoke();
-        if (currentHealth <= 0) Die();
+        if (CurrentHealth <= 0) Die();
     }
 
     public void Die()
