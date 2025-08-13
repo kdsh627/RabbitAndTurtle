@@ -15,6 +15,7 @@ public class PlayerStat : MonoBehaviour
     {
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
+        animatorController = GetComponent<PlayerAnimationController>();
         currentHealth = maxHealth; // 초기 체력 설정
     }
 
@@ -26,6 +27,9 @@ public class PlayerStat : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+        if(animatorController.isDie)
+            return;
+
         StartCoroutine(playerMovement.DamageAni());
         currentHealth -= damage;
         if (currentHealth <= 0) Die();
