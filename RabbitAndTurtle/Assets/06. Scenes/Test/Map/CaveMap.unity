@@ -65657,6 +65657,7 @@ MonoBehaviour:
   - {fileID: 948950176875190219, guid: ebb86529ad28879479d211bb7c300a05, type: 3}
   initialSpawnCount: 10
   maxMonsterCount: 40
+  killsPerElite: 10
   wayPointData:
   - wayPoints:
     - {fileID: 314783976}

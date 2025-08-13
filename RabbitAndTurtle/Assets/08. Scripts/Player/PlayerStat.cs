@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Behavior.Demo;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class PlayerStat : MonoBehaviour
     private PlayerBlock playerBlock;
     private PlayerMovement playerMovement;
     private PlayerAnimationController animatorController;
+
+    public event Action ValueChanged;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +35,7 @@ public class PlayerStat : MonoBehaviour
 
         StartCoroutine(playerMovement.DamageAni());
         currentHealth -= damage;
+        ValueChanged?.Invoke();
         if (currentHealth <= 0) Die();
     }
 
