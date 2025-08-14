@@ -37,8 +37,8 @@ namespace Manager
             _currentStage = 0;
             _currentBossStage = 0;
 
-            _maxStage = _stageData.DefaultStageDataList.Count;
-            _maxBossStage = _stageData.BossStageDataList.Count;
+            _maxStage = SceneDataManager.Instance.GetWaveSubSceneCount();
+            _maxBossStage = SceneDataManager.Instance.GetBossSubSceneCount();
 
             _currentStageData = _stageData.DefaultStageDataList[_currentStage];
             _gameStateMachine = new GameStateMachine(this);
@@ -46,12 +46,12 @@ namespace Manager
 
         private void Start()
         {
-            _gameStateMachine.Initialize(_gameStateMachine._readyState);
+            _gameStateMachine.SetState(_gameStateMachine._readyState);
         }
 
         private void OnEnable()
         {
-            GameEventHandler.GameOverExcuted += UIEventHandler.ToggleGameOverUI;
+            GameEventHandler.GameOverExcuted += UIEventHandler.ToggleGameOverUI_Invoke;
 
             GameEventHandler.ReadyExcuted += GameEvent_ReadyExcuted;
             GameEventHandler.StageExcuted += GameEvent_StageExcuted;
@@ -64,7 +64,7 @@ namespace Manager
 
         private void OnDisable()
         {
-            GameEventHandler.GameOverExcuted -= UIEventHandler.ToggleGameOverUI;
+            GameEventHandler.GameOverExcuted -= UIEventHandler.ToggleGameOverUI_Invoke;
 
             GameEventHandler.ReadyExcuted -= GameEvent_ReadyExcuted;
             GameEventHandler.StageExcuted -= GameEvent_StageExcuted;
@@ -91,8 +91,7 @@ namespace Manager
         /// </summary>
         public void ReadyInit()
         {
-            _scenePath = _currentStageData.ScenePath;
-            SceneEventHandler.SceneLoadedByPath(_scenePath);
+            SceneEventHandler.SceneLoadedByPath_Invoke(_scenePath);
         }
 
         /// <summary>
@@ -104,7 +103,7 @@ namespace Manager
             _waveManager.ResetWaveCount();
 
             _currentStage++;
-            GameEventHandler.WaveExcuted?.Invoke();
+            GameEventHandler.WaveExcuted_Invoke();
         }
 
         /// <summary>
@@ -123,12 +122,12 @@ namespace Manager
         {
             if (_waveManager.IsStageClear())
             {
-                GameEventHandler.StageClearExcuted?.Invoke();
+                GameEventHandler.StageClearExcuted_Invoke();
             }
             else
             {
                 //다음 웨이브 진행
-                GameEventHandler.WaveExcuted?.Invoke();
+                GameEventHandler.WaveExcuted_Invoke();
             }
         }
 
@@ -143,6 +142,7 @@ namespace Manager
 
                 //보스 스테이지로
                 _currentStageData = _stageData.BossStageDataList[_currentBossStage];
+                _scenePath = SceneDataManager.Instance.GetBossSubScene(_currentBossStage);
 
             }
             else
@@ -150,10 +150,11 @@ namespace Manager
                 Debug.Log("다음 스테이지");
 
                 //다음 스테이지로
-                _currentStageData = _stageData.BossStageDataList[_currentBossStage];
+                _currentStageData = _stageData.DefaultStageDataList[_currentStage];
+                _scenePath = SceneDataManager.Instance.GetWaveSubScene(_currentStage);
             }
 
-            GameEventHandler.ReadyExcuted?.Invoke();
+            GameEventHandler.ReadyExcuted_Invoke();
         }
 
         /// <summary>
@@ -172,14 +173,15 @@ namespace Manager
         {
             if(IsGameClear())
             {
-                GameEventHandler.GameClearExcuted?.Invoke();
+                GameEventHandler.GameClearExcuted_Invoke();
             }
             else
             {
-                _scenePath = _stageData.DefaultStageDataList[_currentStage].ScenePath;
+                _scenePath = SceneDataManager.Instance.GetWaveSubScene(_currentStage);
+
                 //원래는 다음 스테이지의 MaxStage를 다시 받아와야하지만
                 //우리 게임은 단일 스테이지라 해당 부분은 생략
-                GameEventHandler.ReadyExcuted?.Invoke();
+                GameEventHandler.ReadyExcuted_Invoke();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using NavMeshPlus.Components;
+using NavMeshPlus.Components;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

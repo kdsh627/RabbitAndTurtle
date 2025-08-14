@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public event Action WaveValueChanged;
+    public void WaveValueChanged_Invoke() => WaveValueChanged?.Invoke();
 
     private float _waveTime;
     private int _currentWave;
@@ -35,7 +36,7 @@ public class WaveManager : MonoBehaviour
     {
         _currentWave++;
         _startWave = true;
-        WaveValueChanged?.Invoke();
+        WaveValueChanged_Invoke();
     }
 
     public bool IsStageClear()
@@ -54,13 +55,13 @@ public class WaveManager : MonoBehaviour
             _waveTime = 0.0f;
             _startWave = false;
         }
-        WaveValueChanged?.Invoke();
+        WaveValueChanged_Invoke();
     }
 
     private void Awake()
     {
         GameStateManager.Instace.SetWaveManager(this);
-        GameEventHandler.StageExcuted?.Invoke();
+        GameEventHandler.StageExcuted_Invoke();
     }
 
     private void Update()

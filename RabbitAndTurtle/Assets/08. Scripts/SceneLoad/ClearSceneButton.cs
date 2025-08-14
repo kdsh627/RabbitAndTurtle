@@ -12,11 +12,11 @@ public class ClearSceneButton : MonoBehaviour
     
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.TitleExcuted.Invoke);
+        button.onClick.AddListener(GameEventHandler.TitleExcuted_Invoke);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.TitleExcuted.Invoke);
+        button.onClick.RemoveListener(GameEventHandler.TitleExcuted_Invoke);
     }
 }

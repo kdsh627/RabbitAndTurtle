@@ -7,7 +7,7 @@ public class MonsterSpawner : MonoBehaviour
 {
     [Header("타일 및 타겟")]
     [SerializeField] private Tilemap tileMap;
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform target => GameManager.Instance.Player.transform;
 
     [Header("프리팹 (일반 / 엘리트)")]
     [SerializeField] private List<GameObject> enemyPrefabs;

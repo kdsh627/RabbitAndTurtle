@@ -27,12 +27,12 @@ public class TitleUI : MonoBehaviour
 
     private void ButtonEvent_Start()
     {
-        GameEventHandler.GamePlayExcuted?.Invoke();
+        GameEventHandler.GamePlayExcuted_Invoke();
     }
 
     private void ButtonEvent_Option()
     {
-        UIEventHandler.ToggleSettingUI?.Invoke();
+        UIEventHandler.ToggleSettingUI_Invoke();
     }
 
     private void ButtonEvent_Credit()
@@ -42,6 +42,6 @@ public class TitleUI : MonoBehaviour
 
     private void ButtonEvent_Exit()
     {
-        GameEventHandler.ExitExcuted?.Invoke();
+        GameEventHandler.ExitExcuted_Invoke();
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using NUnit.Framework;
 using State;
 using State.SceneState;
 using StateMachine.SceneStateMachine;
@@ -8,18 +10,13 @@ namespace Manager
 {
     public class SceneStateManager : MonoBehaviour
     {
-        [Header("--- 핵심 씬 ---")]
-        [SerializeField] private string _titleScenePath;
-        [SerializeField] private string _gameScenePath;
-        [SerializeField] private string _clearScenePath;
-
         private SceneStateMachine _sceneStateMachine;
         private string _currentScenePath;
 
         public SceneStateMachine SceneStateMachine => _sceneStateMachine;
-        public string TitleScenePath => _titleScenePath;
-        public string GameScenePath => _gameScenePath;
-        public string ClearScenePath => _clearScenePath;
+        public string TitleScenePath => SceneDataManager.Instance.TitleScene;
+        public string GameScenePath => SceneDataManager.Instance.WaveCoreScene;
+        public string ClearScenePath => SceneDataManager.Instance.ClearScene;
 
 
         private void Awake()
@@ -66,7 +63,18 @@ namespace Manager
         {
             string scenePath = (state as ISceneState).ScenePath;
 
-            SceneEventHandler.SceneStateChanged(scenePath, _currentScenePath);
+            List<string> subScenes = new List<string>();
+            subScenes.Add(SceneDataManager.Instance.GetWaveSubScene(0));
+
+            switch ((state as ISceneState).CurrentSceneState)
+            {
+                case SceneState.GamePlay:
+                    SceneEventHandler.SceneStateChangedAndLoadScenes_Invoke(scenePath, _currentScenePath, subScenes);
+                    break;
+                default:
+                    SceneEventHandler.SceneStateChanged_Invoke(scenePath, _currentScenePath);
+                    break;
+            }
 
             _currentScenePath = scenePath;
         }
