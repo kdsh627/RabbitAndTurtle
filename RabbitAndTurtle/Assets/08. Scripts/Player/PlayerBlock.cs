@@ -1,4 +1,5 @@
 using Manager;
+using System;
 using UnityEngine;
 
 public class PlayerBlock : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerBlock : MonoBehaviour
     public bool isBlock { get; private set; } = false;
     public bool isExhausted { get; private set; } = false;
 
+    public event Action ValueChanged;
 
     private enum BlockState
     {
@@ -173,6 +175,7 @@ public class PlayerBlock : MonoBehaviour
         if (currentGauge < maxLimit)
         {
             currentGauge += rate * Time.deltaTime;
+            ValueChanged?.Invoke();
             currentGauge = Mathf.Min(currentGauge, maxLimit);
         }
     }
