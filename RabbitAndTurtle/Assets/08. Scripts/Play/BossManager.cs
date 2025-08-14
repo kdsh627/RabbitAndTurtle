@@ -14,7 +14,7 @@ public class BossManager : MonoBehaviour
 
     private void Awake()
     {
-        GameEventHandler.BossExcuted?.Invoke();
+        GameEventHandler.BossExcuted_Invoke();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

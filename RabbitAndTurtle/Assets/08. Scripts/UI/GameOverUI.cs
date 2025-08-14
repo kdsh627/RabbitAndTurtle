@@ -31,11 +31,11 @@ public class GameOverUI : ToggleUI
 
     private void ButtonEvent_ReStart()
     {
-        GameEventHandler.GamePlayExcuted?.Invoke();
+        GameEventHandler.GamePlayExcuted_Invoke();
     }
 
     private void ButtonEvent_GoTitle()
     {
-        GameEventHandler.TitleExcuted?.Invoke();
+        GameEventHandler.TitleExcuted_Invoke();
     }
 }

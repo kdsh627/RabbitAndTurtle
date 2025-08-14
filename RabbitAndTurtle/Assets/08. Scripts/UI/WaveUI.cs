@@ -1,14 +1,24 @@
+using Manager;
 using TMPro;
 using UnityEngine;
 
 public class WaveUI : MonoBehaviour
 {
-    [Header("모델")]
+    [Header("----- 모델 -----")]
     [SerializeField] private WaveManager _waveManager;
 
-    [Header("뷰")]
+    [Header("----- 뷰 -----")]
     [SerializeField] private TMP_Text _waveCountText;
     [SerializeField] private TMP_Text _waveTimeText;
+
+    [Header("----- 캔버스 -----")]
+    [SerializeField] private Canvas _canvas;
+
+    private void Awake()
+    {
+        _canvas.worldCamera = CameraManager.Instance.UICamera;
+        _canvas.sortingLayerID = SortingLayer.NameToID("UI");
+    }
 
     private void OnEnable()
     {
@@ -21,7 +31,7 @@ public class WaveUI : MonoBehaviour
 
     public void UpdateView()
     {
-        _waveCountText.text = string.Format("웨이브 : {0:D2} / {0:D2}", _waveManager.CurrentWave, _waveManager.MaxWave);
+        _waveCountText.text = string.Format("웨이브 : {0:D2} / {1:D2}", _waveManager.CurrentWave, _waveManager.MaxWave);
 
         float time = _waveManager.WaveTime;
         int minutes = (int)(time/ 60);

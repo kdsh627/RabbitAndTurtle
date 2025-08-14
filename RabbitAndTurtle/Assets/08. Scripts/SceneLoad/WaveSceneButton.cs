@@ -12,11 +12,11 @@ public class WaveSceneButton : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(GameEventHandler.WaveClearExcuted.Invoke);
+        button.onClick.AddListener(GameEventHandler.WaveClearExcuted_Invoke);
     }
 
     private void OnDisable()
     {
-        button.onClick.RemoveListener(GameEventHandler.WaveClearExcuted.Invoke);
+        button.onClick.RemoveListener(GameEventHandler.WaveClearExcuted_Invoke);
     }
 }

@@ -22,6 +22,6 @@ public class BossSceneButton : MonoBehaviour
 
     private void ButtonEvent_BossClear()
     {
-        GameEventHandler.BossClearExcuted?.Invoke();
+        GameEventHandler.BossClearExcuted_Invoke();
     }
 }
