@@ -191,7 +191,7 @@ public abstract class BaseMonster : MonoBehaviour
 
         // 연출 후 회수/파괴
         StartCoroutine(DieAni());
-        Instantiate(dropItem, transform.position, Quaternion.identity);
+        StartCoroutine(SpawndropItemDelay());
     }
 
     IEnumerator DieAni()
@@ -208,6 +208,12 @@ public abstract class BaseMonster : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator SpawndropItemDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Instantiate(dropItem, transform.position, Quaternion.identity);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

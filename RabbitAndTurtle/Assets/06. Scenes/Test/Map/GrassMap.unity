@@ -25286,95 +25286,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &586169238
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1356941104645830612, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_Flip.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1356941104645830612, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_Flip.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4748681987041982144, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_Name
-      value: VFX_Critical_Attack_01_Color
-      objectReference: {fileID: 0}
-    - target: {fileID: 4794655212493717476, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: InitialModule.randomizeRotationDirection
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7195835835760226432, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5829076
-      objectReference: {fileID: 0}
-    - target: {fileID: 7195835835760226432, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7195835835760226432, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7195835835760226432, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.8125385
-      objectReference: {fileID: 0}
-    - target: {fileID: 7195835835760226432, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -108.689
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.81
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.22618747
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.97408384
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795210345721637939, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -206.145
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 534e62d9c5d62a24090ab2a1f1376349, type: 3}
 --- !u!1 &608968000
 GameObject:
   m_ObjectHideFlags: 0
@@ -29167,6 +29078,7 @@ MonoBehaviour:
   initialSpawnCount: 10
   maxMonsterCount: 40
   killsPerElite: 10
+  autoStart: 1
   wayPointData:
   - wayPoints:
     - {fileID: 314783976}
@@ -32416,4 +32328,3 @@ SceneRoots:
   - {fileID: 1556145143}
   - {fileID: 1425612161}
   - {fileID: 1981961306}
-  - {fileID: 586169238}
