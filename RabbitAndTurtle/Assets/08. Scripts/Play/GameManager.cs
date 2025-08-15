@@ -2,16 +2,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+    public static GameManager Instance { get; private set; }
 
-    void Start()
-    {
-        
-    }
+    [Header("----- 플레이어 -----")]
+    [SerializeField] private GameObject _player;
 
-    // Update is called once per frame
-    void Update()
+    public GameObject Player => _player;
+
+    private void Awake()
     {
-        
+        Instance = this;
     }
 }

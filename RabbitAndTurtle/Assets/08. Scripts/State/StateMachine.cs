@@ -22,6 +22,11 @@ namespace StateMachine
             stateChanged?.Invoke(state);
         }
 
+        public void SetState(IState state)
+        {
+            CurrentState = state;
+        }
+
         /// <summary>
         /// 상태 변환 시 실행
         /// </summary>

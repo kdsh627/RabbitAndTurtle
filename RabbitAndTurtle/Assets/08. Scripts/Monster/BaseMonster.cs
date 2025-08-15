@@ -1,11 +1,7 @@
-using NUnit.Framework.Constraints;
 using System.Collections;
 using Unity.Behavior;
-using Unity.Behavior.Demo;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 public abstract class BaseMonster : MonoBehaviour
 {
@@ -20,72 +16,83 @@ public abstract class BaseMonster : MonoBehaviour
     [SerializeField] private GameObject FrontDSprite;
     [SerializeField] private GameObject SideDSprite;
 
+    [Header("옵션")]
+    [SerializeField] private bool usePooling = true; // 풀링 사용 여부 (true면 SetActive(false), false면 Destroy)
+
+    [Header("드롭")]
+    [SerializeField] public GameObject dropItem;
+
     private GameObject currentSprite;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer sideDSpriteRenderer;
     private MonsterAnimationController monAni;
+
     public float moveThreshold = 0.01f;
 
-    private Vector3 lastPosition;
     private string lastDirection = "Front";
     private BehaviorGraphAgent agent2;
     private NavMeshAgent agent;
-    private BlackboardVariable var;
     private EnemyFSM fsm;
+
     private bool isAttacking = false;
     private bool isDead = false;
-    public bool isClose;
     private bool isHit = false; // Wave에 맞았는지 여부
 
+    // 추가: 사망 통지자
+    private EnemyDeathNotifier deathNotifier;
+
     protected virtual void Start()
-    { 
+    {
         monAni = GetComponent<MonsterAnimationController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        sideDSpriteRenderer = SideDSprite.GetComponent<SpriteRenderer>();
+        if (SideDSprite != null) sideDSpriteRenderer = SideDSprite.GetComponent<SpriteRenderer>();
         agent2 = GetComponent<BehaviorGraphAgent>();
         agent = GetComponent<NavMeshAgent>();
         fsm = GetComponent<EnemyFSM>();
 
+        // ★ 추가: Notifier 참조 (스포너가 Init해둠)
+        deathNotifier = GetComponent<EnemyDeathNotifier>();
+        if (deathNotifier == null) deathNotifier = gameObject.AddComponent<EnemyDeathNotifier>(); // 안전망
+
         currentHealth = MonsterHealth;
-        lastPosition = transform.position;
-        FrontDSprite.SetActive(false);
-        SideDSprite.SetActive(false);
+
+        if (FrontDSprite) FrontDSprite.SetActive(false);
+        if (SideDSprite) SideDSprite.SetActive(false);
     }
 
     protected virtual void Update()
     {
-        if (!isDead)
-        {
-            Vector3 velocity = agent.velocity;
+        if (isDead) return;
 
-            if (velocity.magnitude < moveThreshold)
+        Vector3 velocity = agent != null ? agent.velocity : Vector3.zero;
+
+        if (velocity.magnitude < moveThreshold)
+        {
+            SetActiveSprite(lastDirection);
+            monAni?.PlayIdle(lastDirection);
+        }
+        else
+        {
+            // 타겟 기준 바라보기
+            if (fsm != null && fsm.target != null)
             {
-                SetActiveSprite(lastDirection);
-                monAni.PlayIdle(lastDirection);
-            }
-            else
-            {
-                // 움직였으면 target 기준으로 바라보게 설정
                 Vector3 dirToTarget = fsm.target.position - transform.position;
                 string direction = GetDirection(dirToTarget);
                 lastDirection = direction;
 
                 SetActiveSprite(direction);
 
-                if (direction == "Side")
+                if (direction == "Side" && spriteRenderer != null && sideDSpriteRenderer != null)
                 {
                     bool flip = dirToTarget.x < 0;
                     spriteRenderer.flipX = flip;
                     sideDSpriteRenderer.flipX = flip;
                 }
 
-                monAni.PlayWalk(direction);
+                monAni?.PlayWalk(direction);
             }
         }
     }
-
-
-
 
     private string GetDirection(Vector3 delta)
     {
@@ -96,7 +103,6 @@ public abstract class BaseMonster : MonoBehaviour
     public void EnterAttackMode()
     {
         isAttacking = true;
-
         FrontSprite?.SetActive(false);
         BackSprite?.SetActive(false);
         SideSprite?.SetActive(false);
@@ -111,95 +117,105 @@ public abstract class BaseMonster : MonoBehaviour
 
     private void SetActiveSprite(string direction)
     {
-        if (isAttacking) return; // 공격 중이면 스프라이트 표시하지 않음
+        if (isAttacking) return;
 
-        // 모두 끄기
         FrontSprite?.SetActive(false);
         BackSprite?.SetActive(false);
         SideSprite?.SetActive(false);
 
-        // 방향별로 선택
         switch (direction)
         {
-            case "Front":
-                currentSprite = FrontSprite;
-                break;
-            case "Back":
-                currentSprite = BackSprite;
-                break;
-            case "Side":
-                currentSprite = SideSprite;
-                break;
+            case "Front": currentSprite = FrontSprite; break;
+            case "Back": currentSprite = BackSprite; break;
+            case "Side": currentSprite = SideSprite; break;
         }
 
         currentSprite?.SetActive(true);
     }
 
-
     public abstract void Attack();
 
     public virtual void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         StartCoroutine(DamageAni());
         currentHealth -= damage;
-        if (currentHealth <= 0) Die();
+
+        if (currentHealth <= 0f)
+            Die();
     }
 
     IEnumerator DamageAni()
     {
-        agent.isStopped = true;
+        if (agent != null) agent.isStopped = true;
 
         if (lastDirection == "Front" || lastDirection == "Back" || currentHealth <= 0)
         {
-            FrontDSprite.SetActive(true);
+            if (FrontDSprite) FrontDSprite.SetActive(true);
             yield return new WaitForSeconds(0.2f);
-            FrontDSprite.SetActive(false);
+            if (FrontDSprite) FrontDSprite.SetActive(false);
         }
         else
         {
-            SideDSprite.SetActive(true);
+            if (SideDSprite) SideDSprite.SetActive(true);
             yield return new WaitForSeconds(0.2f);
-            SideDSprite.SetActive(false);
+            if (SideDSprite) SideDSprite.SetActive(false);
         }
-       
-        agent.isStopped = false;
+
+        if (!isDead && agent != null) agent.isStopped = false;
     }
 
-
-    public bool IsDead()
-    {
-        return currentHealth <= 0;
-    }
+    public bool IsDead() => currentHealth <= 0f;
 
     protected virtual void Die()
     {
-        FrontSprite.SetActive(false);
-        BackSprite.SetActive(false);
-        SideSprite.SetActive(false);
-
-        agent.isStopped = true;
-        agent.ResetPath();
-        agent.velocity = Vector3.zero;
-        agent2.enabled = false;
+        if (isDead) return;
         isDead = true;
+
+        // 이동/AI 정지
+        if (FrontSprite) FrontSprite.SetActive(false);
+        if (BackSprite) BackSprite.SetActive(false);
+        if (SideSprite) SideSprite.SetActive(false);
+
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.velocity = Vector3.zero;
+        }
+        if (agent2 != null) agent2.enabled = false;
+
+        // 가장 중요: 사망 통지 (스포너에게 한 번만)
+        deathNotifier?.NotifyDeath();
+
+        // 연출 후 회수/파괴
         StartCoroutine(DieAni());
+        Instantiate(dropItem, transform.position, Quaternion.identity);
     }
 
     IEnumerator DieAni()
-    { 
-        FrontSprite.SetActive(false);
-        BackSprite.SetActive(false);
-        SideSprite.SetActive(false);
-        monAni.PlayDie();
+    {
+        monAni?.PlayDie();
         yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+
+        if (usePooling)
+        {
+            // 풀링: 비활성화해서 풀로 반환(풀 구현에 맞춰 OnDisable에서 회수하거나 외부 매니저가 감시)
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDead) return;
+
         if (collision.CompareTag("SongPeyon"))
         {
-            Debug.Log("Monster hit by SongPyeon projectile.");
             if (collision.TryGetComponent<EnemyProjectile>(out EnemyProjectile projectile))
             {
                 if (projectile.isReflected)
@@ -208,7 +224,7 @@ public abstract class BaseMonster : MonoBehaviour
                     Destroy(projectile.gameObject);
                 }
             }
-            else return;
+            return;
         }
 
         if (collision.CompareTag("Wave") && !isHit)
@@ -217,15 +233,14 @@ public abstract class BaseMonster : MonoBehaviour
             {
                 isHit = true;
                 TakeDamage(wave.damage);
-                StartCoroutine(WaveDmg()); // 0.5초 후 다시 맞을 수 있도록 설정
+                StartCoroutine(WaveDmg());
             }
-            else return;
         }
     }
 
     IEnumerator WaveDmg()
     {
-           yield return new WaitForSeconds(0.5f); // 0.5초 후 다시 맞을 수 있도록 설정
-          isHit = false;
+        yield return new WaitForSeconds(0.5f);
+        isHit = false;
     }
 }

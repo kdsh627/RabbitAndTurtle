@@ -1,34 +1,45 @@
+using System;
 using System.Collections;
 using Unity.Behavior.Demo;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
+    private float currentHealth;
+
     public float maxHealth = 100f; // 최대 체력
-    public float currentHealth; // 현재 체력
+    public float CurrentHealth // 현재 체력
+    {
+        get => currentHealth;
+        set
+        {
+            currentHealth = value; 
+            ValueChanged?.Invoke();
+        }
+    }
     private PlayerBlock playerBlock;
     private PlayerMovement playerMovement;
     private PlayerAnimationController animatorController;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public event Action ValueChanged;
+
     void Start()
     {
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
-        currentHealth = maxHealth; // 초기 체력 설정
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        animatorController = GetComponent<PlayerAnimationController>();
+        CurrentHealth = maxHealth; // 초기 체력 설정
     }
 
     public virtual void TakeDamage(float damage)
     {
+        if(animatorController.isDie)
+            return;
+
         StartCoroutine(playerMovement.DamageAni());
-        currentHealth -= damage;
-        if (currentHealth <= 0) Die();
+        CurrentHealth -= damage;
+        ValueChanged?.Invoke();
+        if (CurrentHealth <= 0) Die();
     }
 
     public void Die()

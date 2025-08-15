@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable]
 public struct StageData
 {
-    public string ScenePath;
     public int MaxWaveCount;
     public float[] MaxWaveTime;
 }

@@ -21,7 +21,7 @@ TagManager:
   - Player
   - Coin
   - Monster
-  - 
+  - CoreUI
   - 
   - 
   - 
@@ -50,6 +50,12 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 127930021
+    locked: 0
+  - name: CoreUI
+    uniqueID: 1886603949
     locked: 0
   m_RenderingLayers:
   - Default
