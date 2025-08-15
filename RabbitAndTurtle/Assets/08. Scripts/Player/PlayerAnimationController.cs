@@ -5,28 +5,28 @@ using UnityEngine.Android;
 public class PlayerAnimationController : MonoBehaviour
 {
     private Animator ani;
-    public bool isDie = false;
-
+    private PlayerStat playerStat;
     public void Awake()
     {
         ani = GetComponent<Animator>();
+        playerStat = GetComponent<PlayerStat>();
     }
 
     public void PlayIdle(string Dir)
     {
-        if (isDie) return;
+        if (playerStat.isDie) return;
         ani.Play($"{Dir}Idle");
     }
 
     public void PlayWalk(string Dir)
     {
-        if (isDie) return;
+        if (playerStat.isDie) return;
         ani.Play($"{Dir}Walk");
     }
 
     public void PlayGuard()
     {
-        if (isDie) return;
+        if (playerStat.isDie) return;
         ani.Play("Block");
     }
 
