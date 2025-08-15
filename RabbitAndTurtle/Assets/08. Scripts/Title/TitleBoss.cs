@@ -9,6 +9,6 @@ public class TitleBoss : MonoBehaviour
 
     void Start()
     {
-        transform.DOMoveY(_targetPosition, _duration).SetEase(_ease).SetLoops(-1, LoopType.Yoyo);
+        transform.DOMoveY(_targetPosition, _duration).SetEase(_ease).SetUpdate(true).SetLoops(-1, LoopType.Yoyo);
     }
 }

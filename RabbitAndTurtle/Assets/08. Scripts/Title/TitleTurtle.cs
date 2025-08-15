@@ -9,6 +9,6 @@ public class TitleTurtle : MonoBehaviour
 
     void Start()
     {
-        transform.DOScaleY(_targetScale, _duration).SetEase(_ease).SetLoops(-1, LoopType.Yoyo);
+        transform.DOScaleY(_targetScale, _duration).SetEase(_ease).SetUpdate(true).SetLoops(-1, LoopType.Yoyo);
     }
 }
