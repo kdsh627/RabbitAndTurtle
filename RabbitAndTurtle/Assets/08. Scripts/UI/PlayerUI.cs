@@ -13,22 +13,25 @@ public class PlayerUI : MonoBehaviour
     [Header("----- 모델 -----")]
     [SerializeField] private PlayerStat _playerStat;
     [SerializeField] private PlayerBlock _shieldStat;
+    [SerializeField] private LevelDataSO _levelData;
 
     private void Awake()
     {
+        _levelData.valueChanged += UpdateView;
         _playerStat.ValueChanged += UpdateView;
         _shieldStat.ValueChanged += UpdateView;
     }
 
     private void OnDestroy()
     {
+        _levelData.valueChanged -= UpdateView;
         _playerStat.ValueChanged -= UpdateView;
         _shieldStat.ValueChanged -= UpdateView;
     }
 
     private void UpdateView()
     {
-        //_levelText.text = _playerStat.Level;
+        _levelText.text = _levelData.Level.ToString();
 
         float hp = _playerStat.CurrentHealth / _playerStat.maxHealth;
         _hpBar.fillAmount = hp;
@@ -36,11 +39,7 @@ public class PlayerUI : MonoBehaviour
         float shield = _shieldStat.CurrentGauge / _shieldStat.MaxBlockTime;
         _shieldBar.fillAmount = shield;
 
-        //float exp = _playerStat.currentExp / _playerStat.maxExp;
-
-        //if (_expBar.fillAmount != exp)
-        //{
-        //    _expBar.fillAmount = exp;
-        //}
+        float exp = _levelData.Exp / _levelData.MaxExp;
+        _expBar.fillAmount = exp;
     }
 }
