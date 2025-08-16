@@ -41,11 +41,6 @@ public class EnemyProjectile : MonoBehaviour
         // 이동 방향 결정
         Vector2 dir = (target.position - transform.position).normalized;
         movement.MoveTo(dir);
-
-        // 파티클 방향(라디안) 맞추고 터뜨리기
-        SetParticleRotation(dir);
-        PlayShootParticle();
-
         isReflected = false;
 
         // 풀 복귀 예약
@@ -66,9 +61,6 @@ public class EnemyProjectile : MonoBehaviour
         // 현재 속도 기준으로 새 방향 계산
         Vector2 v = rb ? rb.linearVelocity : Vector2.right;
         if (v.sqrMagnitude < 0.0001f) v = Vector2.right; // 안전장치
-
-        SetParticleRotation(v.normalized);
-        PlayShootParticle(); // 반사 스파크를 원치 않으면 이 줄 제거
     }
 
     private void ReturnToPool()
@@ -92,25 +84,6 @@ public class EnemyProjectile : MonoBehaviour
 
         // TODO: 플레이어/벽 등 다른 충돌 처리 필요 시 여기에 추가
     }
+   
 
-    private void SetParticleRotation(Vector2 dir)
-    {
-        if (shootPS == null) return;
-
-        // 오른쪽(+X)이 0 라디안 기준 → 오프셋 불필요
-        float angleRad = Mathf.Atan2(dir.y, dir.x);
-
-        var main = shootPS.main;
-        main.startRotation = angleRad;
-
-        // 파티클 오브젝트 자체 회전은 0으로(중복 회전 방지)
-        shootPS.transform.rotation = Quaternion.identity;
-    }
-
-    private void PlayShootParticle()
-    {
-        if (shootPS == null) return;
-        shootPS.Clear(true);
-        shootPS.Play(true);
-    }
 }

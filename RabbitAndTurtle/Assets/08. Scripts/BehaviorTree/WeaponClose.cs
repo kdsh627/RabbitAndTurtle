@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 public class WeaponClose : WeaponBase
@@ -12,9 +13,12 @@ public class WeaponClose : WeaponBase
     private EnemyFSM fsm;
     private BaseMonster baseMonster;
     [SerializeField] private int closeProjectileIndex;
+    private NavMeshAgent agent;
 
-    private void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         fsm = GetComponent<EnemyFSM>();
         baseMonster = GetComponent<BaseMonster>();
     }

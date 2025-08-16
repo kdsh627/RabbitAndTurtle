@@ -13,6 +13,9 @@ public class Whale : MonoBehaviour
     public float effectLife = 1.2f;
     public float peakScaleMultiplier = 1.3f;
 
+    [Header("던질 때 켤 파티클")]
+    public ParticleSystem Effect;     // 처음엔 꺼둔 상태(비활성 or Stop)
+
     Vector3 baseScale;
     bool running;
 
@@ -30,6 +33,9 @@ public class Whale : MonoBehaviour
     IEnumerator DoLaunch(Vector2 dir, ThrowMode mode)
     {
         running = true;
+
+        // ▼ 던지기 시작 시 파티클 켜기 + 오른쪽이면 flipX
+        PlayParticleForDir(dir);
 
         Vector3 start = transform.position;
         Vector3 end = start + (Vector3)(dir * range);
@@ -52,10 +58,9 @@ public class Whale : MonoBehaviour
             {
                 transform.position = pos;
 
-                // 0→1→0 형태의 간단 곡선(수학식)
+                // 0→1→0 형태
                 float k = 1f - Mathf.Abs(2f * n - 1f); // 0,1,0
                 float s = Mathf.Lerp(1f, peakScaleMultiplier, k);
-
                 transform.localScale = baseScale * s;
             }
 
@@ -72,6 +77,24 @@ public class Whale : MonoBehaviour
             var eff = Instantiate(landEffectPrefab, end, Quaternion.identity);
             Destroy(eff, effectLife);
         }
+
         Destroy(gameObject);
+    }
+
+    void PlayParticleForDir(Vector2 dir)
+    {
+        if (Effect == null) return;
+
+        // Renderer 가져오기
+        var psr = Effect.GetComponent<ParticleSystemRenderer>();
+        if (psr != null)
+        {
+            // 왼쪽으로 던질 땐 그대로(0), 오른쪽일 때만 flipX(= U축 뒤집기)
+            psr.flip = (dir.x > 0f) ?  Vector3.zero : new Vector3(1f, 0f, 0f);
+        }
+
+        if (!Effect.gameObject.activeSelf) Effect.gameObject.SetActive(true);
+        Effect.Clear(true);
+        Effect.Play(true);
     }
 }
