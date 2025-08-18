@@ -1,6 +1,7 @@
 using Manager;
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 
 public class PlayerBlock : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class PlayerBlock : MonoBehaviour
     public bool isExhausted { get; private set; } = false;
 
     public event Action ValueChanged;
-
+   
     private enum BlockState
     {
         Idle,
@@ -47,11 +48,14 @@ public class PlayerBlock : MonoBehaviour
 
     private bool isBlockButtonHeld = false;
 
+    private PlayerStat playerStat;
+
 
     void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         animatorController = GetComponent<PlayerAnimationController>();
+        playerStat = GetComponent<PlayerStat>(); // PlayerStat 컴포넌트 초기화 
         CurrentGauge = MaxBlockTime;
         ExhaustedEff.SetActive(false); // 탈진 이펙트 비활성화
         BlockCollider.SetActive(false);
@@ -59,19 +63,22 @@ public class PlayerBlock : MonoBehaviour
 
     void Update()
     {
-        switch (currentState)
+        if (!playerStat.isDie)
         {
-            case BlockState.Idle:
-                HandleIdle();
-                break;
+            switch (currentState)
+            {
+                case BlockState.Idle:
+                    HandleIdle();
+                    break;
 
-            case BlockState.Blocking:
-                HandleBlocking();
-                break;
+                case BlockState.Blocking:
+                    HandleBlocking();
+                    break;
 
-            case BlockState.Exhausted:
-                HandleExhausted();
-                break;
+                case BlockState.Exhausted:
+                    HandleExhausted();
+                    break;
+            }
         }
     }
 

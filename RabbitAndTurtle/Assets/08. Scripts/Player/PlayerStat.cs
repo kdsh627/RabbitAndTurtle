@@ -21,6 +21,8 @@ public class PlayerStat : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerAnimationController animatorController;
 
+    public bool isDie = false;
+
     public event Action ValueChanged;
 
     void Start()
@@ -29,11 +31,12 @@ public class PlayerStat : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         animatorController = GetComponent<PlayerAnimationController>();
         CurrentHealth = maxHealth; // 초기 체력 설정
+        isDie = false;
     }
 
     public virtual void TakeDamage(float damage)
     {
-        if(animatorController.isDie)
+        if(isDie)
             return;
 
         StartCoroutine(playerMovement.DamageAni());
@@ -44,7 +47,7 @@ public class PlayerStat : MonoBehaviour
 
     public void Die()
     {
-        animatorController.isDie = true;
+        isDie = true;
         playerMovement.enabled = false;
         animatorController.PlayDie();
     }

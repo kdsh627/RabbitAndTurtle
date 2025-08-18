@@ -18,9 +18,9 @@ public abstract class WeaponBase : MonoBehaviour
     private bool isSkillAvailable = true;
     private NavMeshAgent agent;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-       agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
     public void Setup(Transform target, float damage, float cooldownTime)
     {

@@ -18,6 +18,9 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private int maxMonsterCount = 40;
     [SerializeField] private int killsPerElite = 10; // n킬마다 엘리트 1마리
 
+    [Header("실행 옵션")]
+    [SerializeField] private bool autoStart = true; // true면 Start()에서 자동으로 초기 스폰 + 루프 시작
+
     private int currentMonsterCount = 0;
     private int[] killCounts; // 일반 몬스터 처치 수
 
@@ -30,20 +33,42 @@ public class MonsterSpawner : MonoBehaviour
         public GameObject[] wayPoints;
     }
 
-    [SerializeField]
-    private WayPointData[] wayPointData;
+    [SerializeField] private WayPointData[] wayPointData;
 
+    private Coroutine spawnLoopRoutine;
+    private bool initialized = false;
+
+    // ---------------------------
+    // 라이프사이클
+    // ---------------------------
     private void Awake()
     {
+        Initialize(); // 초기화만 수행 (스폰/코루틴 시작 X)
+    }
+
+    private void Start()
+    {
+        if (!initialized) return;
+        if (autoStart)
+        {
+            SpawnInitialBatch();
+            StartSpawnLoop();
+        }
+    }
+
+    // ---------------------------
+    // 초기화(데이터 준비) - 웨이브에서 재사용 가능
+    // ---------------------------
+    public void Initialize()
+    {
+        if (initialized) return;
+
         if (tileMap == null)
         {
             Debug.LogError("[MonsterSpawner] Tilemap이 할당되지 않았어.");
             enabled = false;
             return;
         }
-
-        tileMap.CompressBounds();
-        CalculatePossibleTiles();
 
         if (enemyPrefabs == null || enemyPrefabs.Count == 0)
         {
@@ -52,14 +77,13 @@ public class MonsterSpawner : MonoBehaviour
             return;
         }
 
+        tileMap.CompressBounds();
+        CalculatePossibleTiles();
+
         killCounts = new int[enemyPrefabs.Count];
+        currentMonsterCount = 0;
 
-        // 초기 스폰
-        for (int i = 0; i < initialSpawnCount; i++)
-            SpawnEnemy();
-
-        // 지속 스폰 루프
-        StartCoroutine(SpawnLoop());
+        initialized = true;
     }
 
     private void CalculatePossibleTiles()
@@ -88,6 +112,35 @@ public class MonsterSpawner : MonoBehaviour
             Debug.LogWarning("[MonsterSpawner] 스폰 가능한 타일이 하나도 없어.");
     }
 
+    // ---------------------------
+    // 스폰 제어(웨이브에서 호출)
+    // ---------------------------
+    /// <summary>초기 몬스터 패킷 스폰(한 번)</summary>
+    public void SpawnInitialBatch()
+    {
+        if (!initialized) return;
+        for (int i = 0; i < initialSpawnCount; i++)
+            SpawnEnemy();
+    }
+
+    /// <summary>지속 스폰 루프 시작</summary>
+    public void StartSpawnLoop()
+    {
+        if (!initialized) return;
+        if (spawnLoopRoutine != null) return;
+        spawnLoopRoutine = StartCoroutine(SpawnLoop());
+    }
+
+    /// <summary>지속 스폰 루프 정지</summary>
+    public void StopSpawnLoop()
+    {
+        if (spawnLoopRoutine != null)
+        {
+            StopCoroutine(spawnLoopRoutine);
+            spawnLoopRoutine = null;
+        }
+    }
+
     private IEnumerator SpawnLoop()
     {
         while (true)
@@ -100,6 +153,9 @@ public class MonsterSpawner : MonoBehaviour
         }
     }
 
+    // ---------------------------
+    // 개별 스폰 로직
+    // ---------------------------
     private void SpawnEnemy()
     {
         if (possibleTiles.Count == 0) return;
@@ -112,13 +168,10 @@ public class MonsterSpawner : MonoBehaviour
 
         int prefabIndex = Random.Range(0, enemyPrefabs.Count);
 
-        // 일반 몬스터는 풀에서 꺼내는 기존 방식 유지
+        // 일반 몬스터는 풀에서 꺼냄(없으면 Instantiate)
         GameObject clone = MonsterPool.Instance.Get(prefabIndex);
         if (clone == null)
-        {
-            // 풀에 없으면 안전장치로 Instantiate(권장: 풀에서 관리하도록 통일)
             clone = Instantiate(enemyPrefabs[prefabIndex]);
-        }
 
         clone.transform.position = possibleTiles[tileIndex];
 
@@ -128,34 +181,9 @@ public class MonsterSpawner : MonoBehaviour
 
         var notifier = clone.GetComponent<EnemyDeathNotifier>();
         if (notifier == null) notifier = clone.AddComponent<EnemyDeathNotifier>();
-        notifier.Init(this, prefabIndex, false); // 일반 몬스터 → isElite=false
+        notifier.Init(this, prefabIndex, false); // 일반 몬스터
 
         currentMonsterCount++;
-    }
-
-    /// <summary>
-    /// 적이 죽었을 때 Notifier에서 호출됨
-    /// </summary>
-    public void OnMonsterDied(int prefabIndex, bool isElite)
-    {
-        currentMonsterCount = Mathf.Max(0, currentMonsterCount - 1);
-
-        // 엘리트 처치는 카운트 제외(원하면 별도 배열로 분리 관리)
-        if (!isElite)
-        {
-            if (prefabIndex < 0 || prefabIndex >= killCounts.Length)
-            {
-                Debug.LogWarning($"[MonsterSpawner] 잘못된 prefabIndex {prefabIndex}");
-                return;
-            }
-
-            killCounts[prefabIndex]++;
-
-            if (killsPerElite > 0 && killCounts[prefabIndex] % killsPerElite == 0)
-            {
-                SpawnElite(prefabIndex);
-            }
-        }
     }
 
     private void SpawnElite(int index)
@@ -174,9 +202,7 @@ public class MonsterSpawner : MonoBehaviour
             ? Random.Range(0, wayPointData.Length)
             : -1;
 
-        // 기본: Instantiate로 엘리트 생성 (엘리트도 풀링하고 싶으면 MonsterPool에 전용 채널 추가)
         GameObject elite = Instantiate(elitePrefabs[index]);
-
         elite.transform.position = possibleTiles[tileIndex];
 
         var fsm = elite.GetComponent<EnemyFSM>();
@@ -185,8 +211,32 @@ public class MonsterSpawner : MonoBehaviour
 
         var notifier = elite.GetComponent<EnemyDeathNotifier>();
         if (notifier == null) notifier = elite.AddComponent<EnemyDeathNotifier>();
-        notifier.Init(this, index, true); // 엘리트 → isElite=true
+        notifier.Init(this, index, true); // 엘리트
 
         currentMonsterCount++;
+    }
+
+    // ---------------------------
+    // 콜백(사망 통지)
+    // ---------------------------
+    public void OnMonsterDied(int prefabIndex, bool isElite)
+    {
+        currentMonsterCount = Mathf.Max(0, currentMonsterCount - 1);
+
+        if (!isElite)
+        {
+            if (prefabIndex < 0 || prefabIndex >= killCounts.Length)
+            {
+                Debug.LogWarning($"[MonsterSpawner] 잘못된 prefabIndex {prefabIndex}");
+                return;
+            }
+
+            killCounts[prefabIndex]++;
+
+            if (killsPerElite > 0 && killCounts[prefabIndex] % killsPerElite == 0)
+            {
+                SpawnElite(prefabIndex);
+            }
+        }
     }
 }

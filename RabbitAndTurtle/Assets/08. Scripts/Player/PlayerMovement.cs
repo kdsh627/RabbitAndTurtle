@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerBlock playerBlock; // PlayerBlock 컴포넌트 추가
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer sideDSpriteRenderer;
+    private PlayerStat playerStat; // PlayerStat 컴포넌트 추가
     public float moveSpeed = 5f;
 
     private Rigidbody2D rb;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         sideDSpriteRenderer = SideDSprite.GetComponent<SpriteRenderer>();
         playerBlock = GetComponent<PlayerBlock>();
+        playerStat = GetComponent<PlayerStat>(); // PlayerStat 컴포넌트 초기화
     }
     private void Start()
     {
@@ -33,6 +35,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SetMoveInput(Vector2 input)
     {
+        // 죽었으면 어떤 입력/회전/애니메이션 갱신도 하지 않음
+        if (playerStat != null && playerStat.isDie)
+        {
+            moveInput = Vector2.zero;          // 혹시 남아있는 이동 입력 제거
+            return;
+        }
+
         moveInput = input;
 
         if (moveInput == Vector2.zero)
@@ -46,14 +55,15 @@ public class PlayerMovement : MonoBehaviour
 
             if (direction == "Side")
             {
-                // 오른쪽 기준 → 왼쪽이면 flipX
-                spriteRenderer.flipX = moveInput.x < 0;
-                sideDSpriteRenderer.flipX = moveInput.x < 0;
+                bool flip = moveInput.x < 0;
+                spriteRenderer.flipX = flip;
+                sideDSpriteRenderer.flipX = flip;
             }
 
             animatorController.PlayWalk(direction);
         }
     }
+
 
     public IEnumerator DamageAni()
     {
@@ -72,7 +82,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(playerBlock.isBlock || playerBlock.isExhausted)
+        if(playerStat.isDie) return;
+
+        if (playerBlock.isBlock || playerBlock.isExhausted)
             rb.MovePosition(rb.position + moveInput.normalized * (moveSpeed - 4f) * Time.fixedDeltaTime);
 
         else
