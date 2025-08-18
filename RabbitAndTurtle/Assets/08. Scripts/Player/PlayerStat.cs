@@ -50,6 +50,12 @@ public class PlayerStat : MonoBehaviour
         isDie = true;
         playerMovement.enabled = false;
         animatorController.PlayDie();
+        Invoke("GameOver", 1f);
+    }
+
+    private void GameOver()
+    {
+        GameEventHandler.GameOverExcuted_Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
