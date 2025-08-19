@@ -8,7 +8,7 @@ namespace State.GameState
 
         private GameState _currentGameState;
 
-        public GameState CurrentGameState => _currentGameState;
+        public GameState SceneType => _currentGameState;
 
         /// <summary>
         /// 생성자
@@ -17,11 +17,11 @@ namespace State.GameState
         public StageClearState(GameStateManager gameStateManager)
         {
             _gameStateManager = gameStateManager;
+            _currentGameState = GameState.StageClear;
         }
 
         public void Enter()
         {
-            _currentGameState = GameState.StageClear;
             _gameStateManager.StageClearInit();
         }
 

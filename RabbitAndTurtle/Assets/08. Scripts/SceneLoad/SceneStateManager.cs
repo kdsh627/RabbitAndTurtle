@@ -4,13 +4,17 @@ using State;
 using State.SceneState;
 using StateMachine.SceneStateMachine;
 using UnityEngine;
+using static UnityEngine.Video.VideoPlayer;
 
 
 namespace Manager
 {
     public class SceneStateManager : MonoBehaviour
     {
+        public static SceneStateManager Instance { get; private set; }
+
         private SceneStateMachine _sceneStateMachine;
+        public ISceneState _nextSceneState;
         private string _currentScenePath;
 
         public SceneStateMachine SceneStateMachine => _sceneStateMachine;
@@ -18,9 +22,12 @@ namespace Manager
         public string GameScenePath => SceneDataManager.Instance.WaveCoreScene;
         public string ClearScenePath => SceneDataManager.Instance.ClearScene;
 
+        public ISceneState NextSceneState => _nextSceneState;
+
 
         private void Awake()
         {
+            Instance = this;
             _currentScenePath = "";
             _sceneStateMachine = new SceneStateMachine(this);
         }
@@ -28,30 +35,23 @@ namespace Manager
         private void Start()
         {
             _sceneStateMachine.Initialize(_sceneStateMachine._titleState);
+            GameEventHandler.TitleExcuted_Invoke();
         }
 
         private void OnEnable()
         {
-            _sceneStateMachine.stateChanged += ChangeScene;
-
-            GameEventHandler.TitleExcuted += () => GameEvent_TransitionState(SceneState.Title);
-            GameEventHandler.GamePlayExcuted += () => GameEvent_TransitionState(SceneState.GamePlay);
-            GameEventHandler.GameClearExcuted += () => GameEvent_TransitionState(SceneState.Clear);
+            GameEventHandler.TitleExcuted += GameEvent_ToTitle;
+            GameEventHandler.GamePlayExcuted += GameEvent_ToGame;
+            GameEventHandler.GameClearExcuted += GameEvent_ToClear;
             GameEventHandler.ExitExcuted += GameEvent_Exit;
         }
 
         private void OnDisable()
         {
-            _sceneStateMachine.stateChanged -= ChangeScene;
-            GameEventHandler.TitleExcuted -= () => GameEvent_TransitionState(SceneState.Title);
-            GameEventHandler.GamePlayExcuted -= () => GameEvent_TransitionState(SceneState.GamePlay);
-            GameEventHandler.GameClearExcuted -= () => GameEvent_TransitionState(SceneState.Clear);
+            GameEventHandler.TitleExcuted -= GameEvent_ToTitle;
+            GameEventHandler.GamePlayExcuted -= GameEvent_ToGame;
+            GameEventHandler.GameClearExcuted -= GameEvent_ToClear;
             GameEventHandler.ExitExcuted -= GameEvent_Exit;
-        }
-
-        private void GameEvent_TransitionState(SceneState state)
-        {
-            _sceneStateMachine.TransitionState(state);
         }
 
         private void GameEvent_Exit()
@@ -59,21 +59,47 @@ namespace Manager
             Application.Quit();
         }
 
-        private void ChangeScene(IState state)
+        private void GameEvent_ToTitle()
         {
-            string scenePath = (state as ISceneState).ScenePath;
+            _nextSceneState = _sceneStateMachine._titleState;
 
-            List<string> subScenes = new List<string>();
-            subScenes.Add(SceneDataManager.Instance.GetWaveSubScene(0));
+            GameEvent_TransitionScene(_nextSceneState);
+        }
 
-            switch ((state as ISceneState).CurrentSceneState)
+        private void GameEvent_ToGame()
+        {
+            _nextSceneState = _sceneStateMachine._gamePlayState;
+
+            GameEvent_TransitionScene(_nextSceneState);
+        }
+
+        private void GameEvent_ToClear()
+        {
+            _nextSceneState = _sceneStateMachine._clearState;
+
+            GameEvent_TransitionScene(_nextSceneState);
+        }
+
+        private void GameEvent_TransitionScene(ISceneState state)
+        {
+            StateManager.Instance._stateMachine = _sceneStateMachine;
+            StateManager.Instance._nextState = _nextSceneState;
+            ChangeScene(state);
+        }
+
+        private void ChangeScene(ISceneState state)
+        {
+            string scenePath = state.ScenePath;
+
+            if(state.StateType == SceneState.GamePlay)
             {
-                case SceneState.GamePlay:
-                    SceneEventHandler.SceneStateChangedAndLoadScenes_Invoke(scenePath, _currentScenePath, subScenes);
-                    break;
-                default:
-                    SceneEventHandler.SceneStateChanged_Invoke(scenePath, _currentScenePath);
-                    break;
+                List<string> subScenes = new List<string>() { SceneDataManager.Instance.GetWaveSubScene(0) };
+
+                SceneEventHandler.SceneStateChangedAndLoadScenes_Invoke(scenePath, _currentScenePath, subScenes);
+            }
+            else
+            {
+                SceneEventHandler.SceneStateChanged_Invoke(scenePath, _currentScenePath);
             }
 
             _currentScenePath = scenePath;

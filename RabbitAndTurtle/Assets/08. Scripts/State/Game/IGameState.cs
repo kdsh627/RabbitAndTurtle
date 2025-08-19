@@ -13,6 +13,6 @@ namespace State.GameState
 
     public interface IGameState : IState
     {
-        public GameState CurrentGameState { get; }
+        public GameState SceneType { get; }
     }
 }

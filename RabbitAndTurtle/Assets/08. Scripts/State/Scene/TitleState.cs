@@ -9,7 +9,7 @@ namespace State.SceneState
 
         private SceneState _currentSceneState;
         private string _scenePath;
-        public SceneState CurrentSceneState => _currentSceneState;
+        public SceneState StateType => _currentSceneState;
         public string ScenePath => _scenePath;
 
         /// <summary>
@@ -20,11 +20,11 @@ namespace State.SceneState
         {
             _sceneStateManager = sceneStateManager;
             _scenePath = sceneStateManager.TitleScenePath;
+            _currentSceneState = SceneState.Title;
         }
 
         public void Enter()
         {
-            _currentSceneState = SceneState.Title;
         }
 
         public void Execute()

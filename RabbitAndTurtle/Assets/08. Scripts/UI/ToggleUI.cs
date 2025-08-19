@@ -6,6 +6,8 @@ public class ToggleUI : MonoBehaviour
     [SerializeField] private string _name;
     [SerializeField] private GameObject _ui;
 
+    public string Name => _name;
+    public GameObject UI => _ui;
     private void Awake()
     {
         _ui.SetActive(false);

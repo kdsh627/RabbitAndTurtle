@@ -61,6 +61,10 @@ public class WaveManager : MonoBehaviour
     private void Awake()
     {
         GameStateManager.Instace.SetWaveManager(this);
+    }
+
+    private void Start()
+    {
         GameEventHandler.StageExcuted_Invoke();
     }
 
