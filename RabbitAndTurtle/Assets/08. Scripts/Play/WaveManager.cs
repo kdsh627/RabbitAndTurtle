@@ -5,6 +5,10 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public event Action WaveValueChanged;
+
+    [Header("---- 태어날 위치 ----")]
+    [SerializeField] private Vector3 startPosition;
+
     public void WaveValueChanged_Invoke() => WaveValueChanged?.Invoke();
 
     private float _waveTime;
@@ -65,6 +69,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.Player.transform.position = startPosition;
         GameEventHandler.StageExcuted_Invoke();
     }
 

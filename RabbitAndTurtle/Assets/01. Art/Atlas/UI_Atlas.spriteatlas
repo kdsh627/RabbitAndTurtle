@@ -85,7 +85,7 @@ SpriteAtlas:
   - Shield_Bar
   - Health_Bar
   - Skill_Card
-  - Info_Panel
+  - INFO_Panel
   - Panel
   - Right_Panel
   m_RenderDataMap: {}
