@@ -160,6 +160,8 @@ namespace Utilities
         {
             yield return SceneManager.LoadSceneAsync(LoadingScenePath, LoadSceneMode.Additive);
 
+            yield return UnloadLastSceneRoutine();
+
             yield return UnloadAllAdditiveScenesRoutine();
 
             yield return UnloadSceneRoutine(prevCoreScenePath);
@@ -200,6 +202,8 @@ namespace Utilities
         private IEnumerator LoadingSceneRoutine(string coreScenePath, string prevCoreScenePath, List<string> subScenePaths)
         {
             yield return SceneManager.LoadSceneAsync(LoadingScenePath, LoadSceneMode.Additive);
+
+            yield return UnloadLastSceneRoutine();
 
             yield return UnloadAllAdditiveScenesRoutine();
             yield return UnloadSceneRoutine(prevCoreScenePath);

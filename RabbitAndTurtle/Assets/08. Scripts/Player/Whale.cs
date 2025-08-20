@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public enum ThrowMode { SideParabola, VerticalScale }
@@ -15,6 +16,9 @@ public class Whale : MonoBehaviour
 
     [Header("던질 때 켤 파티클")]
     public ParticleSystem Effect;     // 처음엔 꺼둔 상태(비활성 or Stop)
+
+    [Header("카메라 흔들림")]
+    public CinemachineImpulseSource _impulseSource;
 
     Vector3 baseScale;
     bool running;
@@ -78,6 +82,7 @@ public class Whale : MonoBehaviour
             Destroy(eff, effectLife);
         }
 
+        _impulseSource.GenerateImpulse();
         Destroy(gameObject);
     }
 

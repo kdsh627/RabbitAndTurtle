@@ -39,7 +39,7 @@ public class PlayerUI : MonoBehaviour
         float shield = _shieldStat.CurrentGauge / _shieldStat.MaxBlockTime;
         _shieldBar.fillAmount = shield;
 
-        float exp = _levelData.Exp / _levelData.MaxExp;
+        float exp = _levelData.Exp / (float)_levelData.MaxExp;
         _expBar.fillAmount = exp;
     }
 }

@@ -29,15 +29,19 @@ public class LevelDataSO : ScriptableObject
         _exp += value;
         if(IsLevelUp())
         {
-            _exp = 0;
+            _exp = _exp - _maxExp;
             _level++;
+
+            UpdateMaxExp();
+            valueChanged?.Invoke();
+            UIEventHandler.ToggleSkillEnforceUI_Invoke();
         }
         valueChanged?.Invoke();
     }
 
     public bool IsLevelUp()
     {
-        if(_exp == _maxExp)
+        if(_exp >= _maxExp)
         {
             return true;
         }
@@ -49,6 +53,6 @@ public class LevelDataSO : ScriptableObject
 
     public void UpdateMaxExp()
     {
-        _maxExp = _level * 2 + 3;
+        _maxExp = 10 + _level * 3;
     }
 }

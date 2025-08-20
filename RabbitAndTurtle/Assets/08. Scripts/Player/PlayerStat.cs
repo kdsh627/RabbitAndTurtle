@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
+    [Header("---- 레벨 데이터 ----")]
+    [SerializeField] private LevelDataSO _levelData;
+
     private float currentHealth;
 
     public float maxHealth = 100f; // 최대 체력
@@ -60,6 +63,14 @@ public class PlayerStat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Exp"))
+        {   
+            Drop drop = other.gameObject.GetComponent<Drop>();
+            drop?.GetItem();
+            Debug.Log("경험치 습득");
+            _levelData.UpdateExp(1);
+        }
+
         if (!playerBlock.isBlock)
         {
             if (other.CompareTag("SongPeyon"))
