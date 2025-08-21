@@ -1,25 +1,27 @@
 using System.Runtime.CompilerServices;
+using DG.Tweening;
 using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Tween _tween;
+    private SpriteRenderer _spriteRenderer;
+    private bool _isPlaying = false;
+    private void OnEnable()
     {
-        
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        _tween.Kill();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void GetItem()
     {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
+        if (_isPlaying) return;
+        _isPlaying = true;
+
+        _tween = _spriteRenderer.DOFade(0, 1f).OnComplete(() => { Destroy(gameObject); });
     }
 }

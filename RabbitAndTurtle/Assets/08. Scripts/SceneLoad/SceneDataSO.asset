@@ -18,9 +18,9 @@ MonoBehaviour:
   WaveScene:
     CoreScene: Assets/06. Scenes/Test/SceneFlow/GameScene.unity
     SubScenePaths:
-    - Assets/06. Scenes/Test/Stage/GrassMap.unity
-    - Assets/06. Scenes/Test/Stage/CaveEnteranceMap.unity
-    - Assets/06. Scenes/Test/Stage/CaveMap.unity
+    - Assets/06. Scenes/Test/Map/GrassMap.unity
+    - Assets/06. Scenes/Test/Map/CaveEnteranceMap.unity
+    - Assets/06. Scenes/Test/Map/CaveMap.unity
   BossScene:
     CoreScene: Assets/06. Scenes/Test/SceneFlow/GameScene.unity
     SubScenePaths:

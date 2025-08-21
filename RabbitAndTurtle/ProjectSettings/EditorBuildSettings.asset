@@ -42,14 +42,14 @@ EditorBuildSettings:
     path: Assets/06. Scenes/Test/SceneFlow/LoadingScene.unity
     guid: db756ea0feefa2c4f8e51a47718c69a4
   - enabled: 1
-    path: Assets/06. Scenes/Test/Stage/CaveEnteranceMap.unity
-    guid: c0f3b63423c36c448a5de41f1ed7b202
+    path: Assets/06. Scenes/Test/Map/CaveEnteranceMap.unity
+    guid: 3ab465d738dfae64489ce68a307a048d
   - enabled: 1
-    path: Assets/06. Scenes/Test/Stage/CaveMap.unity
-    guid: 5f663f2a223cc7c49b1e6c66e369d016
+    path: Assets/06. Scenes/Test/Map/CaveMap.unity
+    guid: 4797558d16dc15a46b820ba60d577310
   - enabled: 1
-    path: Assets/06. Scenes/Test/Stage/GrassMap.unity
-    guid: 9067a6584f7cd3e42aa9ce93a5d97483
+    path: Assets/06. Scenes/Test/Map/GrassMap.unity
+    guid: cae28b66474f27d4cb58d965ebbcdb6e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 6f01ade188ee41041a542c6a0584ed21, type: 3}
   m_UseUCBPForAssetBundles: 0

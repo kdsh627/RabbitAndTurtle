@@ -1,6 +1,7 @@
 using Manager;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveUI : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class WaveUI : MonoBehaviour
     [Header("----- 캔버스 -----")]
     [SerializeField] private Canvas _canvas;
 
+    [Header("----- 버튼 -----")]
+    [SerializeField] private Button _menu;
+
     private void Awake()
     {
         _canvas.worldCamera = CameraManager.Instance.UICamera;
@@ -23,10 +27,12 @@ public class WaveUI : MonoBehaviour
     private void OnEnable()
     {
         _waveManager.WaveValueChanged += UpdateView;
+        _menu.onClick.AddListener(UIEventHandler.ToggleSettingUI_Invoke);
     }
     private void OnDisable()
     {
         _waveManager.WaveValueChanged -= UpdateView;
+        _menu.onClick.RemoveListener(UIEventHandler.ToggleSettingUI_Invoke);
     }
 
     public void UpdateView()

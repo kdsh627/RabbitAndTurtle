@@ -1,5 +1,6 @@
 using Manager;
 using State.GameState;
+using State.SceneState;
 
 namespace StateMachine.SceneStateMachine
 {
@@ -43,38 +44,6 @@ namespace StateMachine.SceneStateMachine
         private void AnyState()
         {
 
-        }
-
-        /// <summary>
-        /// 트랜지션 전환
-        /// </summary>
-        /// <param name="state"></param>
-        public void TransitionState(GameState state)
-        {
-            switch (state)
-            {
-                case GameState.Ready:
-                    TransitionTo(_readyState);
-                    break;
-                case GameState.Wave:
-                    TransitionTo(_waveState);
-                    break;
-                case GameState.Boss:
-                    TransitionTo(_bossState);
-                    break;
-                case GameState.WaveClear:
-                    TransitionTo(_waveClearState);
-                    break;
-                case GameState.BossClear:
-                    TransitionTo(_bossClearState);
-                    break;
-                case GameState.StageClear:
-                    TransitionTo(_stageClearState);
-                    break;
-                case GameState.Stage:
-                    TransitionTo(_stageState);
-                    break;
-            }
         }
     }
 }

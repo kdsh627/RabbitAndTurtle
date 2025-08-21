@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
+    [Header("---- 레벨 데이터 ----")]
+    [SerializeField] private LevelDataSO _levelData;
+
     private float currentHealth;
 
     public float maxHealth = 100f; // 최대 체력
@@ -50,10 +53,24 @@ public class PlayerStat : MonoBehaviour
         isDie = true;
         playerMovement.enabled = false;
         animatorController.PlayDie();
+        Invoke("GameOver", 1f);
+    }
+
+    private void GameOver()
+    {
+        GameEventHandler.GameOverExcuted_Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Exp"))
+        {   
+            Drop drop = other.gameObject.GetComponent<Drop>();
+            drop?.GetItem();
+            Debug.Log("경험치 습득");
+            _levelData.UpdateExp(1);
+        }
+
         if (!playerBlock.isBlock)
         {
             if (other.CompareTag("SongPeyon"))
