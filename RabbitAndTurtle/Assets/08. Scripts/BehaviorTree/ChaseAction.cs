@@ -1,9 +1,9 @@
 using System;
 using Unity.Behavior;
-using UnityEngine;
-using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using UnityEngine;
 using UnityEngine.AI;
+using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Chase", story: "[Self] Naviget To [Target]", category: "Action", id: "b7c6d012b88f5bff23f52c109686322a")]

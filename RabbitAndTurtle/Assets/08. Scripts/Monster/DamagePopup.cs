@@ -1,6 +1,6 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
 
 public class DamagePopup : MonoBehaviour
 {

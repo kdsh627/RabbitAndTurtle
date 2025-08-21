@@ -1,11 +1,11 @@
-﻿using UnityEditor;
 using NavMeshPlus.Components;
+using UnityEditor;
 
 namespace NavMeshPlus.Extensions.Editors
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(RootSources2d))]
-    internal class RootSources2dEditor: Editor
+    internal class RootSources2dEditor : Editor
     {
         SerializedProperty _rootSources;
         void OnEnable()
@@ -16,7 +16,7 @@ namespace NavMeshPlus.Extensions.Editors
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-    
+
             var surf = target as RootSources2d;
             EditorGUILayout.HelpBox("Add GameObjects to create NavMesh form it and it's ancestors", MessageType.Info);
 

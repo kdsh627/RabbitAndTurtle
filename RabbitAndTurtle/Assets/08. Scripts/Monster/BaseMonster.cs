@@ -139,14 +139,14 @@ public abstract class BaseMonster : MonoBehaviour
     {
         if (isDead) return;
 
-        Vector3 worldPos = headAnchor ? headAnchor.position :
-                           GetComponent<Collider2D>() ?
-                               new Vector3(transform.position.x,
-                                           GetComponent<Collider2D>().bounds.max.y,
-                                           transform.position.z)
-                               : transform.position + Vector3.up * 1.0f;
+        //Vector3 worldPos = headAnchor ? headAnchor.position :
+        //                   GetComponent<Collider2D>() ?
+        //                       new Vector3(transform.position.x,
+        //                                   GetComponent<Collider2D>().bounds.max.y,
+        //                                   transform.position.z)
+        //                       : transform.position + Vector3.up * 1.0f;
 
-        DamagePopupManager.I.Show((int)damage, worldPos);
+        //DamagePopupManager.I.Show((int)damage, worldPos);
         StartCoroutine(DamageAni());
         currentHealth -= damage;
 

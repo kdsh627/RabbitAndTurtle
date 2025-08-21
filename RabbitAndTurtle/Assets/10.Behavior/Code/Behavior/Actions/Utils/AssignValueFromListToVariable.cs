@@ -9,7 +9,7 @@ namespace Unity.Behavior.Demo
     [NodeDescription(
         name: "Assign Value From List To Variable",
         story: "Assign [list] value at index [i] to [variable]",
-        category: "Action/Utils", 
+        category: "Action/Utils",
         id: "302ea7a2145b099cece5024f44a358e1")]
     public partial class AssignValueFromListToVariable : Action
     {

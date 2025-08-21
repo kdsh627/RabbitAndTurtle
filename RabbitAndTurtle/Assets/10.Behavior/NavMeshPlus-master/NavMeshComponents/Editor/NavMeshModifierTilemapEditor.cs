@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 //***********************************************************************************
@@ -89,9 +89,9 @@ namespace NavMeshPlus.Components.Editors
         [CustomPropertyDrawer(typeof(NavMeshModifierTilemap.TileModifier))]
         class TileModifierPropertyDrawer : PropertyDrawer
         {
-            
+
             private static Dictionary<Object, Texture2D> Previews;
-            
+
             private Rect ClaimAdvance(ref Rect position, float height)
             {
                 Rect retVal = position;
@@ -130,7 +130,7 @@ namespace NavMeshPlus.Components.Editors
                     {
                         try
                         {
-                            
+
                             textureToDraw = GetPreview(tileBase);
                         }
                         catch

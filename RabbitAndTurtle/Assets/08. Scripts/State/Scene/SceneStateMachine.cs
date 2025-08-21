@@ -1,5 +1,4 @@
 using Manager;
-using State.GameState;
 using State.SceneState;
 
 namespace StateMachine.SceneStateMachine

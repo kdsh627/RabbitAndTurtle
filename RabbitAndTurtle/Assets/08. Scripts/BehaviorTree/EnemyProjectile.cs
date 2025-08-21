@@ -76,14 +76,29 @@ public class EnemyProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("BlockCollider") || collision.CompareTag("Shield"))
+        if (collision.CompareTag("BlockCollider"))
         {
             isReflected = true;
             ReflectNow();
         }
 
-        // TODO: 플레이어/벽 등 다른 충돌 처리 필요 시 여기에 추가
+        if (collision.CompareTag("Shield"))
+        {
+            Vector2 dir = -collision.gameObject.transform.up;
+
+            //충돌로 들어온 방향
+            Vector2 dirToOther = (collision.gameObject.transform.position - transform.position).normalized;
+
+            // 내 앞방향과 상대 방향의 내적값
+            float dot = Vector3.Dot(dir, dirToOther);
+
+            if (dot < 0f)
+            {
+                isReflected = true;
+                ReflectNow();
+            }
+        }
     }
-   
+
 
 }

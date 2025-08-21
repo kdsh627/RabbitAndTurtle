@@ -1,7 +1,7 @@
+using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityEditor;
 
 namespace NavMeshPlus.Components.Editors
 {
@@ -29,7 +29,8 @@ namespace NavMeshPlus.Components.Editors
             m_AffectedAgents = serializedObject.FindProperty("m_AffectedAgents");
             m_Area = serializedObject.FindProperty("m_Area");
             m_Center = serializedObject.FindProperty("m_Center");
-            m_Size = serializedObject.FindProperty("m_Size");        }
+            m_Size = serializedObject.FindProperty("m_Size");
+        }
 
         Bounds GetBounds()
         {

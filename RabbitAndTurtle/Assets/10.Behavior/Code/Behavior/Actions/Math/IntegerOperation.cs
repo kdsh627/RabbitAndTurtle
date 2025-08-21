@@ -56,7 +56,8 @@ namespace Unity.Behavior.Demo
                 case OperatorType.IncrementAndRepeat:
                     Result.Value = (int)Mathf.Repeat(LHS.Value + 1, RHS.Value);
                     break;
-            };
+            }
+            ;
 
             return Status.Success;
         }

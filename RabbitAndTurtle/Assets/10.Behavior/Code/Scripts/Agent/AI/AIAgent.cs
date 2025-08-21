@@ -1,6 +1,4 @@
-using Unity.Behavior;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Unity.Behavior.Demo
 {

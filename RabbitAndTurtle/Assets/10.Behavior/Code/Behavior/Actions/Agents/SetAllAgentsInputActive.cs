@@ -28,7 +28,7 @@ namespace Unity.Behavior.Demo
             {
                 foreach (var agent in agents)
                 {
-                    agent.EnableInput();   
+                    agent.EnableInput();
                 }
             }
             else

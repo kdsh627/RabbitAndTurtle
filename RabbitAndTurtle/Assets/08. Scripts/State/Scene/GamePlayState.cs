@@ -1,6 +1,4 @@
 using Manager;
-using State.SceneState;
-using Utilities;
 
 namespace State.SceneState
 {

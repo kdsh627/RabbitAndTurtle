@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Unity.Behavior.Demo
 {
@@ -13,7 +12,7 @@ namespace Unity.Behavior.Demo
         [SerializeField] private float m_Angle = 45;
         [SerializeField] private float m_Height = 0.5f;
         [SerializeField] private LayerMask m_CollisionLayers;
-        
+
         private MeshFilter m_Filter;
         private MeshRenderer m_Renderer;
 
@@ -38,7 +37,7 @@ namespace Unity.Behavior.Demo
             {
                 return;
             }
-               
+
             m_Renderer.enabled = true;
         }
 

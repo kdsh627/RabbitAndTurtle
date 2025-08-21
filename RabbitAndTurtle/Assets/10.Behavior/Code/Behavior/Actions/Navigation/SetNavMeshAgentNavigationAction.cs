@@ -1,7 +1,7 @@
 using System;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.AI;
-using Unity.Properties;
 
 namespace Unity.Behavior.Demo
 {

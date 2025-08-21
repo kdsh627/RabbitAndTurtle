@@ -1,8 +1,8 @@
 using System;
 using Unity.Behavior;
+using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
-using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Update Distance", story: "Update [Self] And [Target] [CurrentDistance]", category: "Action", id: "dbba3d73efcae869e2d1e1d192c7ede8")]

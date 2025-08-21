@@ -19,7 +19,7 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private int killsPerElite = 10; // n킬마다 엘리트 1마리
 
     [Header("실행 옵션")]
-    [SerializeField] private bool autoStart = true; // true면 Start()에서 자동으로 초기 스폰 + 루프 시작
+    [SerializeField] private bool autoStart = false; // true면 Start()에서 자동으로 초기 스폰 + 루프 시작
 
     private int currentMonsterCount = 0;
     private int[] killCounts; // 일반 몬스터 처치 수
@@ -48,6 +48,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Start()
     {
+        autoStart = false;
         if (!initialized) return;
         if (autoStart)
         {

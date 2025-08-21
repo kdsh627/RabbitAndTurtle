@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.Behavior.Demo;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -31,7 +30,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     private void Update()
     {
-        if(isSkillAvailable == false && Time.time - currentCooldownTime > maxCooldownTime)
+        if (isSkillAvailable == false && Time.time - currentCooldownTime > maxCooldownTime)
         {
             isSkillAvailable = true;
         }
@@ -39,11 +38,11 @@ public abstract class WeaponBase : MonoBehaviour
 
     public void TryAttack()
     {
-        if(isSkillAvailable == true)
+        if (isSkillAvailable == true)
         {
             OnAttack();
             StartCoroutine(StopWhileAttacking());
-            isSkillAvailable=false;
+            isSkillAvailable = false;
             currentCooldownTime = Time.time;
         }
     }

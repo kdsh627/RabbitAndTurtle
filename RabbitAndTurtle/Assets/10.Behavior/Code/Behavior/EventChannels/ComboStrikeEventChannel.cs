@@ -8,9 +8,9 @@ namespace Unity.Behavior.Demo
 #endif
     [Serializable, GeneratePropertyBag]
     [EventChannelDescription(
-        name: "Combo Strike Event Channel", 
-        message: "Strike is requested", 
-        category: "Events", 
+        name: "Combo Strike Event Channel",
+        message: "Strike is requested",
+        category: "Events",
         id: "94c4e9ade712bd63ac5b9997dad94ed5")]
     public partial class ComboStrikeEventChannel : EventChannelBase
     {

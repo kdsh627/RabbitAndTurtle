@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 [Serializable]
 public struct PolarCoordinates
@@ -104,28 +101,37 @@ public class ShieldRotate : MonoBehaviour
     [SerializeField] private float _radius;
     [SerializeField] private float _speed;
     [SerializeField] private GameObject _gameObject;
+    [SerializeField] private List<GameObject> _shields;
+
+    private int _level = 1;
+    private int _maxLevel = 5;
 
     private List<Vector2> _pieceDirections;
 
     private void Start()
     {
-        InitPieceDirections();
+        AddShields();
     }
 
     private void Update()
     {
         transform.Rotate(new Vector3(0f, 0f, _speed) * Time.deltaTime);
     }
-
-    private void EnforceSkill()
+    public void Levelup()
     {
         _count++;
-        InitPieceDirections();
+        _level++;
+        AddShields();
     }
 
-    private void InitPieceDirections()
+    public bool isMaxLevel()
     {
-        if(_pieceDirections != null)
+        return _level == _maxLevel;
+    }
+
+    private void AddShields()
+    {
+        if (_pieceDirections != null)
         {
             _pieceDirections.Clear();
         }
@@ -134,12 +140,15 @@ public class ShieldRotate : MonoBehaviour
 
         float angle = 360f / _count;
 
+        GameObject go = Instantiate(_gameObject, transform);
+        _shields.Add(go);
+
         for (int i = 0; i < _count; i++)
         {
             //극좌표 변환
             _pieceDirections.Add(new PolarCoordinates(_radius, angle * i).ToVector2());
-            GameObject go = Instantiate(_gameObject, transform);
-            go.transform.localPosition = _pieceDirections[i];
+
+            _shields[i].transform.localPosition = _pieceDirections[i];
 
             transform.TransformPoint(_pieceDirections[i]);
             Vector2 center = transform.position;
@@ -147,7 +156,7 @@ public class ShieldRotate : MonoBehaviour
 
             //transform.up은 월드 좌표계 기준 계산이기 때문에 방향벡터도 월드 좌표로 해주는게 좋다.
             Vector2 dirToCenter = (center - coordinate).normalized;
-            go.transform.up = dirToCenter;
+            _shields[i].transform.up = dirToCenter;
         }
     }
 }

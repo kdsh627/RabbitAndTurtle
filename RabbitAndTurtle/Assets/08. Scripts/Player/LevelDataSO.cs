@@ -1,5 +1,4 @@
 using System;
-using System.Xml.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelDataSO", menuName = "Scriptable Objects/LevelDataSO")]
@@ -27,7 +26,7 @@ public class LevelDataSO : ScriptableObject
     public void UpdateExp(int value)
     {
         _exp += value;
-        if(IsLevelUp())
+        if (IsLevelUp())
         {
             _exp = _exp - _maxExp;
             _level++;
@@ -41,7 +40,7 @@ public class LevelDataSO : ScriptableObject
 
     public bool IsLevelUp()
     {
-        if(_exp >= _maxExp)
+        if (_exp >= _maxExp)
         {
             return true;
         }

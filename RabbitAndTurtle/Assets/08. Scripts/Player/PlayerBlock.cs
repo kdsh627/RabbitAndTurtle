@@ -1,7 +1,6 @@
-using Manager;
 using System;
+using Manager;
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
 
 public class PlayerBlock : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class PlayerBlock : MonoBehaviour
     public bool isExhausted { get; private set; } = false;
 
     public event Action ValueChanged;
-   
+
     private enum BlockState
     {
         Idle,
@@ -151,7 +150,7 @@ public class PlayerBlock : MonoBehaviour
 
     private void StartBlocking()
     {
-       currentState = BlockState.Blocking;
+        currentState = BlockState.Blocking;
         isBlock = true;
         animatorController.PlayGuard(); // 방어 애니메이션 재생 
     }

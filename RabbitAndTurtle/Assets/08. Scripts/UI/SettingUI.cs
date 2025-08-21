@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Manager;
 using State.SceneState;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +13,8 @@ struct Resolution
 
     public Resolution(int _width, int _height)
     {
-        width = _width; 
-        height = _height;   
+        width = _width;
+        height = _height;
     }
 }
 
@@ -43,7 +42,7 @@ public class SettingUI : ToggleUI
 
     private void InitResolution()
     {
-        foreach(Dropdown.OptionData option in _resolutionDropdown.options)
+        foreach (Dropdown.OptionData option in _resolutionDropdown.options)
         {
             string[] parts = option.text.Split(" x ");
 
@@ -54,7 +53,7 @@ public class SettingUI : ToggleUI
 
     public void ResolutionChange(int x)
     {
-        if(_resolutionList[x].width != width || _resolutionList[x].height != height)
+        if (_resolutionList[x].width != width || _resolutionList[x].height != height)
         {
             width = _resolutionList[x].width;
             height = _resolutionList[x].height;
@@ -115,7 +114,7 @@ public class SettingUI : ToggleUI
     private void ButtonEvent_TitleButtonEvent()
     {
         PlayClickSound();
-        if(SceneStateManager.Instance.NextSceneState.StateType == SceneState.Title)
+        if (SceneStateManager.Instance.NextSceneState.StateType == SceneState.Title)
         {
             UIEvent_ToggleUI();
         }

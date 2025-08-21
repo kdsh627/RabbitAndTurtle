@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.ui-effect": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src",
     "com.unity.ai.navigation": "2.0.7",
     "com.unity.behavior": "1.0.3",
     "com.unity.burst": "1.8.21",

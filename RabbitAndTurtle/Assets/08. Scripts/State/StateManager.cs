@@ -1,5 +1,4 @@
 using State;
-using State.SceneState;
 using UnityEngine;
 
 public class StateManager : MonoBehaviour

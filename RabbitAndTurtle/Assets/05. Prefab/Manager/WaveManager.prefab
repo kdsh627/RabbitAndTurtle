@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc84373db4159d4aa659797509f0e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startPosition: {x: 0, y: 0, z: 0}
+  _monsterSpawner: {fileID: 0}

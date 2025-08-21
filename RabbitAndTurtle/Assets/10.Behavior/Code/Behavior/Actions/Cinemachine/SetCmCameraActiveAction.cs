@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
-using Unity.Properties;
 using Unity.Cinemachine;
+using Unity.Properties;
+using UnityEngine;
 
 namespace Unity.Behavior.Demo
 {

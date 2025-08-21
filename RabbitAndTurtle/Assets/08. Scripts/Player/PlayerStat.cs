@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using Unity.Behavior.Demo;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
@@ -16,7 +14,7 @@ public class PlayerStat : MonoBehaviour
         get => currentHealth;
         set
         {
-            currentHealth = value; 
+            currentHealth = value;
             ValueChanged?.Invoke();
         }
     }
@@ -39,7 +37,7 @@ public class PlayerStat : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        if(isDie)
+        if (isDie)
             return;
 
         StartCoroutine(playerMovement.DamageAni());
@@ -64,7 +62,7 @@ public class PlayerStat : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Exp"))
-        {   
+        {
             Drop drop = other.gameObject.GetComponent<Drop>();
             drop?.GetItem();
             Debug.Log("경험치 습득");
@@ -90,6 +88,6 @@ public class PlayerStat : MonoBehaviour
                 }
             }
         }
-        
+
     }
 }

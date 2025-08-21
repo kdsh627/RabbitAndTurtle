@@ -169,7 +169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &218192554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,6 +645,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhalePrefab: {fileID: 713340527523127906, guid: 6fc72daa5557a3445ae554d537db2866, type: 3}
   spawnYOffset: 1
+  _maxCoolTime: 10
+  _coolTime: 0
+  isCoolTime: 0
   spawnDelay: 0.5
 --- !u!114 &1245979989
 MonoBehaviour:
@@ -680,6 +683,7 @@ MonoBehaviour:
   lastDirection: Front
   FrontDSprite: {fileID: 899230258}
   SideDSprite: {fileID: 1578955277}
+  WaterEffect: {fileID: 0}
 --- !u!95 &1245979991
 Animator:
   serializedVersion: 7

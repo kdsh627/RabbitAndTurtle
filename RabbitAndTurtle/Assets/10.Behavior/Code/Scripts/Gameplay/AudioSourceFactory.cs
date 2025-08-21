@@ -91,7 +91,7 @@ namespace Unity.Behavior.Demo
             do
             {
                 await Awaitable.WaitForSecondsAsync(1f);
-                
+
                 // If the resource has been destroyed already.
                 if (source == null)
                 {

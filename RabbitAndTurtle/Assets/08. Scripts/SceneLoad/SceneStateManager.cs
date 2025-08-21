@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using NUnit.Framework;
-using State;
 using State.SceneState;
 using StateMachine.SceneStateMachine;
 using UnityEngine;
-using static UnityEngine.Video.VideoPlayer;
 
 
 namespace Manager
@@ -91,7 +88,7 @@ namespace Manager
         {
             string scenePath = state.ScenePath;
 
-            if(state.StateType == SceneState.GamePlay)
+            if (state.StateType == SceneState.GamePlay)
             {
                 List<string> subScenes = new List<string>() { SceneDataManager.Instance.GetWaveSubScene(0) };
 

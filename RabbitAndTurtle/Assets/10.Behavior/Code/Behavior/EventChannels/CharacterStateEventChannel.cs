@@ -1,5 +1,4 @@
 using System;
-using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
 
@@ -11,9 +10,9 @@ namespace Unity.Behavior.Demo
 #endif
     [Serializable, GeneratePropertyBag]
     [EventChannelDescription(
-        name: "Character State Event Channel", 
-        message: "Character state has changed to [newState]", 
-        category: "Events/Demo", 
+        name: "Character State Event Channel",
+        message: "Character state has changed to [newState]",
+        category: "Events/Demo",
         id: "6778ae8f566a0ba66723320654ad904e")]
     public partial class CharacterStateEventChannel : EventChannelBase
     {

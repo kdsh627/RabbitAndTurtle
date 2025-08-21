@@ -1,5 +1,3 @@
-using Unity.Behavior;
-
 namespace Unity.Behavior.Demo
 {
     [BlackboardEnum]

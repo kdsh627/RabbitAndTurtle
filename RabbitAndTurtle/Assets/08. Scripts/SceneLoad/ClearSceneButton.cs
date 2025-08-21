@@ -9,7 +9,7 @@ public class ClearSceneButton : MonoBehaviour
     {
         button = GetComponent<Button>();
     }
-    
+
     private void OnEnable()
     {
         button.onClick.AddListener(GameEventHandler.TitleExcuted_Invoke);

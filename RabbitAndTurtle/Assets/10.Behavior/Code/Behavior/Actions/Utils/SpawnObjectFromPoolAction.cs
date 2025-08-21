@@ -1,5 +1,4 @@
 using System;
-using System.Security.Cryptography;
 using Unity.Properties;
 using UnityEngine;
 
@@ -16,7 +15,7 @@ namespace Unity.Behavior.Demo
         [SerializeReference] public BlackboardVariable<BehaviorAgentFactory> Pool;
         [Tooltip("[Out Value] Assigned the spawn object to the assigned field.")]
         [SerializeReference] public BlackboardVariable<GameObject> Object;
-        [SerializeReference] public BlackboardVariable<Vector3> Location = new (Vector3.zero);
+        [SerializeReference] public BlackboardVariable<Vector3> Location = new(Vector3.zero);
 
         protected override Status OnStart()
         {

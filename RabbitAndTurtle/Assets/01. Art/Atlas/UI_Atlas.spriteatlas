@@ -50,10 +50,9 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 9a7f0a51572205641a6fa79938957766, type: 3}
     - {fileID: 2800000, guid: aab269169047fac4b9e86c1a61e4ebf0, type: 3}
     - {fileID: 2800000, guid: 3c573a79f420a644c8e7e41d3d5d8bde, type: 3}
-    - {fileID: 2800000, guid: d938872b612b2a64994dad88b7e0687a, type: 3}
+    - {fileID: 2800000, guid: 43e6dd08416225548b49007656d5e15b, type: 3}
     - {fileID: 2800000, guid: 7c844b5b63cbc2f4ba671cc3d5429815, type: 3}
     - {fileID: 2800000, guid: 5e84c523fc6c9f04593d6f04c8b251fb, type: 3}
-    - {fileID: 2800000, guid: 43e6dd08416225548b49007656d5e15b, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -65,7 +64,6 @@ SpriteAtlas:
     - aab269169047fac4b9e86c1a61e4ebf0: 21300000
     - 43e6dd08416225548b49007656d5e15b: 21300000
     - 3c573a79f420a644c8e7e41d3d5d8bde: 21300000
-    - d938872b612b2a64994dad88b7e0687a: 21300000
     - 7c844b5b63cbc2f4ba671cc3d5429815: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -76,7 +74,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: aab269169047fac4b9e86c1a61e4ebf0, type: 3}
   - {fileID: 21300000, guid: 43e6dd08416225548b49007656d5e15b, type: 3}
   - {fileID: 21300000, guid: 3c573a79f420a644c8e7e41d3d5d8bde, type: 3}
-  - {fileID: 21300000, guid: d938872b612b2a64994dad88b7e0687a, type: 3}
   - {fileID: 21300000, guid: 7c844b5b63cbc2f4ba671cc3d5429815, type: 3}
   m_PackedSpriteNamesToIndex:
   - Bar_Panel
@@ -86,7 +83,6 @@ SpriteAtlas:
   - Health_Bar
   - Skill_Card
   - Info_Panel
-  - Panel
   - Right_Panel
   m_RenderDataMap: {}
   m_Tag: UI_Atlas

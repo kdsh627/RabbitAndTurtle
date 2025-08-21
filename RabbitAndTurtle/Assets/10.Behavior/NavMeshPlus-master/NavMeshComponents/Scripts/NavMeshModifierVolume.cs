@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using NavMeshPlus.Extensions;
+using UnityEngine;
 
 namespace NavMeshPlus.Components
 {

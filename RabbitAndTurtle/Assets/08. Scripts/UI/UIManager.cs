@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 class UIInfo
@@ -50,7 +49,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="name"></param>
     /// <param name="isStop">시간을 멈출지 말지 결정하는 변수</param>
-    public void ToggleUI (string name, bool isStop)
+    public void ToggleUI(string name, bool isStop)
     {
         bool isOpen = _uiDict[name].IsOpen;
         GameObject ui = _uiDict[name].UI;
@@ -73,7 +72,7 @@ public class UIManager : MonoBehaviour
             _uiDict[name].IsOpen = true;
             ui.SetActive(true);
 
-            if(isStop)
+            if (isStop)
             {
                 Time.timeScale = 0.0f;
             }

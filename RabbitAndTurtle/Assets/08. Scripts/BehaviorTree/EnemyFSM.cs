@@ -2,7 +2,6 @@ using System.Linq;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -31,5 +30,5 @@ public class EnemyFSM : MonoBehaviour
         currentWeapon.Setup(target, damage, cooldownTime);
     }
 
-    
+
 }

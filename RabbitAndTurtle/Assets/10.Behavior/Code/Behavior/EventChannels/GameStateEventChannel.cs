@@ -1,5 +1,4 @@
 using System;
-using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
 
@@ -12,8 +11,8 @@ namespace Unity.Behavior.Demo
     [Serializable, GeneratePropertyBag]
     [EventChannelDescription(
         name: "GameState Event Channel",
-        message: "Game state has changed to [Value]", 
-        category: "Events/Demo", 
+        message: "Game state has changed to [Value]",
+        category: "Events/Demo",
         id: "9bd2734d8647eace43b343b0ba21a1af")]
     public partial class GameStateEventChannel : EventChannelBase
     {

@@ -4,29 +4,29 @@ public static class GameEventHandler
     public static event Action ExitExcuted;
 
     #region 씬 상태 관련 이벤트
-	public static event Action GameClearExcuted;
+    public static event Action GameClearExcuted;
 
-	public static event Action TitleExcuted;
+    public static event Action TitleExcuted;
 
-	public static event Action GamePlayExcuted;
+    public static event Action GamePlayExcuted;
 
     #endregion
     #region 게임 플레이 상태 관련 이벤트
-	public static event Action StageExcuted;
+    public static event Action StageExcuted;
 
-	public static event Action StageClearExcuted;
+    public static event Action StageClearExcuted;
 
-	public static event Action WaveExcuted;
+    public static event Action WaveExcuted;
 
-	public static event Action ReadyExcuted;
+    public static event Action ReadyExcuted;
 
-	public static event Action BossExcuted;
+    public static event Action BossExcuted;
 
-	public static event Action WaveClearExcuted;
+    public static event Action WaveClearExcuted;
 
-	public static event Action BossClearExcuted;
+    public static event Action BossClearExcuted;
 
-	public static event Action GameOverExcuted;
+    public static event Action GameOverExcuted;
     #endregion
 
     #region Invoke 처리

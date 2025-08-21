@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +8,7 @@ namespace Unity.Behavior.Demo
         public CharacterStateEventChannel StateChannel { get; set; }
 
         [SerializeField] private InputActionReference m_InputAction;
-        
+
         private InputAction m_AttackAction;
         private bool m_CanAttack;
         private bool m_WantToAttack;
@@ -29,7 +28,7 @@ namespace Unity.Behavior.Demo
         {
             Debug.Assert(m_InputAction != null, "PlayerAgentModule_Attack: No input action reference provided.", this);
             m_AttackAction = activeActionMap.FindAction(m_InputAction.action.name);
-            
+
             m_CanAttack = true;
             m_WantToAttack = false;
 

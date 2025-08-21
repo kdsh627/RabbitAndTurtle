@@ -16,7 +16,7 @@ namespace Unity.Behavior.Demo
         [SerializeReference] public BlackboardVariable<string> OutString;
         [SerializeReference] public BlackboardVariable<List<string>> StringList;
         [CreateProperty] private int m_CompletedRuns;
-        
+
         protected override Status OnStart()
         {
             m_CompletedRuns = 0;

@@ -78,8 +78,8 @@ namespace NavMeshPlus.Components
 
         [SerializeField]
         float m_MinRegionArea = 0;
-        public float minRegionArea { get {  return m_MinRegionArea; } set { m_MinRegionArea = value; } }
-        
+        public float minRegionArea { get { return m_MinRegionArea; } set { m_MinRegionArea = value; } }
+
         [SerializeField]
         bool m_HideEditorLogs;
         public bool hideEditorLogs { get { return m_HideEditorLogs; } set { m_HideEditorLogs = value; } }
@@ -441,20 +441,20 @@ namespace NavMeshPlus.Components
                 switch (src.shape)
                 {
                     case NavMeshBuildSourceShape.Mesh:
-                    {
-                        var m = src.sourceObject as Mesh;
-                        result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, m.bounds));
-                        break;
-                    }
+                        {
+                            var m = src.sourceObject as Mesh;
+                            result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, m.bounds));
+                            break;
+                        }
                     case NavMeshBuildSourceShape.Terrain:
-                    {
+                        {
 #if IS_TERRAIN_USED
-                        // Terrain pivot is lower/left corner - shift bounds accordingly
-                        var t = src.sourceObject as TerrainData;
-                        result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, new Bounds(0.5f * t.size, t.size)));
+                            // Terrain pivot is lower/left corner - shift bounds accordingly
+                            var t = src.sourceObject as TerrainData;
+                            result.Encapsulate(GetWorldBounds(worldToLocal * src.transform, new Bounds(0.5f * t.size, t.size)));
 #endif
-                        break;
-                    }
+                            break;
+                        }
                     case NavMeshBuildSourceShape.Box:
                     case NavMeshBuildSourceShape.Sphere:
                     case NavMeshBuildSourceShape.Capsule:

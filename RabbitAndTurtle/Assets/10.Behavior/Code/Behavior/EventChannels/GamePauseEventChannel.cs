@@ -1,5 +1,4 @@
 using System;
-using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
 
@@ -11,9 +10,9 @@ namespace Unity.Behavior.Demo
 #endif
     [Serializable, GeneratePropertyBag]
     [EventChannelDescription(
-        name: "Game Pause Event Channel", 
-        message: "Game pause state: [Value]", 
-        category: "Events/Demo", 
+        name: "Game Pause Event Channel",
+        message: "Game pause state: [Value]",
+        category: "Events/Demo",
         id: "8b6fdd50d1d561eb66608f652d7ec6c7")]
     public partial class GamePauseEventChannel : EventChannelBase
     {

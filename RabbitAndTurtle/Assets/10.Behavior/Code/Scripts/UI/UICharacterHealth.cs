@@ -7,9 +7,9 @@ namespace Unity.Behavior.Demo
     public class UICharacterHealth : MonoBehaviour
     {
         [SerializeField] private CharacterHealth m_CharacterHealth;
-        
+
         private TMP_Text m_Text;
-        
+
         void OnEnable()
         {
             m_Text = GetComponent<TMP_Text>();

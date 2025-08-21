@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -84,14 +83,14 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(playerStat.isDie) return;
+        if (playerStat.isDie) return;
 
         if (playerBlock.isBlock || playerBlock.isExhausted)
             rb.MovePosition(rb.position + moveInput.normalized * (moveSpeed - 4f) * Time.fixedDeltaTime);
 
         else
             rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
-    }   
+    }
 
     private string GetDirection(Vector2 dir)
     {

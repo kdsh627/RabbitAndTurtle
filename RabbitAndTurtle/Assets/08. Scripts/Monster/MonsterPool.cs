@@ -22,6 +22,11 @@ public class MonsterPool : MonoBehaviour
             CreatePool(i, monsterPrefabs[i]);
     }
 
+    private void Start()
+    {
+
+    }
+
     private void CreatePool(int index, GameObject prefab)
     {
         poolDict[index] = new Queue<GameObject>();

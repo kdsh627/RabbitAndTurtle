@@ -1,10 +1,9 @@
 using System;
 using Unity.Behavior;
-using UnityEngine;
-using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Splines;
+using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Wander", story: "[Self] Navigate To WanderPosition", category: "Action", id: "535a07146f4a469c8d4cf0447a9cf90a")]
@@ -36,7 +35,7 @@ public partial class WanderAction : Action
 
     protected override Status OnUpdate()
     {
-        if ((wanderPosition - Self.Value.transform.position).sqrMagnitude < 0.1f 
+        if ((wanderPosition - Self.Value.transform.position).sqrMagnitude < 0.1f
             || Time.time - currentWanderTime > maxWanderTime)
         {
             return Status.Success;
@@ -44,6 +43,6 @@ public partial class WanderAction : Action
         return Status.Running;
     }
 
-    
+
 }
 

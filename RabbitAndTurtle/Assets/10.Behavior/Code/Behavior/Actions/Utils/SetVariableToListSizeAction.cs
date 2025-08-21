@@ -7,9 +7,9 @@ namespace Unity.Behavior.Demo
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
-        name: "Set Variable To List Size", 
+        name: "Set Variable To List Size",
         story: "Set [Variable] to [List] size",
-        category: "Action/Utils", 
+        category: "Action/Utils",
         id: "302ea7a2145b099cece5024f44a358ew")]
     public partial class SetVariableToListSizeAction : Action
     {

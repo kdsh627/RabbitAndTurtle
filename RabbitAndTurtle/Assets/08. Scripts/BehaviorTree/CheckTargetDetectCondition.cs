@@ -11,7 +11,7 @@ public partial class CheckTargetDetectCondition : Condition
 
     public override bool IsTrue()
     {
-        if(CurrentDistance.Value <= ChaseDistance.Value)
+        if (CurrentDistance.Value <= ChaseDistance.Value)
         {
             return true;
         }

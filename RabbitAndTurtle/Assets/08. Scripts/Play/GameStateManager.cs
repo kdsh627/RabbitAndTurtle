@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using NUnit.Framework;
 using State.GameState;
-using State.SceneState;
 using StateMachine.SceneStateMachine;
 using UnityEngine;
-using StateMachine;
-using State;
 
 namespace Manager
 {
@@ -138,6 +133,7 @@ namespace Manager
             switch (state.SceneType)
             {
                 case GameState.Ready:
+                    InputManager.Instance.DisableInput();
                     SceneEventHandler.SceneLoadedByPath_Invoke(_currentScenePath);
                     break;
                 default:
@@ -163,6 +159,7 @@ namespace Manager
             _waveManager.ResetWaveCount();
 
             _currentStage++;
+
             GameEventHandler.WaveExcuted_Invoke();
         }
 
@@ -174,6 +171,7 @@ namespace Manager
             Debug.Log("실행");
 
             _waveManager.WaveTime = _currentStageData.MaxWaveTime[_waveManager.CurrentWave];
+            InputManager.Instance.EnableInput();
             _waveManager.NextWaveCount();
         }
 
@@ -225,6 +223,7 @@ namespace Manager
         public void BossInit()
         {
             //_waveManager.MaxWave = _stageData.BossStageDataList[_currentBossStage].MaxWaveCount;
+            InputManager.Instance.EnableInput();
             _currentBossStage++;
         }
 

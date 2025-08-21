@@ -8,9 +8,9 @@ namespace Unity.Behavior.Demo
 #endif
     [Serializable, GeneratePropertyBag]
     [EventChannelDescription(
-        name: "Combo State Event Channel", 
-        message: "Combo state has changed to [value]", 
-        category: "Events", 
+        name: "Combo State Event Channel",
+        message: "Combo state has changed to [value]",
+        category: "Events",
         id: "0d1a6905b3e0a7515b7c859053e1aeff")]
     public partial class ComboStateEventChannel : EventChannelBase
     {

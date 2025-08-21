@@ -51,7 +51,8 @@ namespace Unity.Behavior.Demo
                 case OperatorType.Divide:
                     Result.Value = LHS.Value / RHS.Value;
                     break;
-            };
+            }
+            ;
 
             return Status.Success;
         }

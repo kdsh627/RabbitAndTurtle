@@ -95,7 +95,7 @@ public class Whale : MonoBehaviour
         if (psr != null)
         {
             // 왼쪽으로 던질 땐 그대로(0), 오른쪽일 때만 flipX(= U축 뒤집기)
-            psr.flip = (dir.x > 0f) ?  Vector3.zero : new Vector3(1f, 0f, 0f);
+            psr.flip = (dir.x > 0f) ? Vector3.zero : new Vector3(1f, 0f, 0f);
         }
 
         if (!Effect.gameObject.activeSelf) Effect.gameObject.SetActive(true);

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Android;
 
 
 public class PlayerAnimationController : MonoBehaviour

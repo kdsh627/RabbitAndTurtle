@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class CloseEnemyProjectile : MonoBehaviour
@@ -84,5 +83,5 @@ public class CloseEnemyProjectile : MonoBehaviour
             return toTarget.y > 0 ? "Back" : "Front";
     }
 
-   
+
 }

@@ -24,12 +24,12 @@ public class DamagePopupManager : MonoBehaviour
 
     public void Show(int amount, Vector3 worldPos, float clampMargin = 32f)
     {
-        Vector2 anchored = WorldToCanvas(worldPos);
-        anchored = ClampToCanvas(anchored, clampMargin);
+        //Vector2 anchored = WorldToCanvas(worldPos);
+        //anchored = ClampToCanvas(anchored, clampMargin);
 
-        var pop = Get();
-        pop.gameObject.SetActive(true);
-        pop.Play(amount, anchored, () => Return(pop));
+        //var pop = Get();
+        //pop.gameObject.SetActive(true);
+        //pop.Play(amount, anchored, () => Return(pop));
     }
 
     Vector2 WorldToCanvas(Vector3 world)

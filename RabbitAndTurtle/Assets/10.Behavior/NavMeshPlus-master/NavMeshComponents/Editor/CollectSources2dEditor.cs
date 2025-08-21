@@ -1,11 +1,11 @@
-﻿using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace NavMeshPlus.Extensions.Editors
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(CollectSources2d))]
-    internal class CollectSources2dEditor: Editor
+    internal class CollectSources2dEditor : Editor
     {
         SerializedProperty m_OverrideByGrid;
         SerializedProperty m_UseMeshPrefab;
@@ -22,7 +22,7 @@ namespace NavMeshPlus.Extensions.Editors
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-    
+
             var surf = target as CollectSources2d;
 
             EditorGUILayout.PropertyField(m_OverrideByGrid);

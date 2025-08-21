@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    public event Action OnWaveStart;
     public event Action WaveValueChanged;
 
     [Header("---- 태어날 위치 ----")]
-    [SerializeField] private Vector3 startPosition;
+    [SerializeField] private Vector3 _startPosition;
+
+    [Header("---- 몬스터 스포너 ----")]
+    [SerializeField] private MonsterSpawner _monsterSpawner;
 
     public void WaveValueChanged_Invoke() => WaveValueChanged?.Invoke();
 
@@ -41,16 +45,25 @@ public class WaveManager : MonoBehaviour
         _currentWave++;
         _startWave = true;
         WaveValueChanged_Invoke();
+
+        OnWaveStart?.Invoke();
+        Invoke("StartSpawn", 2f);
+    }
+
+    private void StartSpawn()
+    {
+        _monsterSpawner.SpawnInitialBatch();
+        _monsterSpawner.StartSpawnLoop();
     }
 
     public bool IsStageClear()
     {
         return _currentWave == _maxWave;
     }
-    
+
     private void UpdateWaveTime()
     {
-        if (_waveTime >= float.Epsilon)
+        if (_waveTime > float.Epsilon)
         {
             _waveTime -= Time.deltaTime;
         }
@@ -58,6 +71,7 @@ public class WaveManager : MonoBehaviour
         {
             _waveTime = 0.0f;
             _startWave = false;
+            GameEventHandler.WaveClearExcuted_Invoke();
         }
         WaveValueChanged_Invoke();
     }
@@ -69,7 +83,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.Player.transform.position = startPosition;
+        GameManager.Instance.Player.transform.position = _startPosition;
         GameEventHandler.StageExcuted_Invoke();
     }
 
