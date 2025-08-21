@@ -33,6 +33,7 @@ public abstract class BaseMonster : MonoBehaviour
     private BehaviorGraphAgent agent2;
     private NavMeshAgent agent;
     private EnemyFSM fsm;
+    public Transform headAnchor;
 
     private bool isAttacking = false;
     private bool isDead = false;
@@ -50,7 +51,6 @@ public abstract class BaseMonster : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         fsm = GetComponent<EnemyFSM>();
 
-        // ★ 추가: Notifier 참조 (스포너가 Init해둠)
         deathNotifier = GetComponent<EnemyDeathNotifier>();
         if (deathNotifier == null) deathNotifier = gameObject.AddComponent<EnemyDeathNotifier>(); // 안전망
 
@@ -139,6 +139,14 @@ public abstract class BaseMonster : MonoBehaviour
     {
         if (isDead) return;
 
+        Vector3 worldPos = headAnchor ? headAnchor.position :
+                           GetComponent<Collider2D>() ?
+                               new Vector3(transform.position.x,
+                                           GetComponent<Collider2D>().bounds.max.y,
+                                           transform.position.z)
+                               : transform.position + Vector3.up * 1.0f;
+
+        DamagePopupManager.I.Show((int)damage, worldPos);
         StartCoroutine(DamageAni());
         currentHealth -= damage;
 
