@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject FrontDSprite;
     public GameObject SideDSprite;
+    public GameObject WaterEffect;
 
     void Awake()
     {
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         FrontDSprite.SetActive(false);
         SideDSprite.SetActive(false);
+        WaterEffect.SetActive(false);
     }
     public void SetMoveInput(Vector2 input)
     {
@@ -96,5 +98,21 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) return "Side";
         else if (dir.y > 0) return "Back";
         else return "Front";
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            WaterEffect.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            WaterEffect.SetActive(false);
+        }
     }
 }
