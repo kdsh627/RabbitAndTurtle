@@ -576,7 +576,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _count: 3
-  _radius: 1
+  _radius: 0.5
+  _speed: 40
   _gameObject: {fileID: 651518803742650706, guid: a92c2839d09573b408262aafbc4b2648, type: 3}
 --- !u!1 &1245979985
 GameObject:

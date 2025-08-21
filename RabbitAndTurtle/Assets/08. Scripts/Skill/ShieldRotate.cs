@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 
 [Serializable]
@@ -101,6 +102,7 @@ public class ShieldRotate : MonoBehaviour
     [Header("--- 쉴드 정보 ---")]
     [SerializeField] private int _count;
     [SerializeField] private float _radius;
+    [SerializeField] private float _speed;
     [SerializeField] private GameObject _gameObject;
 
     private List<Vector2> _pieceDirections;
@@ -110,8 +112,24 @@ public class ShieldRotate : MonoBehaviour
         InitPieceDirections();
     }
 
+    private void Update()
+    {
+        transform.Rotate(new Vector3(0f, 0f, _speed) * Time.deltaTime);
+    }
+
+    private void EnforceSkill()
+    {
+        _count++;
+        InitPieceDirections();
+    }
+
     private void InitPieceDirections()
     {
+        if(_pieceDirections != null)
+        {
+            _pieceDirections.Clear();
+        }
+
         _pieceDirections = new List<Vector2>();
 
         float angle = 360f / _count;

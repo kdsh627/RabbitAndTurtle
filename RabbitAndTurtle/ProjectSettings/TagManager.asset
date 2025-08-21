@@ -12,6 +12,7 @@ TagManager:
   - Bbata
   - Wave
   - Exp
+  - Shield
   layers:
   - Default
   - TransparentFX

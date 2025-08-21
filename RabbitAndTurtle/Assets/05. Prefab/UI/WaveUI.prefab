@@ -256,6 +256,7 @@ MonoBehaviour:
   _waveCountText: {fileID: 9176789499726304206}
   _waveTimeText: {fileID: 8138041753564674983}
   _canvas: {fileID: 2104818004443767186}
+  _menu: {fileID: 884394121807382947}
 --- !u!1 &1965820100865644507
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,8 +974,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0b4b9417d70de7b44a21e07238e263de, type: 2}
-  m_sharedMaterial: {fileID: -529073774418932353, guid: 0b4b9417d70de7b44a21e07238e263de, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7f420147fb0cd3d4091fb2a263079358, type: 2}
+  m_sharedMaterial: {fileID: 481625930032862722, guid: 7f420147fb0cd3d4091fb2a263079358, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
