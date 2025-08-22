@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
@@ -25,6 +26,7 @@ public class PlayerStat : MonoBehaviour
     public bool isDie = false;
 
     public event Action ValueChanged;
+    [SerializeField] GameObject ItemEffect; // 아이템 획득 이펙트
 
     void Start()
     {
@@ -59,12 +61,20 @@ public class PlayerStat : MonoBehaviour
         GameEventHandler.GameOverExcuted_Invoke();
     }
 
+    private IEnumerator ItemEffectCor()
+    {
+        ItemEffect.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        ItemEffect.SetActive(false);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Exp"))
         {
             Drop drop = other.gameObject.GetComponent<Drop>();
             drop?.GetItem();
+            StartCoroutine(ItemEffectCor());
             Debug.Log("경험치 습득");
             _levelData.UpdateExp(1);
         }
@@ -85,6 +95,9 @@ public class PlayerStat : MonoBehaviour
                 {
                     proj.isHit = true; // 중복 데미지 방지
                     TakeDamage(proj.damage);
+
+                    Vector2 hitPos = other.transform.position;
+                    playerMovement.ApplyKnockback(hitPos);
                 }
             }
         }

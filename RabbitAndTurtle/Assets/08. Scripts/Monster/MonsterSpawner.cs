@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -27,6 +28,9 @@ public class MonsterSpawner : MonoBehaviour
     private List<Vector3> possibleTiles = new List<Vector3>();
     private Vector3 offset = new Vector3(0.5f, 0.5f, 0);
 
+    private bool spawningEnabled = false;  // 스폰 허용 여부
+    private bool allowEliteSpawns = true;
+
     [System.Serializable]
     private struct WayPointData
     {
@@ -38,9 +42,6 @@ public class MonsterSpawner : MonoBehaviour
     private Coroutine spawnLoopRoutine;
     private bool initialized = false;
 
-    // ---------------------------
-    // 라이프사이클
-    // ---------------------------
     private void Awake()
     {
         Initialize(); // 초기화만 수행 (스폰/코루틴 시작 X)
@@ -49,6 +50,8 @@ public class MonsterSpawner : MonoBehaviour
     private void Start()
     {
         autoStart = false;
+        spawningEnabled = true; // 스폰 허용
+        allowEliteSpawns = true;
         if (!initialized) return;
         if (autoStart)
         {
@@ -57,9 +60,7 @@ public class MonsterSpawner : MonoBehaviour
         }
     }
 
-    // ---------------------------
-    // 초기화(데이터 준비) - 웨이브에서 재사용 가능
-    // ---------------------------
+    
     public void Initialize()
     {
         if (initialized) return;
@@ -113,10 +114,7 @@ public class MonsterSpawner : MonoBehaviour
             Debug.LogWarning("[MonsterSpawner] 스폰 가능한 타일이 하나도 없어.");
     }
 
-    // ---------------------------
-    // 스폰 제어(웨이브에서 호출)
-    // ---------------------------
-    /// <summary>초기 몬스터 패킷 스폰(한 번)</summary>
+   
     public void SpawnInitialBatch()
     {
         if (!initialized) return;
@@ -124,15 +122,12 @@ public class MonsterSpawner : MonoBehaviour
             SpawnEnemy();
     }
 
-    /// <summary>지속 스폰 루프 시작</summary>
     public void StartSpawnLoop()
     {
-        if (!initialized) return;
-        if (spawnLoopRoutine != null) return;
+        if (!initialized || spawnLoopRoutine != null || !spawningEnabled) return;
         spawnLoopRoutine = StartCoroutine(SpawnLoop());
     }
 
-    /// <summary>지속 스폰 루프 정지</summary>
     public void StopSpawnLoop()
     {
         if (spawnLoopRoutine != null)
@@ -144,7 +139,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private IEnumerator SpawnLoop()
     {
-        while (true)
+        while (spawningEnabled)
         {
             if (currentMonsterCount < maxMonsterCount)
                 SpawnEnemy();
@@ -152,13 +147,12 @@ public class MonsterSpawner : MonoBehaviour
             float delay = currentMonsterCount < 30 ? 1f : 10f;
             yield return new WaitForSeconds(delay);
         }
+        spawnLoopRoutine = null; // 종료 시 핸들 정리
     }
 
-    // ---------------------------
-    // 개별 스폰 로직
-    // ---------------------------
     private void SpawnEnemy()
     {
+        if (!spawningEnabled) return;
         if (possibleTiles.Count == 0) return;
         if (currentMonsterCount >= maxMonsterCount) return;
 
@@ -217,14 +211,11 @@ public class MonsterSpawner : MonoBehaviour
         currentMonsterCount++;
     }
 
-    // ---------------------------
-    // 콜백(사망 통지)
-    // ---------------------------
     public void OnMonsterDied(int prefabIndex, bool isElite)
     {
         currentMonsterCount = Mathf.Max(0, currentMonsterCount - 1);
 
-        if (!isElite)
+        if (!isElite && allowEliteSpawns)
         {
             if (prefabIndex < 0 || prefabIndex >= killCounts.Length)
             {
@@ -237,6 +228,38 @@ public class MonsterSpawner : MonoBehaviour
             if (killsPerElite > 0 && killCounts[prefabIndex] % killsPerElite == 0)
             {
                 SpawnElite(prefabIndex);
+            }
+        }
+    }
+
+
+    public void StartSpawning()
+    {
+        spawningEnabled = true;
+        allowEliteSpawns = true;
+        StartSpawnLoop();
+    }
+
+    public void StopSpawning()
+    {
+        spawningEnabled = false;
+        allowEliteSpawns = false; // 완전 정지면 엘리트도 차단
+        StopSpawnLoop();
+    }
+
+    public void KillAllMonstersAndStop()
+    {
+        // 1) 스폰 정지
+        StopSpawning();
+
+        BaseMonster[] monsters = Object.FindObjectsByType<BaseMonster>(FindObjectsSortMode.None);
+
+        foreach (var monster in monsters)
+        {
+            if (!monster.IsDead())
+            {
+                // 체력을 0으로 만들고 강제로 죽이기
+                monster.TakeDamage(monster.MonsterHealth);
             }
         }
     }
