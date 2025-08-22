@@ -367,7 +367,7 @@ MonoBehaviour:
           m_Value0: 4175259497739007218
           m_Value1: 4118166852027509837
         Name: falloutDistance
-        m_Value: 6
+        m_Value: 2
     - rid: 7310272870508659014
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -460,7 +460,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 2
-  damage: 10
+  minDamage: 10
+  maxDamage: 20
   target: {fileID: 7740438655710784576}
 --- !u!114 &4669785773149549744
 MonoBehaviour:

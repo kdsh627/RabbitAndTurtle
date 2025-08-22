@@ -139,14 +139,8 @@ public abstract class BaseMonster : MonoBehaviour
     {
         if (isDead) return;
 
-        //Vector3 worldPos = headAnchor ? headAnchor.position :
-        //                   GetComponent<Collider2D>() ?
-        //                       new Vector3(transform.position.x,
-        //                                   GetComponent<Collider2D>().bounds.max.y,
-        //                                   transform.position.z)
-        //                       : transform.position + Vector3.up * 1.0f;
+        DamageManager.Instance.Show(damage, transform.position + Vector3.up * 0.5f, fsm.MinDamage, fsm.MaxDamage);
 
-        //DamagePopupManager.I.Show((int)damage, worldPos);
         StartCoroutine(DamageAni());
         currentHealth -= damage;
 
@@ -186,15 +180,8 @@ public abstract class BaseMonster : MonoBehaviour
         if (BackSprite) BackSprite.SetActive(false);
         if (SideSprite) SideSprite.SetActive(false);
 
-        if (agent != null)
-        {
-            agent.isStopped = true;
-            agent.ResetPath();
-            agent.velocity = Vector3.zero;
-        }
-        if (agent2 != null) agent2.enabled = false;
+        HardStopAI();
 
-        // 가장 중요: 사망 통지 (스포너에게 한 번만)
         deathNotifier?.NotifyDeath();
 
         // 연출 후 회수/파괴
@@ -256,5 +243,31 @@ public abstract class BaseMonster : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         isHit = false;
+    }
+
+    private void HardStopAI()
+    {
+        // 1) 에이전트 완전 정지
+        if (agent != null)
+        {
+            if (agent.isOnNavMesh)
+            {
+                agent.isStopped = true;
+                agent.ResetPath();
+            }
+            agent.velocity = Vector3.zero;
+
+            agent.enabled = false;
+        }
+
+        if (agent2 != null) agent2.enabled = false; // BehaviorGraphAgent
+        if (fsm != null) fsm.enabled = false;    // EnemyFSM(목표 재설정 방지)
+
+        // 3) 혹시 물리 이동 쓰면 같이 정지 (있는 경우에만)
+        var rb2d = GetComponent<Rigidbody2D>();
+        if (rb2d != null) { rb2d.linearVelocity = Vector2.zero; rb2d.angularVelocity = 0f; }
+
+        var animator = GetComponent<Animator>();
+        if (animator != null) animator.applyRootMotion = false;
     }
 }

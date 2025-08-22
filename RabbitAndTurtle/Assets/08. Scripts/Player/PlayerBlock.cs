@@ -12,6 +12,10 @@ public class PlayerBlock : MonoBehaviour
     public float ExhaustThreshold = 0.4f;       // 빨간선 임계값
     public float RecoveryRate = 0.5f;           // Idle 회복 속도
     public float ExhaustedDelay = 1f;           // 탈진 시 회복 지연 시간
+    private float blockCooldown = 0.1f; // 방어 최소 간격
+    private float lastBlockTime = -999f; // 마지막 방어 시도 시간 기록
+
+
 
     public GameObject ExhaustedEff;
     public GameObject BlockCollider;
@@ -83,6 +87,14 @@ public class PlayerBlock : MonoBehaviour
 
     public void SetBlocking(bool isHeld)
     {
+        if (isHeld)
+        {
+            if (Time.time - lastBlockTime < blockCooldown)
+                return; 
+
+            lastBlockTime = Time.time;
+        }
+
         isBlockButtonHeld = isHeld;
     }
 

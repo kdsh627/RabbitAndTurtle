@@ -10284,7 +10284,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0022589713, y: 0.0012437478}
+  m_Offset: {x: -0.0022363607, y: 0.00583034}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -10294,7 +10294,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.1893144, y: 0.28721172}
+  m_Size: {x: 0.0725351, y: 0.16132702}
   m_EdgeRadius: 0
 --- !u!50 &7341765608992892664
 Rigidbody2D:
@@ -10362,6 +10362,8 @@ MonoBehaviour:
   FrontDSprite: {fileID: 8557774627792230263}
   SideDSprite: {fileID: 1866473686123304446}
   WaterEffect: {fileID: 401523659155054673}
+  knockbackForce: 8
+  knockbackTime: 0.12
 --- !u!114 &961939506233472341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10750,7 +10752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2951154761819894508, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2951154761819894508, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
       propertyPath: m_SortingLayerID
