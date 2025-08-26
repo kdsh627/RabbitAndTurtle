@@ -20,10 +20,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject SideDSprite;
     public GameObject WaterEffect;
 
-
-    [SerializeField] private float knockbackForce = 8f;     // 세기
-    [SerializeField] private float knockbackTime = 0.12f;  
+    [SerializeField] private float knockbackForce = 8f; // 세기
+    [SerializeField] private float knockbackTime = 0.12f; 
     private Coroutine knockbackCo;
+    private bool isKnockbacking = false;
 
     void Awake()
     {
@@ -90,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (playerStat.isDie) return;
+        if (isKnockbacking) return;
 
         if (playerBlock.isBlock || playerBlock.isExhausted)
             rb.MovePosition(rb.position + moveInput.normalized * (moveSpeed - 4f) * Time.fixedDeltaTime);
@@ -105,34 +106,57 @@ public class PlayerMovement : MonoBehaviour
         else return "Front";
     }
 
-    public void ApplyKnockback(Vector2 sourcePosition)
+    public void KnockBack(string dir)
     {
-        if (playerStat.isDie || rb == null) return;
-
-        if (knockbackCo != null) StopCoroutine(knockbackCo);
-        knockbackCo = StartCoroutine(KnockbackRoutine(sourcePosition));
+        KnockBack(dir, knockbackForce);
     }
 
-    private IEnumerator KnockbackRoutine(Vector2 sourcePosition)
+    public void KnockBack(string dir, float force)
     {
-        Debug.Log($"Player Knockback from {sourcePosition}");
-        Vector2 dir = ((Vector2)transform.position - sourcePosition).normalized;
-        if (dir.sqrMagnitude < 0.0001f) dir = Vector2.up; // 동일 좌표 보호
+        if (playerStat != null && playerStat.isDie) return;
+        if (rb == null) return;
 
-        // 순간 가속
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(dir * knockbackForce, ForceMode2D.Impulse);
+        Vector2 v = DirStringToVector(dir);
+        if (v == Vector2.zero) return;
 
-        // 짧게 밀리고 멈추기
+        if (knockbackCo != null) StopCoroutine(knockbackCo);
+        knockbackCo = StartCoroutine(KnockbackRoutineByDir(v, force));
+    }
+
+    // 문자열 → 방향 벡터
+    private Vector2 DirStringToVector(string dir)
+    {
+        if (string.IsNullOrEmpty(dir)) return Vector2.zero;
+        var s = dir.Trim().ToLowerInvariant();
+
+        if (s == "front" || s == "down") return Vector2.down;  
+        if (s == "back" || s == "up") return Vector2.up;    
+        if (s == "left") return Vector2.left;
+        if (s == "right") return Vector2.right;
+
+        return Vector2.zero;
+    }
+
+    // 방향 기반 넉백 코루틴
+    private IEnumerator KnockbackRoutineByDir(Vector2 dir, float force)
+    {
+        isKnockbacking = true;                  // 입력 이동 잠깐 중지(원하면 주석 처리)
+        rb.linearVelocity = Vector2.zero;       // 잔여 속도 제거
+        rb.AddForce(dir.normalized * force, ForceMode2D.Impulse);
+
         float t = 0f;
         while (t < knockbackTime)
         {
             t += Time.deltaTime;
             yield return null;
         }
-        rb.linearVelocity = Vector2.zero;
+
+        rb.linearVelocity = Vector2.zero;       // 정지
+        isKnockbacking = false;
         knockbackCo = null;
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

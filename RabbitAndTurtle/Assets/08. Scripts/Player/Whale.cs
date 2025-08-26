@@ -14,6 +14,9 @@ public class Whale : MonoBehaviour
     public float effectLife = 1.2f;
     public float peakScaleMultiplier = 1.3f;
 
+    [Header("성장 설정")]
+    [SerializeField] float growthPerLevel = 1.1f;
+
     [Header("던질 때 켤 파티클")]
     public ParticleSystem Effect;     // 처음엔 꺼둔 상태(비활성 or Stop)
 
@@ -21,12 +24,22 @@ public class Whale : MonoBehaviour
     public CinemachineImpulseSource _impulseSource;
 
     Vector3 baseScale;
+    float levelMultiplier = 1f;
     bool running;
 
     void Awake()
     {
         baseScale = transform.localScale;
+        levelMultiplier = 1f;
+        transform.localScale = baseScale;
     }
+
+    public void LevelMultiply(int level)
+    {
+        int l = Mathf.Max(1, level);
+        levelMultiplier = Mathf.Pow(growthPerLevel, l - 1); // 1레벨:1.0, 2레벨:1.1, 3레벨:1.21...
+    }
+
 
     public void Launch(Vector2 dir, ThrowMode mode)
     {
@@ -38,7 +51,6 @@ public class Whale : MonoBehaviour
     {
         running = true;
 
-        // ▼ 던지기 시작 시 파티클 켜기 + 오른쪽이면 flipX
         PlayParticleForDir(dir);
 
         Vector3 start = transform.position;
@@ -46,6 +58,8 @@ public class Whale : MonoBehaviour
         Vector2 offsetDir = Vector2.up; // 포물선 위쪽 방향
 
         float t = 0f;
+
+        transform.localScale = baseScale * levelMultiplier;
         while (t < flightTime)
         {
             float n = Mathf.Clamp01(t / flightTime);
@@ -79,6 +93,10 @@ public class Whale : MonoBehaviour
         if (landEffectPrefab)
         {
             var eff = Instantiate(landEffectPrefab, end, Quaternion.identity);
+            eff.transform.localScale *= levelMultiplier;
+            var wave = eff.GetComponent<Wave>();
+            if (wave != null) wave.ApplyMultiplier(levelMultiplier);
+
             Destroy(eff, effectLife);
         }
 

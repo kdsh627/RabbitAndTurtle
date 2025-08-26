@@ -7,7 +7,7 @@ public class PlayerSkill : MonoBehaviour
     public GameObject WhalePrefab;
     public float spawnYOffset = 1f;
 
-    private int _level = 1;
+    [SerializeField] private int _level = 1;
     private int _maxLevel = 5;
 
     [Header("---- 쿨타임 ----")]
@@ -84,7 +84,7 @@ public class PlayerSkill : MonoBehaviour
         bool isLeft = GetComponent<SpriteRenderer>().flipX;
 
         Vector2 throwDir = GetThrowDirection(dir, isLeft);
-        StartCoroutine(WhaleThrow(throwDir, isLeft, dir));
+        StartCoroutine(WhaleThrow(throwDir, isLeft, dir, _level));
     }
 
     private Vector2 GetThrowDirection(string dir, bool isLeft)
@@ -98,7 +98,7 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 
-    IEnumerator WhaleThrow(Vector2 throwDir, bool isLeft, string rawDir)
+    IEnumerator WhaleThrow(Vector2 throwDir, bool isLeft, string rawDir, int level)
     {
         // 플레이어 잠깐 멈춤 (원하면 제거)
         float prevSpeed = playerMovement.moveSpeed;
@@ -125,6 +125,9 @@ public class PlayerSkill : MonoBehaviour
 
         // 좌/우 = 포물선, 위/아래 = 스케일
         ThrowMode mode = (rawDir == "Side") ? ThrowMode.SideParabola : ThrowMode.VerticalScale;
+
+        // 레벨 조정
+        proj.LevelMultiply(level);
 
         // 발사
         proj.Launch(throwDir, mode);

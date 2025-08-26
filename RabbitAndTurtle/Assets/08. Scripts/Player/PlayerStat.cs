@@ -95,9 +95,8 @@ public class PlayerStat : MonoBehaviour
                 {
                     proj.isHit = true; // 중복 데미지 방지
                     TakeDamage(proj.damage);
-
+                    playerMovement.KnockBack(proj.dir);
                     Vector2 hitPos = other.transform.position;
-                    playerMovement.ApplyKnockback(hitPos);
                 }
             }
         }
