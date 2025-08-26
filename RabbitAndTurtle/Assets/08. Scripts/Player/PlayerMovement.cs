@@ -42,20 +42,17 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SetMoveInput(Vector2 input)
     {
-        // 죽었으면 어떤 입력/회전/애니메이션 갱신도 하지 않음
+        // 죽었으면 입력 무시
         if (playerStat != null && playerStat.isDie)
         {
-            moveInput = Vector2.zero;          // 혹시 남아있는 이동 입력 제거
+            moveInput = Vector2.zero;
             return;
         }
 
         moveInput = input;
 
-        if (moveInput == Vector2.zero)
-        {
-            animatorController.PlayIdle(lastDirection);
-        }
-        else
+        // 방향 및 플립은 항상 갱신
+        if (moveInput != Vector2.zero)
         {
             string direction = GetDirection(moveInput);
             lastDirection = direction;
@@ -66,10 +63,19 @@ public class PlayerMovement : MonoBehaviour
                 spriteRenderer.flipX = flip;
                 sideDSpriteRenderer.flipX = flip;
             }
-
-            animatorController.PlayWalk(direction);
         }
+        if (playerBlock != null && playerBlock.isBlock)
+        {
+            return; 
+        }
+
+        // 블록이 아닐 때만 기존 로직대로
+        if (moveInput == Vector2.zero)
+            animatorController.PlayIdle(lastDirection);
+        else
+            animatorController.PlayWalk(lastDirection);
     }
+
 
 
     public IEnumerator DamageAni()
