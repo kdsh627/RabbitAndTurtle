@@ -176,9 +176,11 @@ public abstract class BaseMonster : MonoBehaviour
         isDead = true;
 
         // 이동/AI 정지
-        if (FrontSprite) FrontSprite.SetActive(false);
-        if (BackSprite) BackSprite.SetActive(false);
-        if (SideSprite) SideSprite.SetActive(false);
+        FrontSprite.SetActive(false);
+        BackSprite.SetActive(false);
+        SideSprite.SetActive(false);
+        FrontDSprite.SetActive(false); ;
+        SideDSprite.SetActive(false);
 
         HardStopAI();
 
