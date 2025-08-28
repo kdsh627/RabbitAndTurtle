@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerAction : MonoBehaviour
 {
     private GameObject _player;
-
+    
     public GameObject Player
     {
         get { return _player; }
