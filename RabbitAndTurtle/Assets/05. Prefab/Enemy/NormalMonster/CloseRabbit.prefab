@@ -956,7 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isOutline: 0
   _outlineColor: {r: 1, g: 0, b: 0, a: 0}
-  _thickness: 1.5
+  _thickness: 0.1
 --- !u!114 &6429497315211171673
 MonoBehaviour:
   m_ObjectHideFlags: 0

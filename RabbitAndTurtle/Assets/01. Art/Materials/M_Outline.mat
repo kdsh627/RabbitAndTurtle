@@ -69,8 +69,8 @@ Material:
     m_Floats:
     - Coners_On: 0
     - _EnableExternalAlpha: 0
-    - _IsOutline: 0
-    - _OutlineThickness: 0
+    - _IsOutline: 1
+    - _OutlineThickness: 0.1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ZWrite: 0
