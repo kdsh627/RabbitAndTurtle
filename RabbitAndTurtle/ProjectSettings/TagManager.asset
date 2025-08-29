@@ -14,6 +14,8 @@ TagManager:
   - Water
   - Exp
   - Shield
+  - Undefined
+  - FlyingFish
   layers:
   - Default
   - TransparentFX

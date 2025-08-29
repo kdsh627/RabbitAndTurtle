@@ -239,6 +239,13 @@ public abstract class BaseMonster : MonoBehaviour
                 StartCoroutine(WaveDmg());
             }
         }
+
+        if (collision.CompareTag("FlyingFish"))
+        {
+            var fish = collision.GetComponentInParent<FlyingFish>();
+            if (fish != null)
+                TakeDamage(fish._damage);
+        }
     }
 
     IEnumerator WaveDmg()

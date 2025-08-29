@@ -16,7 +16,7 @@ public class FlyingFish : MonoBehaviour
     [SerializeField] private bool isCoolTime = false;
 
     [Header("---- 데미지 ----")]
-    [SerializeField] private float _damage = 10f;
+    [SerializeField] public float _damage = 10f;
 
     public float CoolTime => _coolTime;
     public float MaxCoolTime => _maxCoolTime;
