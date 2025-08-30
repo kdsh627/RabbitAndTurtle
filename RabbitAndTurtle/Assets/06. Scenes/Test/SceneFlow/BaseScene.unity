@@ -383,7 +383,13 @@ MonoBehaviour:
   volumeData: {fileID: 11400000, guid: 1814ce967c3739348827b09a53668ff9, type: 2}
   BgmClips: []
   BGMChannels: 0
-  SfxClips: []
+  SfxClips:
+  - {fileID: 8300000, guid: f9df8f7d2af3e2945994f7687de9446d, type: 3}
+  - {fileID: 8300000, guid: 37df4af2b924eb44eb595ada8ff9b863, type: 3}
+  - {fileID: 8300000, guid: 4cc94e906c4d1bb4691c221a46f2b6a6, type: 3}
+  - {fileID: 8300000, guid: 652eb6be8549e574b94067728066ad1a, type: 3}
+  - {fileID: 8300000, guid: 2b53ca5c999040744a1b5452cc86edd9, type: 3}
+  - {fileID: 8300000, guid: 1c264aeaa3898b14d8799a3a097f039c, type: 3}
   SFXChannels: 0
   LoopingSfxClips: []
   LoopingChannels: 0
