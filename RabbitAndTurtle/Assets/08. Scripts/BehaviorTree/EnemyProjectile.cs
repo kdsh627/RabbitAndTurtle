@@ -14,7 +14,7 @@ public class EnemyProjectile : MonoBehaviour
 
     public float damage;
     public bool isReflected;
-
+    
     private int poolIndex;
 
     private void Awake()
@@ -54,7 +54,7 @@ public class EnemyProjectile : MonoBehaviour
     private void ReflectNow()
     {
         if (movement == null) return;
-
+      
         // 이동 반전
         movement.Reflect();
 
@@ -76,26 +76,29 @@ public class EnemyProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("BlockCollider"))
+        if (!isReflected)
         {
-            isReflected = true;
-            ReflectNow();
-        }
-
-        if (collision.CompareTag("Shield"))
-        {
-            Vector2 dir = -collision.gameObject.transform.up;
-
-            //충돌로 들어온 방향
-            Vector2 dirToOther = (collision.gameObject.transform.position - transform.position).normalized;
-
-            // 내 앞방향과 상대 방향의 내적값
-            float dot = Vector3.Dot(dir, dirToOther);
-
-            if (dot < 0f)
+            if (collision.CompareTag("BlockCollider"))
             {
                 isReflected = true;
                 ReflectNow();
+            }
+
+            if (collision.CompareTag("Shield"))
+            {
+                Vector2 dir = -collision.gameObject.transform.up;
+
+                //충돌로 들어온 방향
+                Vector2 dirToOther = (collision.gameObject.transform.position - transform.position).normalized;
+
+                // 내 앞방향과 상대 방향의 내적값
+                float dot = Vector3.Dot(dir, dirToOther);
+
+                if (dot < 0f)
+                {
+                    isReflected = true;
+                    ReflectNow();
+                }
             }
         }
     }

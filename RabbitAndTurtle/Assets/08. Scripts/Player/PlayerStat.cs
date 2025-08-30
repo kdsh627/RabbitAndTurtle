@@ -27,6 +27,7 @@ public class PlayerStat : MonoBehaviour
 
     public event Action ValueChanged;
     [SerializeField] GameObject ItemEffect; // 아이템 획득 이펙트
+    public int  HealAmount = 0;
 
     void Start()
     {
@@ -46,6 +47,16 @@ public class PlayerStat : MonoBehaviour
         CurrentHealth -= damage;
         ValueChanged?.Invoke();
         if (CurrentHealth <= 0) Die();
+    }
+
+    public virtual void Heal(float amount)
+    {
+        if (isDie)
+            return;
+        if(CurrentHealth >= maxHealth) 
+            return;
+        CurrentHealth += amount;
+        ValueChanged?.Invoke();
     }
 
     public void Die()
@@ -77,6 +88,14 @@ public class PlayerStat : MonoBehaviour
             StartCoroutine(ItemEffectCor());
             Debug.Log("경험치 습득");
             _levelData.UpdateExp(1);
+        }
+
+        if (other.gameObject.CompareTag("Carrot"))
+        {
+            Drop drop = other.gameObject.GetComponent<Drop>();
+            drop?.GetItem();
+            StartCoroutine(ItemEffectCor());
+            Heal(HealAmount); 
         }
 
         if (!playerBlock.isBlock)

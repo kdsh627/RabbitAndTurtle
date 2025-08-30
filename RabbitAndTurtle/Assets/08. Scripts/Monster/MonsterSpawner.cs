@@ -13,7 +13,7 @@ public class MonsterSpawner : MonoBehaviour
     [Header("프리팹 (일반 / 엘리트)")]
     [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private List<GameObject> elitePrefabs; // enemyPrefabs와 인덱스 매핑 1:1 권장
-
+    
     [Header("스폰 설정")]
     [SerializeField] private int initialSpawnCount = 10;
     [SerializeField] private int maxMonsterCount = 40;
@@ -21,6 +21,17 @@ public class MonsterSpawner : MonoBehaviour
 
     [Header("실행 옵션")]
     [SerializeField] private bool autoStart = false; // true면 Start()에서 자동으로 초기 스폰 + 루프 시작
+
+    [Header("당근 소환")]
+    [SerializeField] private GameObject carrotPrefab;   // 기존 Carrots -> carrotPrefab로 사용
+    [SerializeField] private int carrotsPerBatch = 3;    // 한 번에 몇 개
+    [SerializeField] private float carrotInterval = 30f; // 몇 초마다
+    [SerializeField] private int maxCarrots = 30;        // 맵에 동시에 존재 가능한 최대 개수
+    [SerializeField] private bool autoStartCarrots = true;
+
+    private readonly List<GameObject> spawnedCarrots = new();
+    private Coroutine carrotLoopRoutine;
+    private bool allowCarrotSpawns = false;
 
     private int currentMonsterCount = 0;
     private int[] killCounts; // 일반 몬스터 처치 수
@@ -50,6 +61,7 @@ public class MonsterSpawner : MonoBehaviour
     private void Start()
     {
         autoStart = false;
+        autoStartCarrots = false;
         spawningEnabled = true; // 스폰 허용
         allowEliteSpawns = true;
         if (!initialized) return;
@@ -58,6 +70,8 @@ public class MonsterSpawner : MonoBehaviour
             SpawnInitialBatch();
             StartSpawnLoop();
         }
+        if (autoStartCarrots)
+            StartCarrotLoop();
     }
 
     
@@ -261,6 +275,67 @@ public class MonsterSpawner : MonoBehaviour
                 // 체력을 0으로 만들고 강제로 죽이기
                 monster.TakeDamage(monster.MonsterHealth);
             }
+        }
+    }
+
+    public void StartCarrotLoop()
+    {
+        allowCarrotSpawns = true;
+        if (carrotLoopRoutine == null) carrotLoopRoutine = StartCoroutine(CarrotLoop());
+    }
+
+    public void StopCarrotLoop()
+    {
+        allowCarrotSpawns = false;
+        if (carrotLoopRoutine != null)
+        {
+            StopCoroutine(carrotLoopRoutine);
+            carrotLoopRoutine = null;
+        }
+    }
+
+    private IEnumerator CarrotLoop()
+    {
+        var wait = new WaitForSeconds(carrotInterval);
+        while (allowCarrotSpawns)
+        {
+            SpawnCarrotBatch();
+            yield return wait;
+        }
+    }
+
+    private void SpawnCarrotBatch()
+    {
+        if (carrotPrefab == null || possibleTiles.Count == 0) return;
+
+        // 현재 맵에 깔린 수가 max 초과면 추가 스폰 중단
+        CleanupCarrotList();
+        int canSpawn = Mathf.Min(carrotsPerBatch, maxCarrots - spawnedCarrots.Count);
+        if (canSpawn <= 0) return;
+
+        // 한 배치에서 동일 타일 중복 방지
+        var used = new HashSet<int>();
+        for (int i = 0; i < canSpawn; i++)
+        {
+            int tries = 20;
+            int idx;
+            do { idx = Random.Range(0, possibleTiles.Count); }
+            while (used.Contains(idx) && --tries > 0);
+
+            used.Add(idx);
+            Vector3 pos = possibleTiles[idx];
+
+            var carrot = Instantiate(carrotPrefab, pos, Quaternion.identity);
+            spawnedCarrots.Add(carrot);
+        }
+    }
+
+    private void CleanupCarrotList()
+    {
+        // 파괴되었거나 비활성화된 오브젝트 정리
+        for (int i = spawnedCarrots.Count - 1; i >= 0; i--)
+        {
+            if (spawnedCarrots[i] == null) spawnedCarrots.RemoveAt(i);
         }
     }
 }

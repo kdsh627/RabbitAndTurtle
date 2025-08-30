@@ -117816,12 +117816,17 @@ MonoBehaviour:
   - {fileID: 1755243971956980991, guid: 6327a8434bebfd84f8cd8a1e40fe38d8, type: 3}
   - {fileID: 1755243971956980991, guid: 00e54f576b1b22449b833babab1b5837, type: 3}
   elitePrefabs:
-  - {fileID: 1755243971956980991, guid: dd8051732f558a549b521c15ef2823fd, type: 3}
-  - {fileID: 1755243971956980991, guid: 5e3d8b1a086a0404eb1003919a0b50b7, type: 3}
+  - {fileID: 1755243971956980991, guid: 62e1e534c2da224428786780060797db, type: 3}
+  - {fileID: 1755243971956980991, guid: 8f03fea1c5f044243ac85b8de8f8034d, type: 3}
   initialSpawnCount: 10
   maxMonsterCount: 40
   killsPerElite: 10
   autoStart: 1
+  carrotPrefab: {fileID: 6529944258851988723, guid: 557657c1f51ba674a8b11ca8a5e4aae4, type: 3}
+  carrotsPerBatch: 3
+  carrotInterval: 30
+  maxCarrots: 30
+  autoStartCarrots: 1
   wayPointData:
   - wayPoints:
     - {fileID: 1153342935}
@@ -117865,63 +117870,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4112247298943575680
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.4321601
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -9.36864
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99999744
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.0022640803
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1692104786686484272, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.259
-      objectReference: {fileID: 0}
-    - target: {fileID: 8698274619343733288, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
-      propertyPath: m_Name
-      value: Turtle
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 266812bca4bbfed42ab41b44b9d50838, type: 3}
 --- !u!4 &4244934035317484317
 Transform:
   m_ObjectHideFlags: 0
@@ -117969,8 +117917,8 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 1755243971956980991, guid: 6327a8434bebfd84f8cd8a1e40fe38d8, type: 3}
   - {fileID: 1755243971956980991, guid: 00e54f576b1b22449b833babab1b5837, type: 3}
-  - {fileID: 1755243971956980991, guid: dd8051732f558a549b521c15ef2823fd, type: 3}
-  - {fileID: 1755243971956980991, guid: 5e3d8b1a086a0404eb1003919a0b50b7, type: 3}
+  - {fileID: 1755243971956980991, guid: 62e1e534c2da224428786780060797db, type: 3}
+  - {fileID: 1755243971956980991, guid: 8f03fea1c5f044243ac85b8de8f8034d, type: 3}
   poolSize: 80
 --- !u!1 &6850817989620450003
 GameObject:
@@ -118036,23 +117984,22 @@ MonoBehaviour:
   weaponPrefabs:
   - {fileID: 8819085299491658716, guid: ed5d2d72c69348c4790dda9f7eab8760, type: 3}
   - {fileID: 582612280626483459, guid: a14f1e713b720e74080f66e6d2185f72, type: 3}
-  - {fileID: 8819085299491658716, guid: 5c3d026cf6eacc14fb5f30a75c960879, type: 3}
-  - {fileID: 582612280626483459, guid: 6f81f8ee4ac433b46acb8b92f26b794e, type: 3}
+  - {fileID: 8819085299491658716, guid: 32d00f15a93fa68459655b2d761d8d85, type: 3}
+  - {fileID: 582612280626483459, guid: ee97a9122c4d35144a6d6d65f146bee2, type: 3}
   poolSize: 80
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1682668741}
-  - {fileID: 4112247298943575680}
-  - {fileID: 4244934035317484317}
   - {fileID: 7379785566528116042}
+  - {fileID: 838431676}
+  - {fileID: 1019249669}
+  - {fileID: 4244934035317484317}
   - {fileID: 821740498782998957}
+  - {fileID: 1239835102}
+  - {fileID: 1928566440}
   - {fileID: 3769931478205632663}
   - {fileID: 1118396684671299400}
   - {fileID: 1029643459}
   - {fileID: 1566543931}
-  - {fileID: 838431676}
-  - {fileID: 1019249669}
-  - {fileID: 1239835102}
-  - {fileID: 1928566440}

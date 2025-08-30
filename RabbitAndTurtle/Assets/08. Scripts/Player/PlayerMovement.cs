@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sideDSpriteRenderer;
     private PlayerStat playerStat; // PlayerStat 컴포넌트 추가
     public float moveSpeed = 5f;
+    [Range(0f, 1f)] public float inAlpha = 0.5f;
+    public SpriteRenderer Shadow;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -170,13 +172,28 @@ public class PlayerMovement : MonoBehaviour
         {
             WaterEffect.SetActive(true);
         }
-    }
 
+        if(other.CompareTag("AlphaLow"))
+        {
+            SetAlphaBoth(inAlpha);
+        }
+    }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Water"))
         {
             WaterEffect.SetActive(false);
         }
+
+        if (other.CompareTag("AlphaLow"))
+        {
+            SetAlphaBoth(1f);
+        }
+    }
+
+    void SetAlphaBoth(float a)
+    {
+        var c = spriteRenderer.color; c.a = a; spriteRenderer.color = c;
+        var ca = Shadow.color; ca.a = a; Shadow.color = ca;
     }
 }

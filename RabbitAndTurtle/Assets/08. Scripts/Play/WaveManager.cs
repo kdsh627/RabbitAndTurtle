@@ -54,6 +54,7 @@ public class WaveManager : MonoBehaviour
     {
         _monsterSpawner.SpawnInitialBatch();
         _monsterSpawner.StartSpawnLoop();
+        _monsterSpawner.StartCarrotLoop();
     }
 
     public bool IsStageClear()

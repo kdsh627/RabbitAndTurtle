@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class BaseMonster : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public abstract class BaseMonster : MonoBehaviour
     [SerializeField] private GameObject SideSprite;
     [SerializeField] private GameObject FrontDSprite;
     [SerializeField] private GameObject SideDSprite;
+    [Range(0f, 1f)] public float inAlpha = 0.5f;
+    public SpriteRenderer Shadow;
 
     [Header("옵션")]
     [SerializeField] private bool usePooling = true; // 풀링 사용 여부 (true면 SetActive(false), false면 Destroy)
@@ -246,6 +249,25 @@ public abstract class BaseMonster : MonoBehaviour
             if (fish != null)
                 TakeDamage(fish._damage);
         }
+
+        if(collision.CompareTag("AlphaLow"))
+        {
+            SetAlphaBoth(inAlpha);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("AlphaLow"))
+        {
+            SetAlphaBoth(1f);
+        }
+    }
+
+    void SetAlphaBoth(float a)
+    {
+        var c = spriteRenderer.color; c.a = a; spriteRenderer.color = c;
+        var ca = Shadow.color; ca.a = a; Shadow.color = ca;
     }
 
     IEnumerator WaveDmg()

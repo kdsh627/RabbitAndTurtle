@@ -16,6 +16,8 @@ TagManager:
   - Shield
   - Undefined
   - FlyingFish
+  - AlphaLow
+  - Carrot
   layers:
   - Default
   - TransparentFX
