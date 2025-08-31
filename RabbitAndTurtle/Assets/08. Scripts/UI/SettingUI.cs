@@ -126,7 +126,7 @@ public class SettingUI : ToggleUI
 
     private void PlayClickSound()
     {
-        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Click);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.ButtonClick);
     }
 
     private void OnSfxSliderChanged(float value)

@@ -52,7 +52,6 @@ public class AudioManager : MonoBehaviour
        StageClear,
        WaveStart,
        MonsterDeath, //몬스터적용 끝
-       Click = 10
     }
     public enum LoopSfx
     {

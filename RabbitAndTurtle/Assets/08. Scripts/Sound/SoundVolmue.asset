@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdd7dcf5d1ea8e4f9824b85ac35a220, type: 3}
   m_Name: SoundVolmue
   m_EditorClassIdentifier: 
-  _sfxVolume: 0
-  _bgmVolume: 0
+  _sfxVolume: 0.3
+  _bgmVolume: 0.3

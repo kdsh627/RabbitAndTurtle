@@ -81,6 +81,7 @@ public class EnemyProjectile : MonoBehaviour
         {
             if (collision.CompareTag("BlockCollider"))
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Sfx.ShieldSuccess);
                 isReflected = true;
                 ReflectNow();
             }
