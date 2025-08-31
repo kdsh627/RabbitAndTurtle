@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayBgm : MonoBehaviour
@@ -7,10 +8,11 @@ public class PlayBgm : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayBgm(_bgm);
+        SceneEventHandler.SceneExited += AudioManager.Instance.StopBgm;
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
-        AudioManager.Instance.StopBgm();
+        SceneEventHandler.SceneExited -= AudioManager.Instance.StopBgm;
     }
 }

@@ -154,7 +154,10 @@ public class AudioManager : MonoBehaviour
 
     public void StopBgm()
     {
-        _bgmPlayer.Stop();
+        if(_bgmPlayer.isPlaying)
+        {
+            _bgmPlayer.Stop();
+        }
     }
 
     public void PlayBgm(Bgm bgm)

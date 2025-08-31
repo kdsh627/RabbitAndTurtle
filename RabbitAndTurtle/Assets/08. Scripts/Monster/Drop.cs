@@ -21,6 +21,6 @@ public class Drop : MonoBehaviour
         if (_isPlaying) return;
         _isPlaying = true;
 
-        _tween = _spriteRenderer.DOFade(0, 1f).OnComplete(() => { Destroy(gameObject); });
+        Destroy(gameObject);
     }
 }

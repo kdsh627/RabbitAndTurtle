@@ -205,7 +205,7 @@ namespace Manager
             {
                 Debug.Log("스테이지 클리어");
 
-                GameEventHandler.GameClearExcuted_Invoke();
+                //GameEventHandler.GameClearExcuted_Invoke();
 
                 //보스 스테이지로
                 //_currentStageData = _stageData.BossStageDataList[_currentBossStage];
@@ -234,7 +234,14 @@ namespace Manager
             stageClearSequence.AppendCallback(() => {
                 Debug.Log("실행");
                 _stageClearUI.SetActive(false);
-                GameEventHandler.ReadyExcuted_Invoke();
+                if(IsAllStageClear())
+                {
+                    GameEventHandler.GameClearExcuted_Invoke();
+                }
+                else
+                {
+                    GameEventHandler.ReadyExcuted_Invoke();
+                }
             });
 
             stageClearSequence.Play();

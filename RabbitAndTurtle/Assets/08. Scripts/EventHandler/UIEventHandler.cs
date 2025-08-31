@@ -5,6 +5,9 @@ public class UIEventHandler
     //Setting UI 토글
     public static event Action ToggleSettingUI;
 
+    //HowToPlay UI 토글
+    public static event Action ToggleHowToPlayUI;
+
     //GameOver UI 토글
     public static event Action ToggleGameOverUI;
 
@@ -13,6 +16,8 @@ public class UIEventHandler
 
     #region Invoke 처리
     public static void ToggleSettingUI_Invoke() => ToggleSettingUI?.Invoke();
+
+    public static void ToggleHowToPlayUI_Invoke() => ToggleHowToPlayUI?.Invoke();
     public static void ToggleGameOverUI_Invoke() => ToggleGameOverUI?.Invoke();
 
     public static void ToggleSkillEnforceUI_Invoke() => ToggleSkillEnforceUI?.Invoke();
