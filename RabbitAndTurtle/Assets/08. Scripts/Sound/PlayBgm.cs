@@ -8,4 +8,9 @@ public class PlayBgm : MonoBehaviour
     {
         AudioManager.Instance.PlayBgm(_bgm);
     }
+
+    private void OnDestroy()
+    {
+        AudioManager.Instance.StopBgm();
+    }
 }

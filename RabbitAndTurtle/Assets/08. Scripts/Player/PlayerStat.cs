@@ -73,6 +73,7 @@ public class PlayerStat : MonoBehaviour
 
     private void GameOver()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.GameOver);
         GameEventHandler.GameOverExcuted_Invoke();
     }
 

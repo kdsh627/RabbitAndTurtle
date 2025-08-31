@@ -31,11 +31,13 @@ public class GameOverUI : ToggleUI
 
     private void ButtonEvent_ReStart()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.ButtonClick);
         GameEventHandler.GamePlayExcuted_Invoke();
     }
 
     private void ButtonEvent_GoTitle()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.ButtonClick);
         GameEventHandler.TitleExcuted_Invoke();
     }
 }

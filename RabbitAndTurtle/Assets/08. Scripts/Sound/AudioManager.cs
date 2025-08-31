@@ -152,11 +152,14 @@ public class AudioManager : MonoBehaviour
         _bgmPlayer.volume = volume;
     }
 
+    public void StopBgm()
+    {
+        _bgmPlayer.Stop();
+    }
 
     public void PlayBgm(Bgm bgm)
     {
         _bgmPlayer.Stop();
-
 
         if (bgm == Bgm.None) return;
 

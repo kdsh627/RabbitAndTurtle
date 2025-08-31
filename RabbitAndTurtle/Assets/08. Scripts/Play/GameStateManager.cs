@@ -205,9 +205,11 @@ namespace Manager
             {
                 Debug.Log("스테이지 클리어");
 
+                GameEventHandler.GameClearExcuted_Invoke();
+
                 //보스 스테이지로
-                _currentStageData = _stageData.BossStageDataList[_currentBossStage];
-                _currentScenePath = SceneDataManager.Instance.GetBossSubScene(_currentBossStage);
+                //_currentStageData = _stageData.BossStageDataList[_currentBossStage];
+                //_currentScenePath = SceneDataManager.Instance.GetBossSubScene(_currentBossStage);
 
             }
             else

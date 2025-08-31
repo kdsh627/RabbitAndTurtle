@@ -38,6 +38,7 @@ public class FlyingFish : MonoBehaviour
     private void Start()
     {
         OnCoolTimeChanged?.Invoke();
+        OnSkillActive?.Invoke();
     }
 
     void Update()
@@ -94,5 +95,10 @@ public class FlyingFish : MonoBehaviour
         _coolTime = _maxCoolTime;
 
         _animator.Play("Skill3Active", - 1, 0f);
+    }
+
+    public void PlaySfx()
+    {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.WhaleLand);
     }
 }
