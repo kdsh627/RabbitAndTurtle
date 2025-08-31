@@ -48,6 +48,10 @@ public class PlayerStat : MonoBehaviour
             AudioManager.Instance.PlaySfx(AudioManager.Sfx.TurtleHurt);
             StartCoroutine(playerMovement.DamageAni());
             CurrentHealth -= damage;
+            if(CurrentHealth <= 0)
+            {
+                CurrentHealth = 0;
+            }
             ValueChanged?.Invoke();
             if (CurrentHealth <= 0) Die();
         }
