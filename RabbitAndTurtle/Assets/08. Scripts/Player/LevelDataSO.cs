@@ -28,6 +28,7 @@ public class LevelDataSO : ScriptableObject
         _exp += value;
         if (IsLevelUp())
         {
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.LevelUp);
             _exp = _exp - _maxExp;
             _level++;
 

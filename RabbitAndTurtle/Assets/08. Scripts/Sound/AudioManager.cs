@@ -37,12 +37,22 @@ public class AudioManager : MonoBehaviour
 
     public enum Sfx
     {
-        DIe,
-        Jump,
-        SavePoint,
-        Zoom,
-        Text,
-        Click = 10
+       ButtonClick,
+       CloseSwing, //적용끝
+       FarThrow, //적용끝
+       EatCarrot, //적용끝
+       WhaleSpawn, //적용끝
+       WhaleLand, //적용끝
+       ShieldSuccess, //적용끝
+       LevelUp, //적용
+       TurtleHurt, //몬스터적용 끝
+       RabbitHurt, //몬스터적용 끝
+       GameOver,
+       WaveClear,
+       StageClear,
+       WaveStart,
+       MonsterDeath, //몬스터적용 끝
+       Click = 10
     }
     public enum LoopSfx
     {
