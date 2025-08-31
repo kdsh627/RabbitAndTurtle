@@ -49,6 +49,7 @@ public class Whale : MonoBehaviour
 
     IEnumerator DoLaunch(Vector2 dir, ThrowMode mode)
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.WhaleSpawn);
         running = true;
 
         PlayParticleForDir(dir);
@@ -96,7 +97,7 @@ public class Whale : MonoBehaviour
             eff.transform.localScale *= levelMultiplier;
             var wave = eff.GetComponent<Wave>();
             if (wave != null) wave.ApplyMultiplier(levelMultiplier);
-
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.WhaleLand);
             Destroy(eff, effectLife);
         }
 

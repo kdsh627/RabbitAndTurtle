@@ -42,7 +42,7 @@ public class PlayerStat : MonoBehaviour
     {
         if (isDie)
             return;
-
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.TurtleHurt);
         StartCoroutine(playerMovement.DamageAni());
         CurrentHealth -= damage;
         ValueChanged?.Invoke();
@@ -83,6 +83,7 @@ public class PlayerStat : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Exp"))
         {
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.EatCarrot);
             Drop drop = other.gameObject.GetComponent<Drop>();
             drop?.GetItem();
             StartCoroutine(ItemEffectCor());
@@ -92,6 +93,7 @@ public class PlayerStat : MonoBehaviour
 
         if (other.gameObject.CompareTag("Carrot"))
         {
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.EatCarrot);
             Drop drop = other.gameObject.GetComponent<Drop>();
             drop?.GetItem();
             StartCoroutine(ItemEffectCor());

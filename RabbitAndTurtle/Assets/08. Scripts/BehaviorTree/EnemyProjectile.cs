@@ -46,6 +46,7 @@ public class EnemyProjectile : MonoBehaviour
         // 풀 복귀 예약
         CancelInvoke(nameof(ReturnToPool));
         Invoke(nameof(ReturnToPool), 3f);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.FarThrow);
     }
 
     /// <summary>
@@ -86,6 +87,7 @@ public class EnemyProjectile : MonoBehaviour
 
             if (collision.CompareTag("Shield"))
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Sfx.ShieldSuccess);
                 Vector2 dir = -collision.gameObject.transform.up;
 
                 //충돌로 들어온 방향

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CloseEnemyProjectile : MonoBehaviour
@@ -43,7 +44,8 @@ public class CloseEnemyProjectile : MonoBehaviour
         {
             case "Front":
                 {
-                    ani.Play("BaataSwingFront"); break;
+                    ani.Play("BaataSwingFront"); 
+                    break;
                 }
             case "Back":
                 { 
@@ -58,6 +60,7 @@ public class CloseEnemyProjectile : MonoBehaviour
                     ani.Play("BaataSwingRight"); break;
                 }
         }
+        StartCoroutine(HitSoundDelay());
     }
 
     private void Update()
@@ -80,6 +83,7 @@ public class CloseEnemyProjectile : MonoBehaviour
     {
         if (collision.CompareTag("BlockCollider") && !isHit)
         {
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.ShieldSuccess);
             isHit = true;
             if (ownerMonster != null)
                 ownerMonster.TakeDamage(damage);
@@ -96,5 +100,9 @@ public class CloseEnemyProjectile : MonoBehaviour
             return toTarget.y > 0 ? "Back" : "Front";
     }
 
-
+    IEnumerator HitSoundDelay()
+    {
+        yield return new WaitForSeconds(0.35f);
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.CloseSwing);
+    }
 }

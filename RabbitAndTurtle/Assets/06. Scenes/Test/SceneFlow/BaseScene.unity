@@ -385,12 +385,22 @@ MonoBehaviour:
   BGMChannels: 0
   SfxClips:
   - {fileID: 8300000, guid: f9df8f7d2af3e2945994f7687de9446d, type: 3}
-  - {fileID: 8300000, guid: 37df4af2b924eb44eb595ada8ff9b863, type: 3}
   - {fileID: 8300000, guid: 4cc94e906c4d1bb4691c221a46f2b6a6, type: 3}
-  - {fileID: 8300000, guid: 652eb6be8549e574b94067728066ad1a, type: 3}
-  - {fileID: 8300000, guid: 2b53ca5c999040744a1b5452cc86edd9, type: 3}
+  - {fileID: 8300000, guid: 37df4af2b924eb44eb595ada8ff9b863, type: 3}
   - {fileID: 8300000, guid: 1c264aeaa3898b14d8799a3a097f039c, type: 3}
-  SFXChannels: 0
+  - {fileID: 8300000, guid: 2b53ca5c999040744a1b5452cc86edd9, type: 3}
+  - {fileID: 8300000, guid: 652eb6be8549e574b94067728066ad1a, type: 3}
+  - {fileID: 8300000, guid: df0114b4eb4192f41bb8310664da2764, type: 3}
+  - {fileID: 8300000, guid: f632850cc4d833140bda604aecfe9dd3, type: 3}
+  - {fileID: 8300000, guid: e44ddbff5d8005846a063f5d3fd0f9f7, type: 3}
+  - {fileID: 8300000, guid: 74b568b74e8bf6e49b36e690a3a186d2, type: 3}
+  - {fileID: 8300000, guid: 9ca7f258ca280614998b77835f687a12, type: 3}
+  - {fileID: 8300000, guid: 9aa2967191ac0b24cb619e408fafac8f, type: 3}
+  - {fileID: 8300000, guid: 7364879293a24f34e9dc0feb48e7296a, type: 3}
+  - {fileID: 8300000, guid: e3c7c5c0206cc9d4982977bfe4975a40, type: 3}
+  - {fileID: 8300000, guid: b63a467a4a7ee9246b56cfddcdb3f8cc, type: 3}
+  - {fileID: 8300000, guid: f9df8f7d2af3e2945994f7687de9446d, type: 3}
+  SFXChannels: 10
   LoopingSfxClips: []
   LoopingChannels: 0
 --- !u!114 &750111314 stripped
