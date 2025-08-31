@@ -5,8 +5,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [Header("#Volmue")]
-    [SerializeField] private SoundVolumeSO volumeData;
-    public SoundVolumeSO VolumData => volumeData;
+    [SerializeField] private SoundVolumeSO _volumeData;
+    public SoundVolumeSO VolumData => _volumeData;
 
     [Header("#BGM")]
     public AudioClip[] BgmClips;
@@ -38,21 +38,21 @@ public class AudioManager : MonoBehaviour
 
     public enum Sfx
     {
-       ButtonClick,
-       CloseSwing, //적용끝
-       FarThrow, //적용끝
-       EatCarrot, //적용끝
-       WhaleSpawn, //적용끝
-       WhaleLand, //적용끝
-       ShieldSuccess, //적용끝
-       LevelUp, //적용
-       TurtleHurt, //몬스터적용 끝
-       RabbitHurt, //몬스터적용 끝
-       GameOver,
-       WaveClear,
-       StageClear,
-       WaveStart,
-       MonsterDeath, //몬스터적용 끝
+        ButtonClick,
+        CloseSwing, //적용끝
+        FarThrow, //적용끝
+        EatCarrot, //적용끝
+        WhaleSpawn, //적용끝
+        WhaleLand, //적용끝
+        ShieldSuccess, //적용끝
+        LevelUp, //적용
+        TurtleHurt, //몬스터적용 끝
+        RabbitHurt, //몬스터적용 끝
+        GameOver,
+        WaveClear,
+        StageClear,
+        WaveStart,
+        MonsterDeath, //몬스터적용 끝
     }
     public enum LoopSfx
     {
@@ -68,6 +68,7 @@ public class AudioManager : MonoBehaviour
         SoundEventHandler.OnUpdateSfxVolmue += UpdateSfxVolmue;
         SoundEventHandler.OnUpdateBgmVolmue += UpdateBgmVolmue;
         Init();
+        _volumeData.Init();
     }
 
     private void OnDestroy()
@@ -106,7 +107,7 @@ public class AudioManager : MonoBehaviour
         _bgmPlayer = bgmObject.AddComponent<AudioSource>();
         _bgmPlayer.playOnAwake = false;
         _bgmPlayer.loop = true;
-        _bgmPlayer.volume = volumeData.BgmVolume;
+        _bgmPlayer.volume = _volumeData.BgmVolume;
 
         //효과음 플레이어 초기화
         GameObject sfxObject = new GameObject("SfxPlayer");
@@ -117,7 +118,7 @@ public class AudioManager : MonoBehaviour
         {
             _sfxPlayers[index] = sfxObject.AddComponent<AudioSource>();
             _sfxPlayers[index].playOnAwake = false;
-            _sfxPlayers[index].volume = volumeData.SfxVolume;
+            _sfxPlayers[index].volume = _volumeData.SfxVolume;
         }
 
         //반복 재생이 필요한 효과음 플레이어 초기화
@@ -129,7 +130,7 @@ public class AudioManager : MonoBehaviour
         {
             _loopingSfxPlayers[index] = loopingSfxObject.AddComponent<AudioSource>();
             _loopingSfxPlayers[index].playOnAwake = false;
-            _loopingSfxPlayers[index].volume = volumeData.SfxVolume;
+            _loopingSfxPlayers[index].volume = _volumeData.SfxVolume;
             _loopingSfxPlayers[index].loop = true;
         }
     }
@@ -154,7 +155,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopBgm()
     {
-        if(_bgmPlayer.isPlaying)
+        if (_bgmPlayer.isPlaying)
         {
             _bgmPlayer.Stop();
         }

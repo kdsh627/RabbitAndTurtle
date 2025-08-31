@@ -2,7 +2,6 @@ using System.Collections;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public abstract class BaseMonster : MonoBehaviour
 {
@@ -253,7 +252,7 @@ public abstract class BaseMonster : MonoBehaviour
             AudioManager.Instance.PlaySfx(AudioManager.Sfx.RabbitHurt);
         }
 
-        if(collision.CompareTag("AlphaLow"))
+        if (collision.CompareTag("AlphaLow"))
         {
             SetAlphaBoth(inAlpha);
         }

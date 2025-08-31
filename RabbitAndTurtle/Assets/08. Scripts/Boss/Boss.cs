@@ -9,7 +9,7 @@ public class Boss : MonoBehaviour
     public int MaxHP => _maxHP;
     public int HP => _hp;
 
-    public event Action OnValueChanged; 
+    public event Action OnValueChanged;
 
     private void Awake()
     {

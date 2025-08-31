@@ -10,8 +10,8 @@ public class DamageText : MonoBehaviour
     private AnimationCurve alphaCurve =
         AnimationCurve.EaseInOut(0f, 1f, 1f, 0f); // 시간에 따른 알파
 
-    [SerializeField] private Color lowColor = Color.white;           
-    [SerializeField] private Color highColor = new Color(1f, 0f, 0f); 
+    [SerializeField] private Color lowColor = Color.white;
+    [SerializeField] private Color highColor = new Color(1f, 0f, 0f);
 
 
     private float elapsed;

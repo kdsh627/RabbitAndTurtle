@@ -6,6 +6,12 @@ public class SoundVolumeSO : ScriptableObject
     [SerializeField] private float _sfxVolume;
     [SerializeField] private float _bgmVolume;
 
+    public void Init()
+    {
+        SfxVolume = 0.5f;
+        _bgmVolume = 0.5f;
+    }
+
     public float SfxVolume
     {
         get { return _sfxVolume; }

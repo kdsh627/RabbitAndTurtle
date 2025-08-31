@@ -1,4 +1,3 @@
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -23,7 +22,7 @@ public class LowerAlpha : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") )
+        if (other.CompareTag("Player"))
             SetAlphaBoth(1f);
 
         if (other.CompareTag("Monster"))

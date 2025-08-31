@@ -90,7 +90,7 @@ public class PlayerBlock : MonoBehaviour
         if (isHeld)
         {
             if (Time.time - lastBlockTime < blockCooldown)
-                return; 
+                return;
 
             lastBlockTime = Time.time;
         }

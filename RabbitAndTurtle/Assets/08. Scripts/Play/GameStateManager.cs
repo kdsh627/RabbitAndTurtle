@@ -228,15 +228,16 @@ namespace Manager
                 {
                     _monsterSpawner.KillAllMonstersAndStop();
                     _stageClearUI.SetActive(true);
-                }    
+                }
             );
 
             stageClearSequence.AppendInterval(3f);
 
-            stageClearSequence.AppendCallback(() => {
+            stageClearSequence.AppendCallback(() =>
+            {
                 Debug.Log("실행");
                 _stageClearUI.SetActive(false);
-                if(IsAllStageClear())
+                if (IsAllStageClear())
                 {
                     GameEventHandler.GameClearExcuted_Invoke();
                 }

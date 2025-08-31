@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -23,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject WaterEffect;
 
     [SerializeField] private float knockbackForce = 8f; // 세기
-    [SerializeField] private float knockbackTime = 0.12f; 
+    [SerializeField] private float knockbackTime = 0.12f;
     private Coroutine knockbackCo;
     private bool isKnockbacking = false;
 
@@ -68,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (playerBlock != null && playerBlock.isBlock)
         {
-            return; 
+            return;
         }
 
         // 블록이 아닐 때만 기존 로직대로
@@ -137,8 +136,8 @@ public class PlayerMovement : MonoBehaviour
         if (string.IsNullOrEmpty(dir)) return Vector2.zero;
         var s = dir.Trim().ToLowerInvariant();
 
-        if (s == "front" || s == "down") return Vector2.down;  
-        if (s == "back" || s == "up") return Vector2.up;    
+        if (s == "front" || s == "down") return Vector2.down;
+        if (s == "back" || s == "up") return Vector2.up;
         if (s == "left") return Vector2.left;
         if (s == "right") return Vector2.right;
 
@@ -173,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
             WaterEffect.SetActive(true);
         }
 
-        if(other.CompareTag("AlphaLow"))
+        if (other.CompareTag("AlphaLow"))
         {
             SetAlphaBoth(inAlpha);
         }

@@ -44,12 +44,12 @@ public class CloseEnemyProjectile : MonoBehaviour
         {
             case "Front":
                 {
-                    ani.Play("BaataSwingFront"); 
+                    ani.Play("BaataSwingFront");
                     break;
                 }
             case "Back":
-                { 
-                    ani.Play("BaataSwingBack"); break; 
+                {
+                    ani.Play("BaataSwingBack"); break;
                 }
             case "Left":
                 {

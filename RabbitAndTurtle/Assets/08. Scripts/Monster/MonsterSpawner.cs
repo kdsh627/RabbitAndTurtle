@@ -1,7 +1,6 @@
-using Manager;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using Manager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,7 +13,7 @@ public class MonsterSpawner : MonoBehaviour
     [Header("프리팹 (일반 / 엘리트)")]
     [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private List<GameObject> elitePrefabs; // enemyPrefabs와 인덱스 매핑 1:1 권장
-    
+
     [Header("스폰 설정")]
     [SerializeField] private int initialSpawnCount = 10;
     [SerializeField] private int maxMonsterCount = 40;
@@ -76,7 +75,7 @@ public class MonsterSpawner : MonoBehaviour
             StartCarrotLoop();
     }
 
-    
+
     public void Initialize()
     {
         if (initialized) return;
@@ -130,7 +129,7 @@ public class MonsterSpawner : MonoBehaviour
             Debug.LogWarning("[MonsterSpawner] 스폰 가능한 타일이 하나도 없어.");
     }
 
-   
+
     public void SpawnInitialBatch()
     {
         if (!initialized) return;

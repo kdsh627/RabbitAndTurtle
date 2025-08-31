@@ -49,7 +49,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     public IEnumerator StopWhileAttacking()
     {
-        if(agent == null) yield break; // agent가 없으면 중단
+        if (agent == null) yield break; // agent가 없으면 중단
         agent.isStopped = true;
         yield return new WaitForSeconds(1f);
         agent.isStopped = false;

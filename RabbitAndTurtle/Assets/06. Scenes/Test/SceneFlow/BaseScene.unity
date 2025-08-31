@@ -1606,7 +1606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cfd8199c702e884ba420677cd843330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeData: {fileID: 11400000, guid: 1814ce967c3739348827b09a53668ff9, type: 2}
+  _volumeData: {fileID: 11400000, guid: 1814ce967c3739348827b09a53668ff9, type: 2}
   BgmClips:
   - {fileID: 8300000, guid: a77d93b52d0ac6749bc4dd9f2d2e6e9f, type: 3}
   - {fileID: 8300000, guid: 7af812b7e2eb2184d9526632736b4f7f, type: 3}

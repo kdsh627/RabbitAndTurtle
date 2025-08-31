@@ -14,7 +14,7 @@ public class EnemyProjectile : MonoBehaviour
 
     public float damage;
     public bool isReflected;
-    
+
     private int poolIndex;
 
     private void Awake()
@@ -55,7 +55,7 @@ public class EnemyProjectile : MonoBehaviour
     private void ReflectNow()
     {
         if (movement == null) return;
-      
+
         // 이동 반전
         movement.Reflect();
 

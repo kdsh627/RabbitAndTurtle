@@ -82,6 +82,9 @@ public class SettingUI : ToggleUI
 
         InitResolution();
 
+        ResolutionChange(0);
+        ScreenModeChange(true);
+
         _screenToggle.onValueChanged.AddListener(ScreenModeChange);
         _resolutionDropdown.onValueChanged.AddListener(ResolutionChange);
         _exitButton.onClick.AddListener(ButtonEvent_SettingUI);
@@ -120,6 +123,7 @@ public class SettingUI : ToggleUI
         }
         else
         {
+            UIEvent_ToggleUI();
             GameEventHandler.TitleExcuted_Invoke();
         }
     }

@@ -43,7 +43,7 @@ public class FlyingFish : MonoBehaviour
 
     void Update()
     {
-        if(_monster != null)
+        if (_monster != null)
         {
             transform.position = _monster.transform.position;
         }
@@ -94,7 +94,7 @@ public class FlyingFish : MonoBehaviour
         isCoolTime = true;
         _coolTime = _maxCoolTime;
 
-        _animator.Play("Skill3Active", - 1, 0f);
+        _animator.Play("Skill3Active", -1, 0f);
     }
 
     public void PlaySfx()

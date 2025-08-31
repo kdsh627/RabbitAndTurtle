@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
-    public static SkillManager Instance { get; private set; } 
+    public static SkillManager Instance { get; private set; }
 
     [Header("----- 스킬 -----")]
     [SerializeField] private FlyingFish _skill;

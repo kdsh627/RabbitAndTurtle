@@ -28,7 +28,7 @@ public class PlayerStat : MonoBehaviour
 
     public event Action ValueChanged;
     [SerializeField] GameObject ItemEffect; // 아이템 획득 이펙트
-    public int  HealAmount = 0;
+    public int HealAmount = 0;
 
     void Start()
     {
@@ -48,7 +48,7 @@ public class PlayerStat : MonoBehaviour
             AudioManager.Instance.PlaySfx(AudioManager.Sfx.TurtleHurt);
             StartCoroutine(playerMovement.DamageAni());
             CurrentHealth -= damage;
-            if(CurrentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
                 CurrentHealth = 0;
             }
@@ -61,7 +61,7 @@ public class PlayerStat : MonoBehaviour
     {
         if (isDie)
             return;
-        if(CurrentHealth >= maxHealth) 
+        if (CurrentHealth >= maxHealth)
             return;
         CurrentHealth += amount;
         ValueChanged?.Invoke();
@@ -106,7 +106,7 @@ public class PlayerStat : MonoBehaviour
             Drop drop = other.gameObject.GetComponent<Drop>();
             drop?.GetItem();
             StartCoroutine(ItemEffectCor());
-            Heal(HealAmount); 
+            Heal(HealAmount);
         }
 
         if (!playerBlock.isBlock)
