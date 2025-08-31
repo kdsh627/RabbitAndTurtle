@@ -60,7 +60,6 @@ public class SkillEnforceUI : ToggleUI
             _skill2Max.SetActive(true);
         }
 
-
         UIEvent_ToggleUI();
     }
 

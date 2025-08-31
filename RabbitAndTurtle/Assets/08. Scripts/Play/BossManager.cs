@@ -1,10 +1,14 @@
 using System;
+using DG.Tweening;
 using Manager;
 using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
     public event Action BossValueChanged;
+
+    public event Action OnBossStart;
+    public event Action WaveValueChanged;
 
     [Header("---- 태어날 위치 ----")]
     [SerializeField] private Vector3 _startPosition;
@@ -25,5 +29,7 @@ public class BossManager : MonoBehaviour
     {
         GameManager.Instance.Player.transform.position = _startPosition;
         GameEventHandler.BossExcuted_Invoke();
+
+        Sequence stageClearSequence = DOTween.Sequence();
     }
 }

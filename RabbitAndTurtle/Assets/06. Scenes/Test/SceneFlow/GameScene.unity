@@ -4853,8 +4853,8 @@ MonoBehaviour:
   _name: SkillEnforceUI
   _ui: {fileID: 1529568562}
   _whaleToss: {fileID: 256220472}
-  _fishAttack: {fileID: 1652722960}
-  _shieldRotation: {fileID: 544263551}
+  _fishAttack: {fileID: 544263551}
+  _shieldRotation: {fileID: 1652722960}
   _skill1: {fileID: 2242853518762555660}
   _skill2: {fileID: 1946853218}
   _skill3: {fileID: 556418834}

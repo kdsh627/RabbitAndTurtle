@@ -117,8 +117,10 @@ public class ShieldRotate : MonoBehaviour
     {
         transform.Rotate(new Vector3(0f, 0f, _speed) * Time.deltaTime);
     }
+
     public void Levelup()
     {
+        Debug.Log("레벨업");
         _count++;
         _level++;
         AddShields();
