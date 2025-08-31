@@ -80009,7 +80009,7 @@ MonoBehaviour:
   maxMonsterCount: 40
   killsPerElite: 10
   autoStart: 1
-  carrotPrefab: {fileID: 0}
+  carrotPrefab: {fileID: 6529944258851988723, guid: 557657c1f51ba674a8b11ca8a5e4aae4, type: 3}
   carrotsPerBatch: 3
   carrotInterval: 30
   maxCarrots: 30
