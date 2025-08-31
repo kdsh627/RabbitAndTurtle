@@ -29,6 +29,7 @@ public class PlayerSkill : MonoBehaviour
     void Start()
     {
         OnCoolTimeChanged?.Invoke();
+        OnSkillActive?.Invoke();
         playerMovement = GetComponent<PlayerMovement>();
     }
 

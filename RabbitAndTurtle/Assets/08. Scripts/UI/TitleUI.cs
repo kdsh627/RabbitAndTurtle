@@ -24,11 +24,13 @@ public class TitleUI : MonoBehaviour
 
     private void ButtonEvent_Start()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.ButtonClick);
         GameEventHandler.GamePlayExcuted_Invoke();
     }
 
     private void ButtonEvent_Option()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.ButtonClick);
         UIEventHandler.ToggleSettingUI_Invoke();
     }
 
@@ -39,6 +41,7 @@ public class TitleUI : MonoBehaviour
 
     private void ButtonEvent_Exit()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.ButtonClick);
         GameEventHandler.ExitExcuted_Invoke();
     }
 }
