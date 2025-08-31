@@ -22,6 +22,7 @@ public class PlayerSkill : MonoBehaviour
     public float spawnDelay = 0.5f;   // 스폰 애니 길이(클립 길이에 맞춰 조절)
 
     private PlayerMovement playerMovement;
+    private PlayerStat stat;
 
     public event Action OnCoolTimeChanged;
     public event Action OnSkillActive;
@@ -30,6 +31,7 @@ public class PlayerSkill : MonoBehaviour
     {
         OnCoolTimeChanged?.Invoke();
         playerMovement = GetComponent<PlayerMovement>();
+        stat = GetComponent<PlayerStat>();
     }
 
     void Update()
@@ -100,6 +102,7 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator WhaleThrow(Vector2 throwDir, bool isLeft, string rawDir, int level)
     {
+        stat.noDamage = true;
         // 플레이어 잠깐 멈춤 (원하면 제거)
         float prevSpeed = playerMovement.moveSpeed;
         playerMovement.moveSpeed = 0f;
@@ -131,6 +134,7 @@ public class PlayerSkill : MonoBehaviour
 
         // 발사
         proj.Launch(throwDir, mode);
+        stat.noDamage = false;
     }
 
     void WSkill() => StartCoroutine(FlyFishShot());

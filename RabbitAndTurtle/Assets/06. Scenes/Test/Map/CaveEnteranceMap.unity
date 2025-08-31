@@ -40642,6 +40642,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &683687650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 683687652}
+  - component: {fileID: 683687651}
+  m_Layer: 0
+  m_Name: DamageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &683687651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683687650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91876db293336944c967306d8ca5a46b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextPrefab: {fileID: 6276534383147616172, guid: 3dbb8847ee0b627459bf77bd696618a3, type: 3}
+  worldCanvas: {fileID: 801782387}
+--- !u!4 &683687652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683687650}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.02733, y: -2.61433, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &684998171
 GameObject:
   m_ObjectHideFlags: 0
@@ -41081,6 +41127,107 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &801782386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801782390}
+  - component: {fileID: 801782387}
+  - component: {fileID: 801782389}
+  - component: {fileID: 801782388}
+  m_Layer: 5
+  m_Name: DamageCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!223 &801782387
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801782386}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: -1652428535
+  m_SortingOrder: 100
+  m_TargetDisplay: 0
+--- !u!114 &801782388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801782386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &801782389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801782386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!224 &801782390
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801782386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1.5266, y: -1.314}
+  m_SizeDelta: {x: 55.077, y: 36.7787}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &808189312
 GameObject:
   m_ObjectHideFlags: 0
@@ -70583,8 +70730,8 @@ MonoBehaviour:
   weaponPrefabs:
   - {fileID: 8819085299491658716, guid: ed5d2d72c69348c4790dda9f7eab8760, type: 3}
   - {fileID: 582612280626483459, guid: a14f1e713b720e74080f66e6d2185f72, type: 3}
-  - {fileID: 2591564464085389727, guid: 449b9695edb5fd54587b800d2746dd71, type: 3}
-  - {fileID: 248079298253088888, guid: c9c9163fdfe83ce4c96a4db932bb715e, type: 3}
+  - {fileID: 8819085299491658716, guid: 32d00f15a93fa68459655b2d761d8d85, type: 3}
+  - {fileID: 582612280626483459, guid: ee97a9122c4d35144a6d6d65f146bee2, type: 3}
   poolSize: 80
 --- !u!4 &1425612161
 Transform:
@@ -72774,8 +72921,8 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 1755243971956980991, guid: 6327a8434bebfd84f8cd8a1e40fe38d8, type: 3}
   - {fileID: 1755243971956980991, guid: 00e54f576b1b22449b833babab1b5837, type: 3}
-  - {fileID: 7178142710304102445, guid: 2e2dc05551a2b97449731ecbbdeea1fd, type: 3}
-  - {fileID: 948950176875190219, guid: ebb86529ad28879479d211bb7c300a05, type: 3}
+  - {fileID: 1755243971956980991, guid: 62e1e534c2da224428786780060797db, type: 3}
+  - {fileID: 1755243971956980991, guid: 8f03fea1c5f044243ac85b8de8f8034d, type: 3}
   poolSize: 80
 --- !u!1 &1573848927
 GameObject:
@@ -79811,8 +79958,8 @@ MonoBehaviour:
   - {fileID: 1755243971956980991, guid: 6327a8434bebfd84f8cd8a1e40fe38d8, type: 3}
   - {fileID: 1755243971956980991, guid: 00e54f576b1b22449b833babab1b5837, type: 3}
   elitePrefabs:
-  - {fileID: 7178142710304102445, guid: 2e2dc05551a2b97449731ecbbdeea1fd, type: 3}
-  - {fileID: 948950176875190219, guid: ebb86529ad28879479d211bb7c300a05, type: 3}
+  - {fileID: 1755243971956980991, guid: 62e1e534c2da224428786780060797db, type: 3}
+  - {fileID: 1755243971956980991, guid: 8f03fea1c5f044243ac85b8de8f8034d, type: 3}
   initialSpawnCount: 10
   maxMonsterCount: 40
   killsPerElite: 10
@@ -104307,4 +104454,6 @@ SceneRoots:
   - {fileID: 176042425}
   - {fileID: 116867450}
   - {fileID: 1008904692}
+  - {fileID: 801782390}
+  - {fileID: 683687652}
   - {fileID: 702793856}

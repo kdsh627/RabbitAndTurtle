@@ -24,6 +24,7 @@ public class PlayerStat : MonoBehaviour
     private PlayerAnimationController animatorController;
 
     public bool isDie = false;
+    public bool noDamage = false;
 
     public event Action ValueChanged;
     [SerializeField] GameObject ItemEffect; // 아이템 획득 이펙트
@@ -40,13 +41,16 @@ public class PlayerStat : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        if (isDie)
-            return;
-        AudioManager.Instance.PlaySfx(AudioManager.Sfx.TurtleHurt);
-        StartCoroutine(playerMovement.DamageAni());
-        CurrentHealth -= damage;
-        ValueChanged?.Invoke();
-        if (CurrentHealth <= 0) Die();
+        if (!noDamage)
+        {
+            if (isDie)
+                return;
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.TurtleHurt);
+            StartCoroutine(playerMovement.DamageAni());
+            CurrentHealth -= damage;
+            ValueChanged?.Invoke();
+            if (CurrentHealth <= 0) Die();
+        }
     }
 
     public virtual void Heal(float amount)

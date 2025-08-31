@@ -10359,7 +10359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   inAlpha: 0.5
-  Shadow: {fileID: 1248651650583026869}
+  Shadow: {fileID: 0}
   lastDirection: Front
   FrontDSprite: {fileID: 8557774627792230263}
   SideDSprite: {fileID: 1866473686123304446}
@@ -10430,6 +10430,7 @@ MonoBehaviour:
   _levelData: {fileID: 0}
   maxHealth: 100
   isDie: 0
+  noDamage: 0
   ItemEffect: {fileID: 4952981082698818250}
   HealAmount: 20
 --- !u!1001 &385676891728696330
@@ -10751,10 +10752,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
-    - target: {fileID: 2951154761819894508, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4688707637841389824, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0005660186
@@ -10795,20 +10792,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6860876192250419658, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
-      propertyPath: m_Color.a
-      value: 0.59607846
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
---- !u!212 &1248651650583026869 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2951154761819894508, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
-  m_PrefabInstance: {fileID: 4152461317116980825}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8696771182193313625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4688707637841389824, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
