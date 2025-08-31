@@ -1,3 +1,4 @@
+using DG.Tweening;
 using State.GameState;
 using StateMachine.SceneStateMachine;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Manager
         public static GameStateManager Instace { get; set; }
 
         [SerializeField] private StageDataSO _stageData;
+        [SerializeField] private GameObject _stageClearUI;
         [SerializeField] private WaveManager _waveManager;
 
         private StageData _currentStageData;
@@ -96,7 +98,7 @@ namespace Manager
             GameEvent_TransitionScene(_nextGameState);
         }
 
-        private void GameEvent_ToWaveClear()
+        public void GameEvent_ToWaveClear()
         {
             _nextGameState = _gameStateMachine._waveClearState;
 
@@ -191,6 +193,9 @@ namespace Manager
             }
         }
 
+
+
+
         /// <summary>
         /// StageClear 상태에서 변수 초기화
         /// </summary>
@@ -214,7 +219,23 @@ namespace Manager
                 _currentScenePath = SceneDataManager.Instance.GetWaveSubScene(_currentStage);
             }
 
-            GameEventHandler.ReadyExcuted_Invoke();
+            Sequence stageClearSequence = DOTween.Sequence();
+
+            stageClearSequence.AppendCallback(() =>
+                {
+                    _stageClearUI.SetActive(true);
+                }    
+            );
+
+            stageClearSequence.AppendInterval(3f);
+
+            stageClearSequence.AppendCallback(() => {
+                Debug.Log("실행");
+                _stageClearUI.SetActive(false);
+                GameEventHandler.ReadyExcuted_Invoke();
+            });
+
+            stageClearSequence.Play();
         }
 
         /// <summary>

@@ -6,14 +6,12 @@ public class TitleUI : MonoBehaviour
     [Header("------ 버튼 ------")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _optionButton;
-    [SerializeField] private Button _creditButton;
     [SerializeField] private Button _exitButton;
 
     private void OnEnable()
     {
         _startButton.onClick.AddListener(ButtonEvent_Start);
         _optionButton.onClick.AddListener(ButtonEvent_Option);
-        _creditButton.onClick.AddListener(ButtonEvent_Credit);
         _exitButton.onClick.AddListener(ButtonEvent_Exit);
     }
 
@@ -21,7 +19,6 @@ public class TitleUI : MonoBehaviour
     {
         _startButton.onClick.RemoveListener(ButtonEvent_Start);
         _optionButton.onClick.RemoveListener(ButtonEvent_Option);
-        _creditButton.onClick.RemoveListener(ButtonEvent_Credit);
         _exitButton.onClick.RemoveListener(ButtonEvent_Exit);
     }
 

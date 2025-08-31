@@ -12,7 +12,6 @@ public class WaveManager : MonoBehaviour
 
     [Header("---- 몬스터 스포너 ----")]
     [SerializeField] private MonsterSpawner _monsterSpawner;
-
     public void WaveValueChanged_Invoke() => WaveValueChanged?.Invoke();
 
     private float _waveTime;
