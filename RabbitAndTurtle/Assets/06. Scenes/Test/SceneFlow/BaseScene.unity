@@ -381,8 +381,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeData: {fileID: 11400000, guid: 1814ce967c3739348827b09a53668ff9, type: 2}
-  BgmClips: []
-  BGMChannels: 0
+  BgmClips:
+  - {fileID: 8300000, guid: a77d93b52d0ac6749bc4dd9f2d2e6e9f, type: 3}
+  - {fileID: 8300000, guid: 7af812b7e2eb2184d9526632736b4f7f, type: 3}
+  - {fileID: 8300000, guid: 03a371e70c1888449b340b595ac69fbb, type: 3}
+  BGMChannels: 1
   SfxClips:
   - {fileID: 8300000, guid: f9df8f7d2af3e2945994f7687de9446d, type: 3}
   - {fileID: 8300000, guid: 4cc94e906c4d1bb4691c221a46f2b6a6, type: 3}

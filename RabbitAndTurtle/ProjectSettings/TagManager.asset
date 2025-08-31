@@ -18,6 +18,7 @@ TagManager:
   - FlyingFish
   - AlphaLow
   - Carrot
+  - Wall
   layers:
   - Default
   - TransparentFX

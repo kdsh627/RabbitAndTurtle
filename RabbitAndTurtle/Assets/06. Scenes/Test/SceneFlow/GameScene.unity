@@ -966,6 +966,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4254093404929054228, guid: 874c4312b1095224c81fd63fe1245bf6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5354866880895893203, guid: 874c4312b1095224c81fd63fe1245bf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.42
@@ -4849,8 +4853,8 @@ MonoBehaviour:
   _name: SkillEnforceUI
   _ui: {fileID: 1529568562}
   _whaleToss: {fileID: 256220472}
-  _fishAttack: {fileID: 1652722960}
-  _shieldRotation: {fileID: 544263551}
+  _fishAttack: {fileID: 544263551}
+  _shieldRotation: {fileID: 1652722960}
   _skill1: {fileID: 2242853518762555660}
   _skill2: {fileID: 1946853218}
   _skill3: {fileID: 556418834}
