@@ -197,6 +197,7 @@ public abstract class BaseMonster : MonoBehaviour
     IEnumerator DieAni()
     {
         monAni?.PlayDie();
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.MonsterDeath);
         yield return new WaitForSeconds(1f);
 
         if (usePooling)
@@ -227,6 +228,7 @@ public abstract class BaseMonster : MonoBehaviour
                 if (projectile.isReflected)
                 {
                     TakeDamage(projectile.damage);
+                    AudioManager.Instance.PlaySfx(AudioManager.Sfx.RabbitHurt);
                     Destroy(projectile.gameObject);
                 }
             }
@@ -239,6 +241,7 @@ public abstract class BaseMonster : MonoBehaviour
             {
                 isHit = true;
                 TakeDamage(wave.damage);
+                AudioManager.Instance.PlaySfx(AudioManager.Sfx.RabbitHurt);
                 StartCoroutine(WaveDmg());
             }
         }
@@ -246,8 +249,8 @@ public abstract class BaseMonster : MonoBehaviour
         if (collision.CompareTag("FlyingFish"))
         {
             var fish = collision.GetComponentInParent<FlyingFish>();
-            if (fish != null)
-                TakeDamage(fish._damage);
+            TakeDamage(fish._damage);
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.RabbitHurt);
         }
 
         if(collision.CompareTag("AlphaLow"))

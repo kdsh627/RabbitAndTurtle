@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8f193da3eb97c4385cb8d243cded2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 8819085299491658716, guid: ed5d2d72c69348c4790dda9f7eab8760, type: 3}
+  projectilePrefab: {fileID: 8819085299491658716, guid: 32d00f15a93fa68459655b2d761d8d85, type: 3}
   projectileSpawnPoint: {fileID: 7740438655710784576}
   FrontAttackPoint: {fileID: 7164705905478848335}
   BackAttackPoint: {fileID: 8269979771377551222}
