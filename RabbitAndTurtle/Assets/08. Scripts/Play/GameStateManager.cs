@@ -7,11 +7,12 @@ namespace Manager
 {
     public class GameStateManager : MonoBehaviour
     {
-        public static GameStateManager Instace { get; set; }
+        public static GameStateManager Instance { get; set; }
 
         [SerializeField] private StageDataSO _stageData;
         [SerializeField] private GameObject _stageClearUI;
         [SerializeField] private WaveManager _waveManager;
+        public MonsterSpawner _monsterSpawner;
 
         private StageData _currentStageData;
 
@@ -34,7 +35,7 @@ namespace Manager
 
         private void Awake()
         {
-            Instace = this;
+            Instance = this;
 
             _currentStage = 0;
             _currentBossStage = 0;
@@ -225,6 +226,7 @@ namespace Manager
 
             stageClearSequence.AppendCallback(() =>
                 {
+                    _monsterSpawner.KillAllMonstersAndStop();
                     _stageClearUI.SetActive(true);
                 }    
             );

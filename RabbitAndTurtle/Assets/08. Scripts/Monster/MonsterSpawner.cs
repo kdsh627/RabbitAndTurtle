@@ -1,3 +1,4 @@
+using Manager;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -56,6 +57,7 @@ public class MonsterSpawner : MonoBehaviour
     private void Awake()
     {
         Initialize(); // 초기화만 수행 (스폰/코루틴 시작 X)
+        GameStateManager.Instance._monsterSpawner = this;
     }
 
     private void Start()
@@ -263,7 +265,12 @@ public class MonsterSpawner : MonoBehaviour
 
     public void KillAllMonstersAndStop()
     {
-        // 1) 스폰 정지
+        StartCoroutine(KillCor());
+    }
+
+    IEnumerator KillCor()
+    {
+        yield return new WaitForSeconds(1f);
         StopSpawning();
 
         BaseMonster[] monsters = Object.FindObjectsByType<BaseMonster>(FindObjectsSortMode.None);

@@ -10359,7 +10359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   inAlpha: 0.5
-  Shadow: {fileID: 0}
+  Shadow: {fileID: 6853652919357461372}
   lastDirection: Front
   FrontDSprite: {fileID: 8557774627792230263}
   SideDSprite: {fileID: 1866473686123304446}
@@ -10792,11 +10792,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7403232335015984421, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
+      propertyPath: m_Color.b
+      value: 0.24528301
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403232335015984421, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
+      propertyPath: m_Color.g
+      value: 0.24528301
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403232335015984421, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
+      propertyPath: m_Color.r
+      value: 0.24528301
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
+--- !u!212 &6853652919357461372 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7403232335015984421, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
+  m_PrefabInstance: {fileID: 4152461317116980825}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8696771182193313625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4688707637841389824, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}

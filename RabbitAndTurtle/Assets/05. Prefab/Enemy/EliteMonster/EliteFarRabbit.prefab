@@ -412,7 +412,7 @@ MonoBehaviour:
   FrontDSprite: {fileID: 4292308581470775049}
   SideDSprite: {fileID: 6767105734232932360}
   inAlpha: 0.5
-  Shadow: {fileID: 7221337276585775310}
+  Shadow: {fileID: 3061987005052526343}
   usePooling: 1
   dropItem: {fileID: 37357033029640370, guid: d1c3717cad82b0d44b374ad305398bfd, type: 3}
   moveThreshold: 0.01
@@ -1092,8 +1092,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4688707637841389824, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
   m_PrefabInstance: {fileID: 5531489482468270626}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &7221337276585775310 stripped
+--- !u!212 &3061987005052526343 stripped
 SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2951154761819894508, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7403232335015984421, guid: c939fd549aa2736419ebfe48f9783e14, type: 3}
   m_PrefabInstance: {fileID: 5531489482468270626}
   m_PrefabAsset: {fileID: 0}
