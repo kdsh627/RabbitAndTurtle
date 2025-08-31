@@ -1,9 +1,13 @@
 using System;
+using Manager;
 using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
     public event Action BossValueChanged;
+
+    [Header("---- 태어날 위치 ----")]
+    [SerializeField] private Vector3 _startPosition;
 
     private float _waveTime;
     private int _currentWave;
@@ -11,20 +15,15 @@ public class BossManager : MonoBehaviour
 
     private bool _startWave;
 
-
     private void Awake()
     {
-        GameEventHandler.BossExcuted_Invoke();
+        //GameEventHandler.BossExcuted_Invoke();
+        //GameStateManager.Instace.SetWaveManager(this);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        GameManager.Instance.Player.transform.position = _startPosition;
+        GameEventHandler.BossExcuted_Invoke();
     }
 }
